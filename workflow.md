@@ -1,290 +1,161 @@
-# 🗺️ 台灣天氣預報專案開發工作流程 (Development Workflow)
+# 台灣海氣象與災害資訊儀表板工作流程
 
-> 本工作流程指南依據「**AI 創新微課程：Taiwan Weather Forecast（從氣象資料到互動式天氣預報應用）**」之 24 個核心實作模組編寫，旨在提供從 0 到 1 完整建置氣象資料收集、SQLite 持久化儲存與 Streamlit + Folium 互動視覺化儀表板的步驟化指引。
+> 本專案整合中央氣象署六項資料，呈現海面預報、測站觀測、海嘯資訊、溫度分布與颱風資訊。各資料集格式與更新頻率不同，因此採用「共用擷取與紀錄機制 + 各資料集專屬解析器 + 分頁展示」；不要把所有資料轉成同一張溫度表。
 
----
+## 目標資料集與呈現方式
 
-## 🧭 全流程導覽 (Workflow Overview)
+| 儀表板區塊 | 資料集 | 建議呈現 | 資料處理重點 |
+| :--- | :--- | :--- | :--- |
+| 海面天氣預報 | `F-A0012-001` | 海域/預報時段清單、風向風速與浪高卡片；有座標資料時再上地圖 | 使用 `StartTime`、`EndTime`、`locationName`、`Wx`、`WindDir`、`WindSpeed`、`WaveHeight`、`WaveType`；資料每 6 小時更新。 |
+| 氣象觀測站 | `O-A0001-001` | 測站地圖、縣市/測站篩選、逐時氣溫/降雨/風速等觀測圖表 | 以 `StationID` + `ObsTime/DateTime` 定位觀測；保留站名、縣市、座標和測項。特殊值（例如 `-99`、`X`）應視資料說明轉為缺值，勿當成真實測量值。 |
+| 海嘯資訊 | `E-A0014-001` | 最新事件/警示狀態、事件時間與說明；無事件時顯示「目前無資料/事件」狀態 | 依最新官方範例解析事件結構；CWA 已公告此資料於 2026-06-01 起有 API 欄位格式異動，解析器需容許欄位版本變化。 |
+| 溫度分布狀態 | `O-A0038-001` | 顯示 CWA 溫度分布圖及資料時間；可提供原圖連結 | 此資料集是溫度分布圖產品，不等同於逐站數值表。若要做數值格點分析，應另評估 `O-A0038-003`，本次需求仍以 `O-A0038-001` 呈圖為主。 |
+| 颱風侵襲機率 | `W-C0034-003` | 機率資訊/官方圖層與說明；標示資料時間和適用範圍 | 機率是官方路徑預報產品，清楚標示發布時間、預報區間與機率定義；不可解讀成確定會侵襲。 |
+| 熱帶氣旋路徑 | `W-C0034-005` | 地圖呈現過去、目前定位與預測路徑，附時間、強度等資訊 | 保留颱風識別/名稱、定位時間、緯經度、預報時間、最大風速等欄位；活動資料依官方產品更新。 |
+
+> `O-A0038-001` 的官方名稱為「溫度分布圖-溫度分布圖」。海面預報、圖檔/圖層或其他 rawData 產品不一定能以一般 JSON 資料列方式讀取。開始實作前，逐一確認資料頁提供的格式與官方 API/檔案下載方式；不要假設六項都能用同一個 REST JSON URL。CWA 提供 RESTful API 與檔案下載介面，使用哪一種依資料集頁面格式決定。
+
+## 全流程導覽
 
 ```mermaid
 flowchart TD
-    subgraph Phase1 ["階段一：資料探索與 API 串接 (步驟 1~5)"]
-        S1["1. 課程介紹與環境確立"] --> S2["2. 天氣影響與生活應用分析"]
-        S2 --> S3["3. CWA 開放資料平台註冊與金鑰"]
-        S3 --> S4["4. Requests 呼叫 API 取得 JSON"]
-        S4 --> S5["5. JSON 階層結構探勘與定位"]
-    end
-
-    subgraph Phase2 ["階段二：資料清洗與 SQLite 入庫 (步驟 6~10)"]
-        S5 --> S6["6. 提取 MinT / MaxT 溫差資料"]
-        S6 --> S7["7. Pandas 清洗並轉為結構化 DataFrame"]
-        S7 --> S8["8. 建立 SQLite 資料庫 (data.db)"]
-        S8 --> S9["9. DDL 設計：TemperatureForecasts 資料表"]
-        S9 --> S10["10. 執行 SQL 查詢校驗與去重機制"]
-    end
-
-    subgraph Phase3 ["階段三：Streamlit Web App 互動開發 (步驟 11~16)"]
-        S10 --> S11["11. Streamlit 核心架構與 Hello World"]
-        S11 --> S12["12. pd.read_sql 連線資料庫動態讀取"]
-        S12 --> S13["13. Selectbox 下拉選單篩選地區"]
-        S13 --> S14["14. 繪製一週最高/最低溫折線圖"]
-        S14 --> S15["15. 結構化顯示資料明細表格"]
-        S15 --> S16["16. 整合完整 Web App 互動介面"]
-    end
-
-    subgraph Phase4 ["階段四：進階台灣地圖視覺化 (步驟 17~19)"]
-        S16 --> S17["17. Folium + Streamlit 地圖圖層整合"]
-        S17 --> S18["18. 日期篩選器 + 溫度分級著色與 Popup"]
-        S18 --> S19["19. 打造 Taiwan Weather Dashboard 綜合儀表板"]
-    end
-
-    subgraph Phase5 ["階段五：品質優化、Git 管理與延伸 (步驟 20~24)"]
-        S19 --> S20["20. 程式碼分層重構與例外處理"]
-        S20 --> S21["21. Git 版本控制與 GitHub 發布"]
-        S21 --> S22["22. 延伸思考：Line Bot、AI 旅遊推薦"]
-        S22 --> S23["23. 專案核心技術回顧與總結"]
-        S23 --> S24["24. 未來下一步：AI × Data 實踐"]
-    end
+    A[1. 確認六項資料與展示需求] --> B[2. 申請 CWA 授權碼與設定環境]
+    B --> C[3. 核對各資料集格式、欄位、更新頻率]
+    C --> D[4. 建立共用 HTTP 擷取器]
+    D --> E[5. 建立六種資料集專屬解析器]
+    E --> F[6. 正規化時間、座標、單位與缺值]
+    F --> G[7. 設計原始快照與結構化資料儲存]
+    G --> H[8. 建立資料更新與查核流程]
+    H --> I[9. Streamlit 主頁與資料狀態]
+    I --> J[10. 海面預報與測站觀測頁]
+    J --> K[11. 溫度分布與海嘯資訊頁]
+    K --> L[12. 颱風路徑與侵襲機率頁]
+    L --> M[13. 錯誤處理、快取與資料新鮮度]
+    M --> N[14. 文件、Git 與部署準備]
 ```
 
----
+## 階段一：資料與環境確認
 
-## 📍 階段一：資料探索與 API 串接 (步驟 1 ~ 5)
+### 1. 確認展示需求
 
-### 步驟 1：課程介紹與專案目標確立
-- **目標**：掌握 AIoT 專案目標，確立「資料擷取 ➔ 清洗入庫 ➔ 視覺化介面」的三層體系。
-- **產出**：建立專案根目錄與基礎設定。
+- 儀表板以六個分頁/區塊呈現：海面預報、測站觀測、海嘯、溫度分布、侵襲機率、熱帶氣旋路徑。
+- 每區塊顯示資料來源、資料時間/更新時間、目前是否有資料，以及單位。
+- 先確定要即時讀取或定時擷取後保存。建議先實作手動更新，之後再加排程。
 
-### 步驟 2：台灣天氣與生活關聯分析
-- **目標**：確認應用場景需求，釐清氣象數據於日常生活、出遊規劃與智慧農業中的決策價值。
-- **關注指標**：未來一週日最高溫（`MaxT`）、最低溫（`MinT`）、降雨機率（`PoP`）與天氣現象（`Wx`）。
+### 2. 取得授權碼並設定環境
 
-### 步驟 3：中央氣象署 CWA Open Data 平台
-- **目標**：取得合法公開存取憑證。
-- **操作步驟**：
-  1. 前往 [CWA 氣象資料開放平臺](https://opendata.cwa.gov.tw/) 註冊帳號。
-  2. 登入後於「會員中心」取得個人的 **API 授權碼 (Authorization Code)**。
-  3. 選定預報資料集（例如全區一週天氣預報資料集代號 `F-C0032-001` 或鄉鎮天氣預報 `F-D0047-091`）。
+建立虛擬環境並安裝 `requirements.txt`。從 CWA 會員中心取得 API 授權碼，放入 `.env`：
 
-### 步驟 4：使用 Requests 取得 API JSON 資料
-- **目標**：使用 Python 發起 HTTP 請求，取得即時天氣預報原始資料。
-- **關鍵程式碼**：
-  ```python
-  import requests
-  import os
-  from dotenv import load_dotenv
+```ini
+CWA_API_KEY=你的授權碼
+```
 
-  load_dotenv()
-  api_key = os.getenv("CWA_API_KEY")
-  url = f"https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization={api_key}&format=JSON"
+讀取金鑰前檢查是否存在；不得將 `.env`、下載的私有資料或真實金鑰提交到 Git。保留 `.env.example` 作為設定範例。
 
-  response = requests.get(url, timeout=10)
-  if response.status_code == 200:
-      data = response.json()
-      print("API 連線成功！")
-  else:
-      print(f"連線失敗，狀態碼：{response.status_code}")
-  ```
+### 3. 建立資料集規格清單
 
-### 步驟 5：JSON 資料結構解析
-- **目標**：理清 CWA API 巢狀層級關係，定位目標數據。
-- **層級路徑**：
-  ```text
-  records
-   └── location: [
-         ├── locationName: "臺北市" / "中部地區"
-         └── weatherElement: [
-               ├── elementName: "MinT", time: [...]
-               ├── elementName: "MaxT", time: [...]
-               └── elementName: "Wx",   time: [...]
-             ]
-       ]
-  ```
+每項資料集記錄：`dataset_id`、官方名稱、取得方式（REST API 或 file API/其他格式）、回傳格式、解析入口、更新頻率、時間欄位、座標欄位、單位、缺值代碼、展示元件。格式或欄位以 CWA 最新資料頁和產品文件為準。
 
----
+## 階段二：擷取、解析與保存
 
-## 📍 階段二：資料整理與 SQLite 資料庫建置 (步驟 6 ~ 10)
+### 4. 共用擷取器
 
-### 步驟 6：提取最高與最低氣溫
-- **目標**：遍歷 JSON 解析出各地區在不同日期時間區間內的氣溫數值。
-- **資料轉換重點**：
-  - 將溫度字串轉為浮點數（`float`）。
-  - 將開始時間（`startTime`）正規化為日期格式（`YYYY-MM-DD`）。
+共用程式負責設定 timeout、HTTP 錯誤處理、授權、重試策略、回應格式辨識、擷取時間記錄。以 `requests` 的 `params` 組查詢參數，避免手動拼接 URL。對 API 回應同時檢查 HTTP 狀態與資料本身的錯誤欄位。
 
-### 步驟 7：使用 Pandas 清洗整理資料
-- **目標**：建構結構化 DataFrame，方便預覽與批次入庫。
-- **預期欄位結構**：
-  | regionName | dataDate | minT | maxT |
-  | :--- | :--- | :--- | :--- |
-  | 北部地區 | 2026-04-14 | 18.0 | 26.0 |
-  | 中部地區 | 2026-04-14 | 20.0 | 30.0 |
-  | 南部地區 | 2026-04-14 | 22.0 | 31.0 |
+### 5. 各資料集專屬解析器
 
-- **關鍵程式碼**：
-  ```python
-  import pandas as pd
+建議模組切分：
 
-  records = []
-  # 假設已解析出每筆記錄字典
-  # records.append({"regionName": "中部地區", "dataDate": "2026-04-14", "minT": 20.0, "maxT": 30.0})
-  df = pd.DataFrame(records)
-  print(df.head())
-  ```
+```text
+src/
+├── cwa_client.py          # 授權、HTTP、錯誤與重試
+├── datasets/
+│   ├── marine_forecast.py # F-A0012-001
+│   ├── station_obs.py     # O-A0001-001
+│   ├── tsunami.py         # E-A0014-001
+│   ├── temperature_map.py # O-A0038-001
+│   └── typhoon.py         # W-C0034-003、W-C0034-005
+├── storage.py             # 原始快照與標準化資料持久化
+└── app.py                 # Streamlit 入口
+```
 
-### 步驟 8 & 9：建立 SQLite 資料庫與 Schema 設計
-- **目標**：建立本機資料庫 `data.db`，設計具備複合主鍵或唯一約束之 `TemperatureForecasts` 資料表。
-- **DDL 綱要**：
-  ```sql
-  CREATE TABLE IF NOT EXISTS TemperatureForecasts (
-      id INTEGER PRIMARY KEY AUTOINCREMENT,
-      regionName TEXT NOT NULL,
-      dataDate TEXT NOT NULL,
-      minT REAL NOT NULL,
-      maxT REAL NOT NULL,
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      UNIQUE(regionName, dataDate)
-  );
-  ```
+解析器需對欄位缺漏、空資料、日期時區、異常數值與格式變更作出可辨識的錯誤回報。海嘯資料遵照最新格式範例，不依賴單一固定欄位路徑。
 
-### 步驟 10：資料寫入與 SQL 驗證
-- **目標**：實作**冪等性（Idempotency）寫入**，保證重複執行腳本時不產生重複紀錄，並進行查核。
-- **關鍵語法**：
-  ```sql
-  -- 避免重複插入，若衝突則更新數值
-  INSERT INTO TemperatureForecasts (regionName, dataDate, minT, maxT)
-  VALUES (?, ?, ?, ?)
-  ON CONFLICT(regionName, dataDate) 
-  DO UPDATE SET minT=excluded.minT, maxT=excluded.maxT;
-  ```
-- **驗證查核**：
-  ```python
-  import sqlite3
-  conn = sqlite3.connect("data.db")
-  cursor = conn.cursor()
-  cursor.execute("SELECT DISTINCT regionName FROM TemperatureForecasts;")
-  print("現存分區：", cursor.fetchall())
-  ```
+### 6. 正規化原則
 
----
+- 時間保留 ISO 8601 時區資訊，畫面統一轉為台灣時間顯示。
+- 儲存原始回應/檔案快照與擷取時間，方便欄位變更時重新解析。
+- 數值觀測統一轉型並處理缺值代碼；文字描述保留原始值。
+- 座標明確採 WGS84 經緯度；地圖元件收到無效座標時不繪點。
+- 使用各資料集的複合識別欄位去重；保留預報發布時間與觀測時間，避免新資料覆寫仍需比較的舊快照。
 
-## 📍 階段三：Streamlit 互動式 Web App 開發 (步驟 11 ~ 16)
+### 7. 儲存設計
 
-### 步驟 11：Streamlit 快速入門
-- **目標**：搭建輕量 Web 介面。
-- **測試命令**：
-  ```bash
-  streamlit run app.py
-  ```
+不要使用原本僅有 `TemperatureForecasts(regionName, dataDate, minT, maxT)` 的單表設計。六項資料型態差異大，建議：
 
-### 步驟 12：從 SQLite 資料庫動態讀取資料
-- **關鍵程式碼**：
-  ```python
-  import streamlit as st
-  import sqlite3
-  import pandas as pd
+1. `ingestion_runs`：資料集代碼、擷取時間、狀態、錯誤摘要。
+2. `raw_snapshots`：資料集代碼、發布/觀測時間、原始 JSON 或檔案位置、內容雜湊。
+3. 依資料類型建獨立的結構化表（例如 `station_observations`、`marine_forecasts`、`typhoon_positions`、`tsunami_events`）；圖檔型產品保存下載位置、時間與 metadata。
 
-  @st.cache_data(ttl=600)
-  def load_data():
-      conn = sqlite3.connect("data.db")
-      df = pd.read_sql_query("SELECT * FROM TemperatureForecasts ORDER BY dataDate ASC", conn)
-      conn.close()
-      return df
+採 SQLite 時避免把大型影像二進位內容塞入一般資料表；可保存於 `data/` 並在資料庫記錄相對路徑。資料庫與下載資料須列入 `.gitignore`。
 
-  df = load_data()
-  ```
+### 8. 資料查核
 
-### 步驟 13：下拉選單切換地區 (Interactive Controls)
-- **實作**：
-  ```python
-  regions = df['regionName'].unique()
-  selected_region = st.selectbox("請選擇預報地區：", regions)
-  filtered_df = df[df['regionName'] == selected_region]
-  ```
+每次擷取後記錄成功/失敗、回應時間、資料筆數、資料時間範圍與資料新鮮度。空資料本身不一定是錯誤（例如目前沒有海嘯或颱風事件），介面要區分「目前無事件」與「擷取失敗」。
 
-### 步驟 14 & 15：繪製一週溫差折線圖與資料表格
-- **實作**：
-  ```python
-  st.subheader(f"📊 {selected_region} - 一週最高與最低氣溫走勢")
-  chart_data = filtered_df.set_index("dataDate")[["minT", "maxT"]]
-  st.line_chart(chart_data)
+## 階段三：Streamlit 儀表板
 
-  st.subheader("📋 氣溫預報詳細數據")
-  st.dataframe(filtered_df[["dataDate", "minT", "maxT"]].reset_index(drop=True), use_container_width=True)
-  ```
+### 9. 主頁與導覽
 
-### 步驟 16：整合完整 Web 介面
-- 結合 `st.sidebar` 擺放參數控制項，使用 `st.metric` 顯示今日最高/最低溫與平均溫差，提供清晰之 Dashboard 佈局。
+首頁顯示六項資料的最新更新時間和狀態。各資料集以獨立頁籤或 sidebar 頁面呈現，提供手動重新整理、資料來源連結與錯誤狀態提示。
 
----
+### 10. 海面預報與測站觀測
 
-## 📍 階段四：進階台灣地圖視覺化 (步驟 17 ~ 19)
+- **海面預報**：依預報海域與時段篩選，表格列出天氣、風、浪資訊；地圖座標若未提供或無法可靠對應，就以清單呈現，不使用虛構座標。
+- **測站觀測**：以測站地理座標標記地圖，支援縣市/站點選擇；展示氣溫、降雨、風速等逐時趨勢。顯示觀測時間和缺值狀態。
 
-### 步驟 17：使用 Folium 繪製台灣地圖
-- **目標**：在 Streamlit 中嵌入具備地理資訊的互動地圖。
-- **技術套件**：`folium`, `streamlit_folium.st_folium`。
+### 11. 溫度分布與海嘯資訊
 
-### 步驟 18：日期切換與溫度顏色級距
-- **溫度顏色對照表**：
-  - `< 20°C` ➔ 🔵 偏冷（藍色 `#3498db`）
-  - `20 ~ 25°C` ➔ 🟢 舒適（綠色 `#2ecc71`）
-  - `25 ~ 30°C` ➔ 🟡 溫熱（黃色/橙色 `#f39c12`）
-  - `> 30°C` ➔ 🔴 炎熱（紅色 `#e74c3c`）
+- **溫度分布**：顯示官方溫度分布圖產品及其時間資訊；不要把圖片色彩直接宣稱為精確數值。若未來要做逐格數據分析，另行改用格點資料集並校正格點座標/單位。
+- **海嘯資訊**：展示官方事件狀態、發布時間、事件說明和來源連結。沒有事件時明確顯示目前狀態；遇到未知欄位格式時保留原始紀錄並顯示解析警示。
 
-- **地圖標記範例**：
-  ```python
-  import folium
-  from streamlit_folium import st_folium
+### 12. 颱風資訊
 
-  # 台灣中心座標
-  m = folium.Map(location=[23.973875, 120.982024], zoom_start=7, tiles="CartoDB positron")
+- **路徑頁**：地圖分別畫出過去/目前定位與預測定位，使用不同線型或圖例；Popup 呈現名稱、定位時間、風速等。
+- **侵襲機率頁**：依官方產品欄位呈現數值或圖層，標註發布時間、預報時間範圍和適用區域。避免自行將機率重新解釋為警報或確定性結論。
+- 無活動資料時顯示「目前無活動資料」，並標註最後成功更新時間。
 
-  # 根據選定日期的平均溫度標記各地區
-  for _, row in day_df.iterrows():
-      avg_temp = (row['minT'] + row['maxT']) / 2
-      color = "blue" if avg_temp < 20 else ("green" if avg_temp <= 25 else ("orange" if avg_temp <= 30 else "red"))
-      coords = REGION_COORDS.get(row['regionName'], [23.5, 121.0])
-      folium.CircleMarker(
-          location=coords,
-          radius=12,
-          popup=f"<b>{row['regionName']}</b><br>最低溫: {row['minT']}°C<br>最高溫: {row['maxT']}°C",
-          color=color,
-          fill=True,
-          fill_opacity=0.7
-      ).add_to(m)
+### 13. 快取與例外處理
 
-  st_folium(m, width=700, height=500)
-  ```
+以資料集各自的更新頻率設定快取期限，提供使用者手動刷新。遇到 API 失敗時，可顯示最後一次成功資料及其時間，但要明確標示資料已過期；不可將舊資料標成即時資料。
 
-### 步驟 19：Taiwan Weather Dashboard 成果展示
-- 將折線圖、表格、統計指標與台灣地圖組裝為完整的全功能儀表板。
+## 階段四：品質、版本控制與交付
 
----
+### 14. 驗收項目
 
-## 📍 階段五：程式碼品質優化、Git 管理與未來展望 (步驟 20 ~ 24)
+- 六項資料集皆能獨立擷取、解析或呈現，失敗不會讓其他區塊一併中斷。
+- 畫面標明時間、時區、單位、資料來源與資料新鮮度。
+- 無事件、空回應、欄位變更、網路錯誤和缺值都有不同狀態提示。
+- 地圖只畫真實座標；圖像產品不冒充可查詢的逐點數值。
+- API 金鑰、原始下載資料及本機 DB 不會被提交。
 
-### 步驟 20：程式碼品質與架構優化
-- [x] **模組分工**：將 API 擷取、資料庫邏輯、地圖工具分拆為不同 `.py` 檔案。
-- [x] **例外防護**：加裝 `try...except`，針對網絡斷線、API 回傳無效 JSON 等做容錯處理。
-- [x] **快取優化**：善用 `@st.cache_data` 降低重複讀取資料庫的開銷。
+### 15. Git 提交
 
-### 步驟 21：專案版本控制與 GitHub 託管
 ```bash
-# 初始化並確認變更
 git status
-
-# 加入版本管理並提交
-git add .
-git commit -m "feat: complete Taiwan weather forecast dashboard with folium map"
-
-# 推送至遠端 GitHub 儲存庫
+git add workflow.md README.md requirements.txt src app.py
+git commit -m "feat: add multi-source CWA dashboard workflow"
 git push origin main
 ```
 
-### 步驟 22：延伸應用與創新想法
-- **Line Bot 智慧天氣小幫手**：串接 Line Messaging API，每天早晨發送穿衣降雨警報。
-- **AI 旅遊行程推薦助理**：結合 LLM 模型，依據預測天氣推薦戶外或室內景點。
-- **農業與防災自動告警**：低溫特報、強降雨即時 Email / SMS 通知。
+> 提交前確認實際檔案路徑存在，並檢查 staged diff 未包含 `.env`、資料庫、API 回應檔或大型圖檔。
 
-### 步驟 23 & 24：回顧、總結與下一步
-- 複習核心技術鏈：`API` ➔ `JSON` ➔ `Pandas` ➔ `SQLite` ➔ `Streamlit` ➔ `Folium`。
-- 持續探索政府資料開放平台更多開放 API，打造更完整的 AIoT 數據應用作品！
+## 官方資料參考
+
+- [CWA 海面天氣預報 `F-A0012-001`](https://opendata.cwa.gov.tw/dataset/all/F-A0012-001)
+- [CWA 氣象觀測站全測站逐時資料標準 `O-A0001-001`](https://opendata.cwa.gov.tw/opendatadoc/Observation/O-A0001-001.pdf)
+- [CWA 海嘯 API 格式異動公告 `E-A0014-001`](https://opendata.cwa.gov.tw/announcement/news/316?page=1)
+- [CWA 溫度分布圖資料標準 `O-A0038-001`](https://opendata.cwa.gov.tw/opendatadoc/Observation/A0038-001.pdf)
+- [CWA 天氣警特報資料介紹（含颱風侵襲機率更新說明）](https://opendata.cwa.gov.tw/promotion/introduction/warning)
+- [CWA 熱帶氣旋路徑產品說明 `W-C0034-005`](https://opendata.cwa.gov.tw/opendatadoc/Warning/W-C0034-005.pdf)
+- [CWA API 使用說明](https://opendata.cwa.gov.tw/devManual/insrtuction)
