@@ -91,6 +91,49 @@ def _show_ingestion_status(dataset_id: str) -> None:
         )
 
 
+def _freshness_overview(latest: Dict[str, Dict[str, Any]]) -> None:
+    # Allow twice the published interval for normal delivery/network variance.
+    freshness_limits = {
+        "F-A0012-001": 12,
+        "O-A0001-001": 2,
+        "O-A0038-001": 2,
+        "W-C0034-003": 12,
+        "W-C0034-005": 12,
+    }
+    rows = []
+    for dataset_id, spec in DATASET_SPECS.items():
+        run = latest.get(dataset_id)
+        if not run:
+            status = "⚪ 尚未匯入"
+            fetched_at = "—"
+            source_time = "—"
+        else:
+            run_status = str(run.get("status", "UNKNOWN")).upper()
+            fetched_at = _timestamp(run.get("run_time"))
+            source_time = _timestamp(run.get("data_timestamp"))
+            if run_status == "FAILED":
+                status = "🔴 更新失敗"
+            elif run_status == "EMPTY":
+                status = "⚪ 來源無可呈現資料"
+            elif dataset_id in freshness_limits:
+                checked_time = run.get("data_timestamp") or run.get("run_time")
+                freshness = _freshness(checked_time, freshness_limits[dataset_id])
+                status = "🟢 新鮮" if freshness == "資料新鮮" else "🟡 可能過期" if "可能已過期" in freshness else "⚪ 時間無法判讀"
+            else:
+                # Tsunami and typhoon feeds are event-driven; an old event timestamp
+                # does not mean the feed is stale when there is no active event.
+                status = "🟢 擷取成功（事件型）"
+        rows.append({
+            "資料集": dataset_id,
+            "資料名稱": spec.official_name,
+            "狀態": status,
+            "來源資料時間": source_time,
+            "最近擷取時間": fetched_at,
+        })
+    st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    st.caption("固定週期資料依更新頻率判斷新鮮度；海嘯與颱風屬事件型資料，舊事件時間不代表資料過期。狀態依最近一次擷取紀錄，按左側「更新全部資料」可重新檢查。")
+
+
 def _station_map(frame: pd.DataFrame) -> None:
     mapped = frame.dropna(subset=["latitude", "longitude"])
     if mapped.empty:
@@ -247,6 +290,9 @@ def _page_overview() -> None:
     rain_values = stations["precipitation"].dropna() if not stations.empty else pd.Series(dtype=float)
     wind_values = stations["wind_speed"].dropna() if not stations.empty else pd.Series(dtype=float)
     dark_basemap = st.session_state.get("overview_basemap", "深色") == "深色"
+
+    with st.expander("六項資料新鮮度與更新狀態", expanded=False):
+        _freshness_overview(latest)
 
     left, center, right = st.columns([2.25, 8.1, 2.25], gap="small")
     with left:
