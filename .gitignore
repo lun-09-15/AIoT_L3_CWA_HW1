@@ -4,22 +4,22 @@ __pycache__/
 *$py.class
 *.so
 .Python
+.venv/
 env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
 # Environment Variables & Keys
 .env
 .env.local
 
-# Databases & Local Data
+# Databases and downloaded data
 *.db
 *.sqlite3
 data/*.db
+data/snapshots/*
 
-# IDEs & OS
+# IDEs and OS
 .vscode/
 .idea/
 .DS_Store

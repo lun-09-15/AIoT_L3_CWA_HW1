@@ -1,6 +1,6 @@
 # 📊 中央氣象署 (CWA) 六大資料集規格清單 (Dataset Specifications)
 
-本文件依據專案 [workflow.md](file:///c:/code/碩士/AIoT/L3%20CWA/workflow.md) 之**階段一：步驟 3「建立資料集規格清單」**編寫，詳細記錄各資料集之代碼、官方名稱、API 取得方式、格式、欄位規範、缺值定義與視覺化呈現元件。
+本文件依據專案 [workflow.md](../workflow.md) 之**階段一：步驟 3「建立資料集規格清單」**編寫，詳細記錄各資料集之代碼、官方名稱、API 取得方式、格式、欄位規範、缺值定義與視覺化呈現元件。
 
 ---
 
@@ -12,8 +12,8 @@
 | **2** | **氣象觀測站** | `O-A0001-001` | 全測站逐時氣象資料 | REST API | JSON | 每小時 | `-99`, `-999`, `X` | `station_observations` |
 | **3** | **海嘯資訊** | `E-A0014-001` | 海嘯資訊-海嘯警示與解除報告 | REST API | JSON | 事件觸發 | 空陣列/無資料 | `tsunami_events` |
 | **4** | **溫度分布狀態** | `O-A0038-001` | 溫度分布圖-溫度分布圖 | File API | JSON (圖片URL) | 每小時 | 無 | `temperature_maps` |
-| **5** | **颱風侵襲機率** | `W-C0034-003` | 暴風圈侵襲機率圖層 | File API | KMZ (KML) | 颱風期 6~12h | 無 | `typhoon_probabilities` |
-| **6** | **熱帶氣旋路徑** | `W-C0034-005` | 熱帶氣旋路徑 (過去定位與未來預報) | REST API | JSON | 颱風期 3~6h | `-`, `None` | `typhoon_tracks` |
+| **5** | **颱風侵襲機率** | `W-C0034-003` | 暴風圈侵襲機率圖層 | File API | KMZ (KML) | 颱風活動時 6 小時；警報期間 3 小時 | 無 | `typhoon_probabilities` |
+| **6** | **熱帶氣旋路徑** | `W-C0034-005` | 熱帶氣旋路徑 (過去定位與未來預報) | REST API | JSON | 颱風活動時 6 小時；警報期間 3 小時 | `-`, `None` | `typhoon_tracks` |
 
 ---
 

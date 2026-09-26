@@ -1,120 +1,88 @@
-"""
-Main ingestion script for CWA Weather Dashboard.
-Fetches all 6 datasets from CWA Open Data, parses them, and stores into SQLite.
-
-Usage:
-    python -m src.ingest          # Fetch all datasets
-    python -m src.ingest --only O-A0001-001   # Fetch a single dataset
-"""
-
-import sys
+"""Fetch the six configured CWA datasets and persist normalized records."""
 import argparse
+import sys
 from datetime import datetime
+from typing import Dict, Optional
 
+from src.cwa_client import CWAClient
 from src.config import CWA_API_KEY, DB_PATH
 from src.database import init_db, record_ingestion_run
-from src.cwa_client import CWAClient
-from src.storage import process_and_store_dataset
 from src.datasets.specs import DATASET_SPECS
+from src.storage import process_and_store_dataset
 
 
-def ingest_all(client: CWAClient, dataset_ids: list[str] | None = None) -> dict:
-    """
-    Runs ingestion for all (or selected) datasets.
-    Returns a summary dict keyed by dataset_id.
-    """
-    targets = dataset_ids or list(DATASET_SPECS.keys())
-    summary = {}
-
-    for ds_id in targets:
-        spec = DATASET_SPECS.get(ds_id)
-        if not spec:
-            print(f"  ⚠️  Unknown dataset_id: {ds_id}, skipping.")
-            summary[ds_id] = {"status": "SKIPPED", "message": "Unknown dataset"}
+def ingest_all(client: CWAClient, dataset_ids: Optional[list[str]] = None) -> Dict[str, dict]:
+    targets = list(DATASET_SPECS) if dataset_ids is None else dataset_ids
+    summary: Dict[str, dict] = {}
+    for dataset_id in targets:
+        spec = DATASET_SPECS.get(dataset_id)
+        if spec is None:
+            summary[dataset_id] = {"status": "SKIPPED", "message": "Unknown dataset"}
             continue
-
-        print(f"\n{'='*60}")
-        print(f"  📥 Fetching [{ds_id}] {spec.official_name}")
-        print(f"     API type: {spec.api_type} | Format: {spec.file_format}")
-        print(f"{'='*60}")
-
-        # --- Fetch ---
+        print(f"\n[{dataset_id}] {spec.official_name}")
+        print(f"  介面：{spec.api_type} / {spec.file_format}；更新頻率：{spec.update_frequency}")
         if spec.api_type == "REST":
-            success, payload, msg = client.fetch_rest_dataset(ds_id)
+            success, payload, message = client.fetch_rest_dataset(dataset_id)
         elif spec.api_type == "FILE":
-            success, payload, msg = client.fetch_file_dataset(ds_id, file_format=spec.file_format)
+            success, payload, message = client.fetch_file_dataset(dataset_id, spec.file_format)
         else:
-            print(f"  ❌ Unsupported api_type: {spec.api_type}")
-            summary[ds_id] = {"status": "FAILED", "message": f"Unsupported api_type: {spec.api_type}"}
-            continue
+            success, payload, message = False, None, f"Unsupported API type: {spec.api_type}"
 
         if not success or payload is None:
-            print(f"  ❌ Fetch failed: {msg}")
-            summary[ds_id] = {"status": "FAILED", "message": msg}
+            record_ingestion_run(
+                dataset_id, "FAILED",
+                response_time_ms=client.last_response_times_ms.get(dataset_id),
+                data_timestamp=client.last_data_timestamps.get(dataset_id),
+                error_message=message,
+            )
+            summary[dataset_id] = {"status": "FAILED", "records": 0, "message": message}
+            print(f"  失敗：{message}")
             continue
 
-        print(f"  ✅ Fetch success: {msg}")
+        snapshot_path = client.last_snapshot_paths.get(dataset_id)
+        ok, count, store_message = process_and_store_dataset(dataset_id, payload, snapshot_path)
+        if not ok:
+            record_ingestion_run(
+                dataset_id, "FAILED",
+                response_time_ms=client.last_response_times_ms.get(dataset_id),
+                data_timestamp=client.last_data_timestamps.get(dataset_id),
+                error_message=store_message,
+            )
+            summary[dataset_id] = {"status": "FAILED", "records": 0, "message": store_message}
+            print(f"  解析/儲存失敗：{store_message}")
+            continue
 
-        # --- Parse & Store ---
-        ok, count, store_msg = process_and_store_dataset(ds_id, payload)
-        if ok:
-            print(f"  💾 Stored: {store_msg}")
-            summary[ds_id] = {"status": "SUCCESS", "records": count, "message": store_msg}
-            # Update ingestion run with record count
-            record_ingestion_run(ds_id, status="SUCCESS", records_count=count)
-        else:
-            print(f"  ❌ Store failed: {store_msg}")
-            summary[ds_id] = {"status": "FAILED", "message": store_msg}
-            record_ingestion_run(ds_id, status="FAILED", error_message=store_msg)
-
+        status = "SUCCESS" if count else "EMPTY"
+        record_ingestion_run(
+            dataset_id, status, records_count=count,
+            response_time_ms=client.last_response_times_ms.get(dataset_id),
+            data_timestamp=client.last_data_timestamps.get(dataset_id),
+        )
+        summary[dataset_id] = {"status": status, "records": count, "message": store_message}
+        print(f"  {status}：{store_message}")
     return summary
 
 
-def main():
-    parser = argparse.ArgumentParser(description="CWA Weather Dashboard - Data Ingestion")
-    parser.add_argument(
-        "--only",
-        nargs="*",
-        help="Only fetch specific dataset IDs (e.g. O-A0001-001 E-A0014-001)"
-    )
-    args = parser.parse_args()
-
-    print("=" * 60)
-    print("  🌦️  CWA Weather Dashboard - Data Ingestion")
-    print(f"  🕐 {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print(f"  🔑 API Key: {'***' + CWA_API_KEY[-6:] if CWA_API_KEY else '❌ MISSING'}")
-    print(f"  🗄️  DB Path: {DB_PATH}")
-    print("=" * 60)
-
+def main(argv: Optional[list[str]] = None) -> int:
+    parser = argparse.ArgumentParser(description="匯入中央氣象署六項開放資料")
+    parser.add_argument("--only", nargs="+", choices=sorted(DATASET_SPECS), help="只匯入指定資料集")
+    args = parser.parse_args(argv)
+    print(f"CWA 資料匯入｜{datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')}")
+    print(f"資料庫：{DB_PATH}")
     if not CWA_API_KEY:
-        print("\n❌ CWA_API_KEY is not set. Please configure it in .env file.")
-        sys.exit(1)
-
-    # 1. Initialize database tables
-    print("\n📋 Initializing database tables...")
+        print("錯誤：尚未設定 CWA_API_KEY。請在專案根目錄 .env 填入授權碼。", file=sys.stderr)
+        return 2
     init_db()
-    print("   ✅ Database tables ready.")
-
-    # 2. Create client and run ingestion
-    client = CWAClient()
-    summary = ingest_all(client, dataset_ids=args.only)
-
-    # 3. Print summary
-    print("\n" + "=" * 60)
-    print("  📊 Ingestion Summary")
-    print("=" * 60)
-    for ds_id, result in summary.items():
-        icon = "✅" if result["status"] == "SUCCESS" else "❌" if result["status"] == "FAILED" else "⚠️"
-        count_str = f" ({result.get('records', 0)} records)" if result["status"] == "SUCCESS" else ""
-        print(f"  {icon} {ds_id}: {result['status']}{count_str}")
-    print("=" * 60)
-
-    failed = [ds for ds, r in summary.items() if r["status"] == "FAILED"]
-    if failed:
-        print(f"\n⚠️  {len(failed)} dataset(s) failed: {', '.join(failed)}")
-    else:
-        print("\n🎉 All datasets ingested successfully!")
+    try:
+        summary = ingest_all(CWAClient(), args.only)
+    except Exception as exc:
+        print(f"匯入中止：{exc}", file=sys.stderr)
+        return 1
+    print("\n匯入摘要")
+    for dataset_id, result in summary.items():
+        print(f"  {dataset_id}: {result['status']} ({result.get('records', 0)}) — {result['message']}")
+    return 1 if any(row["status"] == "FAILED" for row in summary.values()) else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
