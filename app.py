@@ -111,7 +111,7 @@ def _station_map(frame: pd.DataFrame) -> None:
             [row.latitude, row.longitude], radius=5, color=color, fill=True,
             fill_color=color, fill_opacity=.75, tooltip=row.station_name, popup=popup,
         ).add_to(weather_map)
-    st_folium(weather_map, width=1000, height=520, key="station_map")
+    st_folium(weather_map, width=1000, height=520, key="station_map", returned_objects=[])
 
 
 def _latest_station_frame() -> pd.DataFrame:
@@ -148,9 +148,9 @@ def _weather_overview_map(
         ))
 
     station_layer = folium.FeatureGroup(name="測站位置", show=True)
-    temperature_layer = folium.FeatureGroup(name="氣溫標籤", show=show_temperature)
-    rain_layer = folium.FeatureGroup(name="降雨觀測", show=show_rain)
-    wind_layer = folium.FeatureGroup(name="風速觀測", show=show_wind)
+    temperature_layer = folium.FeatureGroup(name="氣溫標籤", show=True) if show_temperature else None
+    rain_layer = folium.FeatureGroup(name="降雨觀測", show=True) if show_rain else None
+    wind_layer = folium.FeatureGroup(name="風速觀測", show=True) if show_wind else None
 
     for row in mapped.itertuples(index=False):
         lat, lon = float(row.latitude), float(row.longitude)
@@ -175,7 +175,7 @@ def _weather_overview_map(
             popup=folium.Popup(details, max_width=280),
         ).add_to(station_layer)
 
-        if pd.notna(temp):
+        if temperature_layer is not None and pd.notna(temp):
             color = "#50c9a7" if temp < 24 else "#f2d16b" if temp < 29 else "#f58c69"
             label = folium.DivIcon(
                 icon_size=(48, 25), icon_anchor=(24, 12),
@@ -185,26 +185,25 @@ def _weather_overview_map(
             )
             folium.Marker(
                 [lat, lon], icon=label, tooltip=f"{station_name} · {temp:.1f} °C",
-                popup=folium.Popup(details, max_width=280),
             ).add_to(temperature_layer)
 
-        if pd.notna(rain) and rain > 0:
+        if rain_layer is not None and pd.notna(rain) and rain > 0:
             folium.CircleMarker(
                 [lat, lon], radius=min(5 + float(rain), 18), color="#49a8ff",
                 fill=True, fill_color="#49a8ff", fill_opacity=.48,
                 tooltip=f"{station_name} · 雨量 {rain:g} mm",
-                popup=folium.Popup(details, max_width=280),
             ).add_to(rain_layer)
 
-        if pd.notna(wind):
+        if wind_layer is not None and pd.notna(wind):
             folium.CircleMarker(
                 [lat, lon], radius=min(4 + float(wind) / 2, 12), color="#bd91ff",
                 fill=True, fill_color="#bd91ff", fill_opacity=.42,
                 tooltip=f"{station_name} · 風速 {wind:g} m/s",
-                popup=folium.Popup(details, max_width=280),
             ).add_to(wind_layer)
 
-    for layer in (station_layer, temperature_layer, rain_layer, wind_layer):
+    layers = [station_layer]
+    layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer) if layer is not None)
+    for layer in layers:
         layer.add_to(weather_map)
     folium.LayerControl(collapsed=False, position="topright").add_to(weather_map)
     weather_map.fit_bounds(
@@ -212,7 +211,8 @@ def _weather_overview_map(
          [mapped["latitude"].max(), mapped["longitude"].max()]],
         padding=(28, 28),
     )
-    st_folium(weather_map, width=1120, height=670, key="overview_weather_map")
+    map_key = f"overview_map_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}"
+    st_folium(weather_map, width=960, height=610, key=map_key, returned_objects=[])
 
 
 def _apply_dashboard_theme() -> None:
@@ -304,7 +304,7 @@ def _page_overview() -> None:
             _weather_overview_map(
                 stations,
                 dark_basemap=dark_basemap,
-                show_temperature=st.session_state.get("overview_show_temperature", True),
+                show_temperature=st.session_state.get("overview_show_temperature", False),
                 show_rain=st.session_state.get("overview_show_rain", False),
                 show_wind=st.session_state.get("overview_show_wind", False),
             )
@@ -313,7 +313,7 @@ def _page_overview() -> None:
     with right:
         st.markdown("**圖層與底圖**")
         basemap = st.radio("底圖樣式", ["深色", "街道"], horizontal=True, key="overview_basemap")
-        st.checkbox("顯示氣溫標籤", value=True, key="overview_show_temperature")
+        st.checkbox("顯示氣溫標籤", value=False, key="overview_show_temperature")
         st.checkbox("顯示降雨標記", value=False, key="overview_show_rain")
         st.checkbox("顯示風速標記", value=False, key="overview_show_wind")
         st.markdown("**圖例**")
@@ -436,7 +436,7 @@ def _page_tsunami() -> None:
     if pd.notna(latest.get("epicenter_lat")) and pd.notna(latest.get("epicenter_lon")):
         m = folium.Map(location=[latest["epicenter_lat"], latest["epicenter_lon"]], zoom_start=5, tiles="OpenStreetMap")
         folium.Marker([latest["epicenter_lat"], latest["epicenter_lon"]], tooltip="最新報告震央", popup=latest.get("epicenter_location") or "震央").add_to(m)
-        st_folium(m, width=1000, height=360, key="tsunami_map")
+        st_folium(m, width=1000, height=360, key="tsunami_map", returned_objects=[])
     history = events[["issue_time", "tsunami_no", "report_no", "report_type", "report_color", "epicenter_location", "magnitude", "web_url"]].copy()
     history.columns = ["發布時間", "事件編號", "報別", "報告類型", "顏色", "震央", "規模", "官方報告"]
     st.subheader("最近報告")
@@ -499,7 +499,7 @@ def _probability_map() -> None:
             bounds.extend([[lat, lon] for lon, lat in ring])
     if bounds:
         m.fit_bounds(bounds, padding=(15, 15))
-    st_folium(m, width=1000, height=560, key="typhoon_probability_map")
+    st_folium(m, width=1000, height=560, key="typhoon_probability_map", returned_objects=[])
     st.caption("顏色代表 KMZ 內官方標示的機率級距，請依 CWA 原始產品說明判讀。")
     with st.expander("圖層資料"):
         st.write(f"多邊形數：{parsed['polygon_count']}")
@@ -547,7 +547,7 @@ def _page_typhoon_track() -> None:
     points = cyclone[["latitude", "longitude"]].dropna()
     if not points.empty:
         m.fit_bounds([[points["latitude"].min(), points["longitude"].min()], [points["latitude"].max(), points["longitude"].max()]], padding=(20, 20))
-    st_folium(m, width=1000, height=560, key="typhoon_track_map")
+    st_folium(m, width=1000, height=560, key="typhoon_track_map", returned_objects=[])
     detail = cyclone[["record_type", "fix_time", "latitude", "longitude", "max_wind_speed", "gust", "pressure"]].copy()
     detail["record_type"] = detail["record_type"].map({"ANALYSIS": "分析定位", "FORECAST": "預測定位"}).fillna(detail["record_type"])
     detail.columns = ["資料類型", "時間", "緯度", "經度", "最大風速 m/s", "陣風 m/s", "氣壓 hPa"]
