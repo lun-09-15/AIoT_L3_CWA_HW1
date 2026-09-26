@@ -1,5 +1,6 @@
 """Streamlit application for the six CWA marine, observation and hazard datasets."""
 from datetime import datetime, timezone
+from html import escape
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -112,34 +113,215 @@ def _station_map(frame: pd.DataFrame) -> None:
     st_folium(weather_map, width=1000, height=520, key="station_map")
 
 
+def _latest_station_frame() -> pd.DataFrame:
+    return _read("""SELECT s.* FROM station_observations s
+                    JOIN (SELECT station_id,MAX(obs_time) AS obs_time FROM station_observations GROUP BY station_id) latest
+                    ON s.station_id=latest.station_id AND s.obs_time=latest.obs_time
+                    ORDER BY s.county_name,s.station_name""")
+
+
+def _weather_overview_map(
+    frame: pd.DataFrame,
+    dark_basemap: bool,
+    show_temperature: bool,
+    show_rain: bool,
+    show_wind: bool,
+) -> None:
+    mapped = frame.dropna(subset=["latitude", "longitude"]).copy()
+    if mapped.empty:
+        st.info("目前尚無含有效 WGS84 座標的測站資料。請從側邊欄更新氣象觀測站資料。")
+        return
+
+    weather_map = folium.Map(
+        location=[23.7, 121.0], zoom_start=6, tiles=None, control_scale=True,
+        prefer_canvas=True, min_zoom=5,
+    )
+    folium.TileLayer(
+        tiles="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        name="深色底圖", attr="© OpenStreetMap contributors © CARTO", subdomains="abcd",
+        max_zoom=20, show=dark_basemap,
+    ).add_to(weather_map)
+    folium.TileLayer(
+        tiles="OpenStreetMap", name="街道底圖", show=not dark_basemap,
+    ).add_to(weather_map)
+
+    station_layer = folium.FeatureGroup(name="測站位置", show=True)
+    temperature_layer = folium.FeatureGroup(name="氣溫標籤", show=show_temperature)
+    rain_layer = folium.FeatureGroup(name="降雨觀測", show=show_rain)
+    wind_layer = folium.FeatureGroup(name="風速觀測", show=show_wind)
+
+    for row in mapped.itertuples(index=False):
+        lat, lon = float(row.latitude), float(row.longitude)
+        station_name = escape(str(row.station_name or "測站"))
+        station_id = escape(str(row.station_id or ""))
+        county = escape(str(row.county_name or ""))
+        town = escape(str(row.town_name or ""))
+        temp = row.temperature
+        rain = row.precipitation
+        wind = row.wind_speed
+        details = (
+            f"<b>{station_name}</b> ({station_id})<br>{county} {town}<br>"
+            f"觀測時間：{escape(_timestamp(row.obs_time))}<br>"
+            f"氣溫：{temp if pd.notna(temp) else '—'} °C　"
+            f"雨量：{rain if pd.notna(rain) else '—'} mm<br>"
+            f"風速：{wind if pd.notna(wind) else '—'} m/s"
+        )
+        folium.CircleMarker(
+            [lat, lon], radius=3, color="#d8e4f0", weight=1,
+            fill=True, fill_color="#24364a", fill_opacity=.9,
+            tooltip=f"{station_name} · {temp if pd.notna(temp) else '—'} °C",
+            popup=folium.Popup(details, max_width=280),
+        ).add_to(station_layer)
+
+        if pd.notna(temp):
+            color = "#50c9a7" if temp < 24 else "#f2d16b" if temp < 29 else "#f58c69"
+            label = folium.DivIcon(
+                icon_size=(48, 25), icon_anchor=(24, 12),
+                html=(f'<div style="background:{color};color:#17202a;border:1px solid #fff;'
+                      f'border-radius:16px;padding:2px 7px;font:bold 12px Arial;text-align:center;'
+                      f'box-shadow:0 2px 8px #0008;white-space:nowrap">{temp:.0f}°</div>'),
+            )
+            folium.Marker(
+                [lat, lon], icon=label, tooltip=f"{station_name} · {temp:.1f} °C",
+                popup=folium.Popup(details, max_width=280),
+            ).add_to(temperature_layer)
+
+        if pd.notna(rain) and rain > 0:
+            folium.CircleMarker(
+                [lat, lon], radius=min(5 + float(rain), 18), color="#49a8ff",
+                fill=True, fill_color="#49a8ff", fill_opacity=.48,
+                tooltip=f"{station_name} · 雨量 {rain:g} mm",
+                popup=folium.Popup(details, max_width=280),
+            ).add_to(rain_layer)
+
+        if pd.notna(wind):
+            folium.CircleMarker(
+                [lat, lon], radius=min(4 + float(wind) / 2, 12), color="#bd91ff",
+                fill=True, fill_color="#bd91ff", fill_opacity=.42,
+                tooltip=f"{station_name} · 風速 {wind:g} m/s",
+                popup=folium.Popup(details, max_width=280),
+            ).add_to(wind_layer)
+
+    for layer in (station_layer, temperature_layer, rain_layer, wind_layer):
+        layer.add_to(weather_map)
+    folium.LayerControl(collapsed=False, position="topright").add_to(weather_map)
+    weather_map.fit_bounds(
+        [[mapped["latitude"].min(), mapped["longitude"].min()],
+         [mapped["latitude"].max(), mapped["longitude"].max()]],
+        padding=(28, 28),
+    )
+    st_folium(weather_map, width=1120, height=670, key="overview_weather_map")
+
+
+def _apply_dashboard_theme() -> None:
+    st.markdown("""
+    <style>
+      :root { color-scheme: dark; }
+      .stApp, [data-testid="stAppViewContainer"] { background:#0c1420; color:#e7edf5; }
+      [data-testid="stHeader"] { background:rgba(12,20,32,.94); }
+      [data-testid="stMainBlockContainer"] { max-width:100%; padding:1.1rem 1.35rem 2rem; }
+      [data-testid="stSidebar"] { background:#101b2a; border-right:1px solid #233247; }
+      [data-testid="stMetric"] { background:#172334; border:1px solid #26374d; border-radius:12px; padding:12px 14px; }
+      [data-testid="stMetricLabel"] { color:#aab9cc; }
+      [data-testid="stMetricValue"] { color:#f3f7fc; }
+      [data-testid="stMarkdownContainer"] p { color:#c2cede; }
+      [data-testid="stVerticalBlockBorderWrapper"] { border-color:#26374d; }
+      .overview-kicker { color:#56d4b0; font-size:.78rem; letter-spacing:.12em; font-weight:700; }
+      .overview-title { color:#f4f7fb; font-size:1.55rem; font-weight:750; margin:.1rem 0 .25rem; }
+      .overview-panel { background:#121e2d; border:1px solid #26374d; border-radius:14px; padding:14px 16px; margin:0 0 12px; }
+      .overview-panel-title { color:#edf3fa; font-weight:700; margin-bottom:5px; }
+      .overview-muted { color:#9eafc3; font-size:.82rem; line-height:1.5; }
+      .overview-ok { color:#59d7b4; font-weight:700; }
+    </style>
+    """, unsafe_allow_html=True)
+
+
 def _page_overview() -> None:
-    st.title("🌦️ CWA 海氣象與災害資訊儀表板")
-    st.write("整合六項中央氣象署資料。資料時間與來源會隨各產品呈現；事件型資料在無事件時會明確顯示狀態。")
+    _apply_dashboard_theme()
+    stations = _latest_station_frame()
     latest = {row["dataset_id"]: row for row in get_latest_ingestion_summary()}
-    cols = st.columns(3)
-    for index, (page, dataset_id) in enumerate(DATASET_FOR_PAGE.items()):
-        spec = DATASET_SPECS[dataset_id]
-        run = latest.get(dataset_id)
-        status = run["status"] if run else "尚未匯入"
-        date = _timestamp(run.get("data_timestamp") or run.get("run_time")) if run else "—"
-        with cols[index % 3]:
-            st.metric(page, status, f"{run.get('records_count', 0)} 筆" if run else None)
-            st.caption(f"{dataset_id} · {date}")
-            st.caption(spec.update_frequency)
-    st.subheader("最近匯入狀態")
-    if latest:
-        rows = []
-        for dataset_id, run in latest.items():
-            rows.append({
-                "資料集": dataset_id,
-                "狀態": run["status"],
-                "筆數/圖層數": run["records_count"],
-                "執行時間": _timestamp(run["run_time"]),
-                "錯誤": run.get("error_message") or "",
-            })
-        st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
-    else:
-        _empty("資料庫尚無匯入紀錄。請先在左側按「更新全部資料」，或執行 `python -m src.ingest`。")
+    station_run = latest.get("O-A0001-001")
+    observed_at = stations["obs_time"].max() if not stations.empty else None
+    temp_values = stations["temperature"].dropna() if not stations.empty else pd.Series(dtype=float)
+    rain_values = stations["precipitation"].dropna() if not stations.empty else pd.Series(dtype=float)
+    wind_values = stations["wind_speed"].dropna() if not stations.empty else pd.Series(dtype=float)
+    dark_basemap = st.session_state.get("overview_basemap", "深色") == "深色"
+
+    left, center, right = st.columns([2.25, 8.1, 2.25], gap="small")
+    with left:
+        st.markdown('<div class="overview-kicker">CWA · TAIWAN</div><div class="overview-title">台灣即時氣象</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="overview-panel"><div class="overview-panel-title">● 觀測資料狀態</div>'
+            f'<div class="overview-muted">來源：全測站逐時觀測<br>觀測時間：{escape(_timestamp(observed_at))}<br>'
+            f'有效測站：{len(stations)} 站<br>同步狀態：<span class="overview-ok">{escape(station_run["status"] if station_run else "尚未匯入")}</span></div></div>',
+            unsafe_allow_html=True,
+        )
+        st.markdown("**即時觀測摘要**")
+        c1, c2 = st.columns(2, gap="small")
+        c1.metric("最高氣溫", f"{temp_values.max():.1f} °C" if not temp_values.empty else "—")
+        c2.metric("最低氣溫", f"{temp_values.min():.1f} °C" if not temp_values.empty else "—")
+        c1.metric("最大雨量", f"{rain_values.max():.1f} mm" if not rain_values.empty else "—")
+        c2.metric("最大風速", f"{wind_values.max():.1f} m/s" if not wind_values.empty else "—")
+        if not stations.empty and not temp_values.empty:
+            hottest = stations.loc[stations["temperature"].idxmax()]
+            coolest = stations.loc[stations["temperature"].idxmin()]
+            st.markdown(
+                f'<div class="overview-panel"><div class="overview-panel-title">溫度極值測站</div>'
+                f'<div class="overview-muted">最高　{escape(str(hottest["station_name"]))} · {hottest["temperature"]:.1f} °C<br>'
+                f'最低　{escape(str(coolest["station_name"]))} · {coolest["temperature"]:.1f} °C</div></div>',
+                unsafe_allow_html=True,
+            )
+        st.caption("氣溫標籤使用各站最近一筆觀測。點選地圖標記可查看站名、時間、雨量與風速。")
+
+    with center:
+        st.markdown('<div class="overview-title">全台測站觀測分布</div>', unsafe_allow_html=True)
+        tsunami_run = latest.get("E-A0014-001")
+        tsunami = _read("SELECT issue_time,report_type,report_color,report_content,valid_end_time FROM tsunami_events ORDER BY issue_time DESC LIMIT 1")
+        if tsunami_run and tsunami_run["status"] == "FAILED":
+            st.warning("海嘯資料最近更新失敗；請以中央氣象署官方公告為準。")
+        elif not tsunami.empty:
+            notice = tsunami.iloc[0]
+            expired = False
+            try:
+                end = datetime.fromisoformat(str(notice["valid_end_time"]).replace("Z", "+00:00"))
+                if end.tzinfo is None:
+                    end = end.replace(tzinfo=timezone.utc)
+                expired = end.astimezone(timezone.utc) < datetime.now(timezone.utc)
+            except (ValueError, TypeError):
+                pass
+            if not expired and ("解除" in str(notice["report_type"] or "") or notice["report_color"] == "綠色"):
+                st.success(f"最新海嘯資料：{notice['report_type'] or '報告'}（{notice['report_color'] or '未標示'}）")
+            elif not expired:
+                st.warning(f"海嘯資訊提醒：{notice['report_type'] or '最新報告'}（{notice['report_color'] or '未標示'}） · {_timestamp(notice['issue_time'])}")
+            else:
+                st.info(f"最近海嘯報告已超過有效時間（{_timestamp(notice['issue_time'])}），不代表目前警報。")
+        else:
+            st.info("資料庫目前沒有海嘯報告；此狀態不等同官方即時安全告警。")
+
+        with st.container(border=True):
+            _weather_overview_map(
+                stations,
+                dark_basemap=dark_basemap,
+                show_temperature=st.session_state.get("overview_show_temperature", True),
+                show_rain=st.session_state.get("overview_show_rain", False),
+                show_wind=st.session_state.get("overview_show_wind", False),
+            )
+        st.caption(f"地圖底圖：{'CARTO 深色' if dark_basemap else 'OpenStreetMap'} · 圖磚不需要 API key · 測站資料：{_timestamp(observed_at)}")
+
+    with right:
+        st.markdown("**圖層與底圖**")
+        basemap = st.radio("底圖樣式", ["深色", "街道"], horizontal=True, key="overview_basemap")
+        st.checkbox("顯示氣溫標籤", value=True, key="overview_show_temperature")
+        st.checkbox("顯示降雨標記", value=False, key="overview_show_rain")
+        st.checkbox("顯示風速標記", value=False, key="overview_show_wind")
+        st.markdown("**圖例**")
+        st.markdown("🟢 **低於 24°C**　🟡 **24–28.9°C**　🟠 **29°C 以上**")
+        st.caption("藍色圓圈為有雨測站，紫色圓圈為風速觀測；圓圈大小依數值調整。")
+        st.markdown("**資料來源**")
+        st.caption("中央氣象署 O-A0001-001 全測站逐時氣象資料。地圖採用免金鑰底圖，不使用照片中的 Esri 圖磚服務。")
+        if st.button("⟳ 更新全部資料", key="overview_sync", use_container_width=True):
+            _sync_all()
+            st.rerun()
 
 
 def _page_marine() -> None:
