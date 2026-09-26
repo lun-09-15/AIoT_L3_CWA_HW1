@@ -7,6 +7,7 @@ from typing import Any, Dict, List, Optional
 import folium
 import pandas as pd
 import streamlit as st
+from branca.element import Element
 from streamlit_folium import st_folium
 
 from src.config import BASE_DIR, CWA_API_KEY, DB_PATH
@@ -95,7 +96,7 @@ def _station_map(frame: pd.DataFrame) -> None:
     if mapped.empty:
         st.info("目前資料沒有可用的 WGS84 座標。")
         return
-    weather_map = folium.Map(location=[23.7, 121.0], zoom_start=7, tiles="CartoDB positron", control_scale=True)
+    weather_map = folium.Map(location=[23.7, 121.0], zoom_start=7, tiles="OpenStreetMap", control_scale=True)
     for row in mapped.itertuples(index=False):
         temp = getattr(row, "temperature", None)
         color = "blue" if pd.notna(temp) and temp < 20 else "orange" if pd.notna(temp) and temp >= 30 else "green"
@@ -137,13 +138,14 @@ def _weather_overview_map(
         prefer_canvas=True, min_zoom=5,
     )
     folium.TileLayer(
-        tiles="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
-        name="深色底圖", attr="© OpenStreetMap contributors © CARTO", subdomains="abcd",
-        max_zoom=20, show=dark_basemap,
+        tiles="OpenStreetMap", name="OpenStreetMap", show=True,
     ).add_to(weather_map)
-    folium.TileLayer(
-        tiles="OpenStreetMap", name="街道底圖", show=not dark_basemap,
-    ).add_to(weather_map)
+    if dark_basemap:
+        # Keep the OSM tile service/API key-free while giving the overview a dark look.
+        weather_map.get_root().header.add_child(Element(
+            f'<style>#{weather_map.get_name()} .leaflet-tile-pane '
+            '{filter:invert(.88) hue-rotate(180deg) brightness(.72) contrast(.92) saturate(.78);}</style>'
+        ))
 
     station_layer = folium.FeatureGroup(name="測站位置", show=True)
     temperature_layer = folium.FeatureGroup(name="氣溫標籤", show=show_temperature)
@@ -306,7 +308,7 @@ def _page_overview() -> None:
                 show_rain=st.session_state.get("overview_show_rain", False),
                 show_wind=st.session_state.get("overview_show_wind", False),
             )
-        st.caption(f"地圖底圖：{'CARTO 深色' if dark_basemap else 'OpenStreetMap'} · 圖磚不需要 API key · 測站資料：{_timestamp(observed_at)}")
+            st.caption(f"地圖底圖：OpenStreetMap {'深色樣式' if dark_basemap else '標準街道'} · 不需要底圖 API key · 測站資料：{_timestamp(observed_at)}")
 
     with right:
         st.markdown("**圖層與底圖**")
@@ -318,7 +320,7 @@ def _page_overview() -> None:
         st.markdown("🟢 **低於 24°C**　🟡 **24–28.9°C**　🟠 **29°C 以上**")
         st.caption("藍色圓圈為有雨測站，紫色圓圈為風速觀測；圓圈大小依數值調整。")
         st.markdown("**資料來源**")
-        st.caption("中央氣象署 O-A0001-001 全測站逐時氣象資料。地圖採用免金鑰底圖，不使用照片中的 Esri 圖磚服務。")
+        st.caption("中央氣象署 O-A0001-001 全測站逐時氣象資料。底圖使用 OpenStreetMap，保留地圖授權標示。")
         if st.button("⟳ 更新全部資料", key="overview_sync", use_container_width=True):
             _sync_all()
             st.rerun()
@@ -432,7 +434,7 @@ def _page_tsunami() -> None:
     cols[2].metric("震央", latest.get("epicenter_location") or "—")
     cols[3].metric("地震時間", _timestamp(latest.get("origin_time")))
     if pd.notna(latest.get("epicenter_lat")) and pd.notna(latest.get("epicenter_lon")):
-        m = folium.Map(location=[latest["epicenter_lat"], latest["epicenter_lon"]], zoom_start=5, tiles="CartoDB positron")
+        m = folium.Map(location=[latest["epicenter_lat"], latest["epicenter_lon"]], zoom_start=5, tiles="OpenStreetMap")
         folium.Marker([latest["epicenter_lat"], latest["epicenter_lon"]], tooltip="最新報告震央", popup=latest.get("epicenter_location") or "震央").add_to(m)
         st_folium(m, width=1000, height=360, key="tsunami_map")
     history = events[["issue_time", "tsunami_no", "report_no", "report_type", "report_color", "epicenter_location", "magnitude", "web_url"]].copy()
@@ -478,7 +480,7 @@ def _probability_map() -> None:
         return
     colors = {"20%": "#2ecc71", "40%": "#3498db", "60%": "#f1c40f", "80%": "#e67e22", "100%": "#e74c3c"}
     geojson = {"type": "FeatureCollection", "features": features}
-    m = folium.Map(location=[22.5, 130.0], zoom_start=4, tiles="CartoDB positron", control_scale=True)
+    m = folium.Map(location=[22.5, 130.0], zoom_start=4, tiles="OpenStreetMap", control_scale=True)
     folium.GeoJson(
         geojson,
         name="暴風圈侵襲機率",
@@ -523,7 +525,7 @@ def _page_typhoon_track() -> None:
     selected_name = st.selectbox("熱帶氣旋", names, format_func=lambda name: f"{name}（{cwa_names.get(name, '')}）")
     cyclone = frame[frame["typhoon_name"] == selected_name].copy()
     cyclone = cyclone.sort_values("fix_time")
-    m = folium.Map(location=[20.0, 135.0], zoom_start=4, tiles="CartoDB positron", control_scale=True)
+    m = folium.Map(location=[20.0, 135.0], zoom_start=4, tiles="OpenStreetMap", control_scale=True)
     palette = {"ANALYSIS": "#1565c0", "FORECAST": "#d32f2f"}
     for kind, group in cyclone.groupby("record_type"):
         group = group.sort_values("fix_time")
