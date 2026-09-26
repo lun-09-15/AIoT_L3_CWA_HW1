@@ -1,0 +1,6771 @@
+{
+ "cwaopendata": {
+  "@xmlns": "urn:cwa:gov:tw:cwacommon:0.1",
+  "Identifier": "5c14b9a6-eadb-4d75-b1ce-6ed74c7e82a0",
+  "Sender": "fss@wfc.cwa.gov.tw",
+  "Sent": "2026-09-24T22:36:23+08:00",
+  "Status": "Actual",
+  "MsgType": "Issue",
+  "Source": "Weather Forecast Center",
+  "Dataid": "A0012-001",
+  "Scope": "Public",
+  "Dataset": {
+   "DatasetInfo": {
+    "DatasetDescription": "海面天氣預報",
+    "DatasetLanguage": "zh-TW",
+    "DataValueInfo": {
+     "Weather": {
+      "@description": "天氣現象",
+      "@unit": "NA"
+     },
+     "WeatherCode": {
+      "@description": "天氣現象代碼",
+      "@unit": "NA"
+     },
+     "WindDirectionDescription": {
+      "@description": "風向描述",
+      "@unit": "8方位"
+     },
+     "BeaufortScaleDescription": {
+      "@description": "蒲福風級描述",
+      "@unit": "蒲福風級"
+     },
+     "WaveHeightDescription": {
+      "@description": "浪高描述",
+      "@unit": "公尺"
+     },
+     "WaveTypeDescription": {
+      "@description": "浪型描述",
+      "@unit": "NA"
+     }
+    },
+    "IssueTime": "2026-09-24T22:30:00+08:00",
+    "Update": "2026-09-24T22:36:23+08:00"
+   },
+   "Locations": {
+    "Location": [
+     {
+      "LocationName": "釣魚台海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉西北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "彭佳嶼基隆海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級晨轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "宜蘭蘇澳沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "新竹鹿港沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級上午轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級下午轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "澎湖海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級晨轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "鹿港東石沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級晨轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "東石安平沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "安平高雄沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西轉西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "高雄枋寮沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時晴",
+           "WeatherCode": "3"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "枋寮恆春沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏西風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "鵝鑾鼻沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "5至6陣風8級晨轉4至5陣風7級上午再轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2再轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪再轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "成功臺東沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時晴",
+           "WeatherCode": "3"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時晴",
+           "WeatherCode": "3"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2再轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪再轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "臺東大武沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級下午轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2再轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪再轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "綠島蘭嶼海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時晴",
+           "WeatherCode": "3"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西轉偏北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級上午轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪至中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "花蓮沿海",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪至中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "金門海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下晚轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級上午轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "馬祖海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級晨轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "黃海南部海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "陰時多雲局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "陰時多雲局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "陰時多雲局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "5至6雷雨區陣風9級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "5至6雷雨區陣風9級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉3再轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪再轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "花鳥山海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏東風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "浙江海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "東海北部海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時陰局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "陰時多雲局部陣雨或雷雨",
+           "WeatherCode": "34"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "東海南部海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西轉偏東風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "臺灣北部海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "5至6陣風8級晨轉4至5陣風7級上午再轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級下午轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "臺灣東北部海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉東南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下下午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級晨轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪至中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "臺灣東南部海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉東南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級晨轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪至中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "臺灣海峽北部",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東北轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "5至6陣風8級晨轉4至5陣風7級上午再轉4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下上午轉4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級下午轉4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "臺灣海峽南部",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "晴時多雲",
+           "WeatherCode": "2"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲時晴",
+           "WeatherCode": "3"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉偏南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "巴士海峽",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏西風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "5至6雷雨區陣風9級晚轉4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5陣風7級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1轉3公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2至3公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "3轉1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪轉中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "中浪轉小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "廣東海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "東沙島海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨",
+           "WeatherCode": "29"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東轉東南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級陣風6級以下"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1再轉2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "中西沙島海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏東風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "東南轉偏西風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏南轉西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉東北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     {
+      "LocationName": "南沙島海面",
+      "WeatherElement": [
+       {
+        "ElementName": "天氣現象",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "Weather": "多雲局部陣雨或雷雨",
+           "WeatherCode": "33"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "風向描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉西北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "西南轉偏北風"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WindDirectionDescription": "偏北轉東北風"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "蒲福風級描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4至5雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "BeaufortScaleDescription": "4級以下雷雨區陣風8級"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪高描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "1至2公尺"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveHeightDescription": "2轉約1公尺"
+          }
+         }
+        ]
+       },
+       {
+        "ElementName": "浪型描述",
+        "Time": [
+         {
+          "StartTime": "2026-09-25T00:00:00+08:00",
+          "EndTime": "2026-09-26T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-26T00:00:00+08:00",
+          "EndTime": "2026-09-27T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-27T00:00:00+08:00",
+          "EndTime": "2026-09-28T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-28T00:00:00+08:00",
+          "EndTime": "2026-09-29T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         },
+         {
+          "StartTime": "2026-09-29T00:00:00+08:00",
+          "EndTime": "2026-09-30T00:00:00+08:00",
+          "ElementValue": {
+           "WaveTypeDescription": "小浪"
+          }
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

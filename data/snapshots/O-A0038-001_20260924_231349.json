@@ -1,0 +1,25 @@
+{
+ "cwaopendata": {
+  "@xmlns": "urn:cwa:gov:tw:cwacommon:0.1",
+  "identifier": "c47329a6-b829-11f1-a5f9-2c44fd85440d",
+  "sender": "od@cwa.gov.tw",
+  "sent": "2026-09-24T23:08:15+08:00",
+  "status": "Actual",
+  "msgType": "Issue",
+  "dataid": "O-A0038-001",
+  "scope": "Public",
+  "dataset": {
+   "GeoInfo": {
+    "LongitudeRange": "119.188-123.588",
+    "LatitudeRange": "21.523-25.938"
+   },
+   "ObsTime": {
+    "DateTime": "2026-09-24T23:00:00+08:00"
+   },
+   "Resource": {
+    "ResourceDesc": "溫度分布圖",
+    "ProductURL": "https://cwaopendata.s3.ap-northeast-1.amazonaws.com/Observation/O-A0038-001.jpg"
+   }
+  }
+ }
+}
