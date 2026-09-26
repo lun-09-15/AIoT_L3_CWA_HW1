@@ -177,7 +177,7 @@ def _weather_overview_map(
         return
 
     weather_map = folium.Map(
-        location=[23.7, 121.0], zoom_start=6, tiles=None, control_scale=True,
+        location=[23.7, 121.0], zoom_start=7, tiles=None, control_scale=True,
         prefer_canvas=True, min_zoom=5,
     )
     folium.TileLayer(
@@ -248,11 +248,6 @@ def _weather_overview_map(
     layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer) if layer is not None)
     for layer in layers:
         layer.add_to(weather_map)
-    weather_map.fit_bounds(
-        [[mapped["latitude"].min(), mapped["longitude"].min()],
-         [mapped["latitude"].max(), mapped["longitude"].max()]],
-        padding=(28, 28),
-    )
     map_key = f"overview_map_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}"
     st_folium(weather_map, width=960, height=610, key=map_key, returned_objects=[])
 
