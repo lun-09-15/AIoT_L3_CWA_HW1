@@ -230,6 +230,7 @@ def _apply_dashboard_theme() -> None:
       [data-testid="stVerticalBlockBorderWrapper"] { border-color:#26374d; }
       .overview-kicker { color:#56d4b0; font-size:.78rem; letter-spacing:.12em; font-weight:700; }
       .overview-title { color:#f4f7fb; font-size:1.55rem; font-weight:750; margin:.1rem 0 .25rem; }
+      .overview-section-title { color:#f4f7fb; font-size:1.15rem; font-weight:700; line-height:1.4; padding-top:1.1rem; margin:0 0 .55rem; overflow:visible; }
       .overview-panel { background:#121e2d; border:1px solid #26374d; border-radius:14px; padding:14px 16px; margin:0 0 12px; }
       .overview-panel-title { color:#edf3fa; font-weight:700; margin-bottom:5px; }
       .overview-muted { color:#9eafc3; font-size:.82rem; line-height:1.5; }
@@ -276,7 +277,7 @@ def _page_overview() -> None:
         st.caption("氣溫標籤使用各站最近一筆觀測。點選地圖標記可查看站名、時間、雨量與風速。")
 
     with center:
-        st.markdown('<div class="overview-title">全台測站觀測分布</div>', unsafe_allow_html=True)
+        st.markdown('<div class="overview-section-title">全台測站觀測分布</div>', unsafe_allow_html=True)
         tsunami_run = latest.get("E-A0014-001")
         tsunami = _read("SELECT issue_time,report_type,report_color,report_content,valid_end_time FROM tsunami_events ORDER BY issue_time DESC LIMIT 1")
         if tsunami_run and tsunami_run["status"] == "FAILED":
@@ -311,7 +312,7 @@ def _page_overview() -> None:
             st.caption(f"地圖底圖：OpenStreetMap {'深色樣式' if dark_basemap else '標準街道'} · 不需要底圖 API key · 測站資料：{_timestamp(observed_at)}")
 
     with right:
-        st.markdown("**圖層與底圖**")
+        st.markdown('<div class="overview-section-title">圖層與底圖</div>', unsafe_allow_html=True)
         basemap = st.radio("底圖樣式", ["深色", "街道"], horizontal=True, key="overview_basemap")
         st.checkbox("顯示氣溫標籤", value=False, key="overview_show_temperature")
         st.checkbox("顯示降雨標記", value=False, key="overview_show_rain")
