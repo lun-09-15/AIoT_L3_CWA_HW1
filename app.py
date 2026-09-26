@@ -130,7 +130,7 @@ def _freshness_overview(latest: Dict[str, Dict[str, Any]]) -> None:
             "來源資料時間": source_time,
             "最近擷取時間": fetched_at,
         })
-    st.dataframe(pd.DataFrame(rows), hide_index=True, use_container_width=True)
+    st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
     st.caption("固定週期資料依更新頻率判斷新鮮度；海嘯與颱風屬事件型資料，舊事件時間不代表資料過期。狀態依最近一次擷取紀錄，按左側「更新全部資料」可重新檢查。")
 
 
@@ -298,9 +298,9 @@ def _weather_overview_map(
       }};
       control.addTo(map);
       const style = document.createElement('style');
-      style.textContent = '.leaflet-control-locate{width:34px;height:34px;border:0;border-radius:4px;'
+      style.textContent = '.leaflet-control-locate{{width:34px;height:34px;border:0;border-radius:4px;'
         + 'background:#fff;color:#172334;font-size:23px;line-height:30px;text-align:center;cursor:pointer;'
-        + 'box-shadow:0 1px 5px #0008}.leaflet-control-locate:disabled{opacity:.65}';
+        + 'box-shadow:0 1px 5px #0008}}.leaflet-control-locate:disabled{{opacity:.65}}';
       document.head.appendChild(style);
     }})();
     """
@@ -453,7 +453,7 @@ def _page_marine() -> None:
     st.info(f"有效時間：{_timestamp(row['start_time'])} 至 {_timestamp(row['end_time'])} · 浪高 {row['wave_height'] or '—'} · 浪況 {row['wave_type'] or '—'}")
     display = frame[["location_name", "start_time", "end_time", "weather", "wind_direction", "wind_speed", "wave_height", "wave_type"]].copy()
     display.columns = ["海域", "開始時間", "結束時間", "天氣", "風向", "風速", "浪高", "浪況"]
-    st.dataframe(display, hide_index=True, use_container_width=True)
+    st.dataframe(display, hide_index=True, width="stretch")
     _download_csv(display, "marine_forecasts.csv")
 
 
@@ -532,7 +532,7 @@ def _page_stations() -> None:
             st.info("請至少選擇一個測站。")
     table = frame[["station_id", "station_name", "county_name", "town_name", "obs_time", "temperature", "relative_humidity", "wind_speed", "wind_direction", "precipitation", "air_pressure"]].copy()
     table.columns = ["站碼", "測站", "縣市", "鄉鎮", "觀測時間", "氣溫 °C", "濕度 %", "風速 m/s", "風向 °", "雨量 mm", "氣壓 hPa"]
-    st.dataframe(table, hide_index=True, use_container_width=True)
+    st.dataframe(table, hide_index=True, width="stretch")
     _download_csv(table, "station_observations.csv")
 
 
@@ -577,7 +577,7 @@ def _page_tsunami() -> None:
     history = events[["issue_time", "tsunami_no", "report_no", "report_type", "report_color", "epicenter_location", "magnitude", "web_url"]].copy()
     history.columns = ["發布時間", "事件編號", "報別", "報告類型", "顏色", "震央", "規模", "官方報告"]
     st.subheader("最近報告")
-    st.dataframe(history, hide_index=True, use_container_width=True, column_config={"官方報告": st.column_config.LinkColumn()})
+    st.dataframe(history, hide_index=True, width="stretch", column_config={"官方報告": st.column_config.LinkColumn()})
     _download_csv(history, "tsunami_reports.csv")
 
 
@@ -590,7 +590,7 @@ def _page_temperature() -> None:
         return _empty()
     row = maps.iloc[0]
     st.caption(f"觀測時間：{_timestamp(row['obs_time'])} · {_freshness(row['obs_time'], 2)} · 範圍 {row.get('lat_range') or '—'} N, {row.get('lon_range') or '—'} E")
-    st.image(row["image_url"], caption=f"中央氣象署溫度分布圖 · {_timestamp(row['obs_time'])}", use_container_width=True)
+    st.image(row["image_url"], caption=f"中央氣象署溫度分布圖 · {_timestamp(row['obs_time'])}", width="stretch")
     st.link_button("開啟原始影像", row["image_url"])
 
 
@@ -688,7 +688,7 @@ def _page_typhoon_track() -> None:
     detail = cyclone[["record_type", "fix_time", "latitude", "longitude", "max_wind_speed", "gust", "pressure"]].copy()
     detail["record_type"] = detail["record_type"].map({"ANALYSIS": "分析定位", "FORECAST": "預測定位"}).fillna(detail["record_type"])
     detail.columns = ["資料類型", "時間", "緯度", "經度", "最大風速 m/s", "陣風 m/s", "氣壓 hPa"]
-    st.dataframe(detail, hide_index=True, use_container_width=True)
+    st.dataframe(detail, hide_index=True, width="stretch")
     _download_csv(detail, "typhoon_track.csv")
 
 
@@ -712,7 +712,7 @@ def _sync_all() -> None:
 
 st.sidebar.title("資料導覽")
 page = st.sidebar.radio("選擇資料區塊", PAGES, label_visibility="collapsed")
-st.sidebar.button("⟳ 更新全部資料", on_click=_sync_all, use_container_width=True, type="primary")
+st.sidebar.button("⟳ 更新全部資料", on_click=_sync_all, width="stretch", type="primary")
 st.sidebar.caption("同步需設定有效 CWA API Key，並保持網路連線。")
 st.sidebar.caption(f"資料庫：{DB_PATH.name}")
 
