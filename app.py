@@ -170,14 +170,21 @@ def _weather_overview_map(
     show_temperature: bool,
     show_rain: bool,
     show_wind: bool,
+    county_key: str,
+    selected_county: str,
 ) -> None:
     mapped = frame.dropna(subset=["latitude", "longitude"]).copy()
     if mapped.empty:
         st.info("目前尚無含有效 WGS84 座標的測站資料。請從側邊欄更新氣象觀測站資料。")
         return
 
+    is_county_filtered = selected_county != "全部縣市"
+    map_center = (
+        [float(mapped["latitude"].median()), float(mapped["longitude"].median())]
+        if is_county_filtered else [23.7, 121.0]
+    )
     weather_map = folium.Map(
-        location=[23.7, 121.0], zoom_start=7, tiles=None, control_scale=True,
+        location=map_center, zoom_start=9 if is_county_filtered else 7, tiles=None, control_scale=True,
         prefer_canvas=True, min_zoom=5,
     )
     folium.TileLayer(
@@ -248,7 +255,57 @@ def _weather_overview_map(
     layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer) if layer is not None)
     for layer in layers:
         layer.add_to(weather_map)
-    map_key = f"overview_map_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}"
+    map_name = weather_map.get_name()
+    locate_script = f"""
+    (function () {{
+      const map = {map_name};
+      let deviceMarker = null;
+      const control = L.control({{position: 'topleft'}});
+      control.onAdd = function () {{
+        const button = L.DomUtil.create('button', 'leaflet-control-locate');
+        button.type = 'button';
+        button.title = '定位我的裝置';
+        button.setAttribute('aria-label', '定位我的裝置');
+        button.textContent = '⌖';
+        L.DomEvent.disableClickPropagation(button);
+        L.DomEvent.on(button, 'click', function (event) {{
+          L.DomEvent.preventDefault(event);
+          if (!navigator.geolocation) {{
+            window.alert('此瀏覽器不支援裝置定位。');
+            return;
+          }}
+          button.disabled = true;
+          button.textContent = '…';
+          navigator.geolocation.getCurrentPosition(function (position) {{
+            const point = [position.coords.latitude, position.coords.longitude];
+            map.flyTo(point, Math.max(map.getZoom(), 10));
+            if (deviceMarker) map.removeLayer(deviceMarker);
+            deviceMarker = L.circleMarker(point, {{radius: 8, color: '#fff', weight: 3,
+              fillColor: '#e53935', fillOpacity: 1}}).addTo(map)
+              .bindPopup('您的裝置位置').openPopup();
+            button.disabled = false;
+            button.textContent = '⌖';
+          }}, function (error) {{
+            const message = error.code === 1 ? '定位權限遭拒，請在瀏覽器網址列允許位置存取。'
+              : error.code === 2 ? '無法取得裝置位置，請確認定位服務已開啟。'
+              : '取得位置逾時，請稍後再試。';
+            window.alert(message);
+            button.disabled = false;
+            button.textContent = '⌖';
+          }}, {{enableHighAccuracy: true, timeout: 12000, maximumAge: 60000}});
+        }});
+        return button;
+      }};
+      control.addTo(map);
+      const style = document.createElement('style');
+      style.textContent = '.leaflet-control-locate{width:34px;height:34px;border:0;border-radius:4px;'
+        + 'background:#fff;color:#172334;font-size:23px;line-height:30px;text-align:center;cursor:pointer;'
+        + 'box-shadow:0 1px 5px #0008}.leaflet-control-locate:disabled{opacity:.65}';
+      document.head.appendChild(style);
+    }})();
+    """
+    weather_map.get_root().script.add_child(Element(locate_script))
+    map_key = f"overview_map_{county_key}_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}"
     st_folium(weather_map, width=960, height=610, key=map_key, returned_objects=[])
 
 
@@ -277,13 +334,8 @@ def _apply_dashboard_theme() -> None:
 
 def _page_overview() -> None:
     _apply_dashboard_theme()
-    stations = _latest_station_frame()
+    all_stations = _latest_station_frame()
     latest = {row["dataset_id"]: row for row in get_latest_ingestion_summary()}
-    station_run = latest.get("O-A0001-001")
-    observed_at = stations["obs_time"].max() if not stations.empty else None
-    temp_values = stations["temperature"].dropna() if not stations.empty else pd.Series(dtype=float)
-    rain_values = stations["precipitation"].dropna() if not stations.empty else pd.Series(dtype=float)
-    wind_values = stations["wind_speed"].dropna() if not stations.empty else pd.Series(dtype=float)
     dark_basemap = st.session_state.get("overview_basemap", "深色") == "深色"
 
     with st.expander("六項資料新鮮度與更新狀態", expanded=False):
@@ -291,6 +343,14 @@ def _page_overview() -> None:
 
     left, center, right = st.columns([2.25, 8.1, 2.25], gap="small")
     with left:
+        counties = ["全部縣市"] + sorted(all_stations["county_name"].dropna().unique().tolist())
+        selected_county = st.selectbox("總覽縣市篩選", counties, key="overview_county")
+        stations = all_stations if selected_county == "全部縣市" else all_stations[all_stations["county_name"] == selected_county]
+        station_run = latest.get("O-A0001-001")
+        observed_at = stations["obs_time"].max() if not stations.empty else None
+        temp_values = stations["temperature"].dropna() if not stations.empty else pd.Series(dtype=float)
+        rain_values = stations["precipitation"].dropna() if not stations.empty else pd.Series(dtype=float)
+        wind_values = stations["wind_speed"].dropna() if not stations.empty else pd.Series(dtype=float)
         st.markdown('<div class="overview-kicker">CWA · TAIWAN</div><div class="overview-title">台灣即時氣象</div>', unsafe_allow_html=True)
         st.markdown(
             f'<div class="overview-panel"><div class="overview-panel-title">● 觀測資料狀態</div>'
@@ -347,6 +407,8 @@ def _page_overview() -> None:
                 show_temperature=st.session_state.get("overview_show_temperature", False),
                 show_rain=st.session_state.get("overview_show_rain", False),
                 show_wind=st.session_state.get("overview_show_wind", False),
+                county_key=str(counties.index(selected_county)),
+                selected_county=selected_county,
             )
             st.caption(f"地圖底圖：OpenStreetMap {'深色樣式' if dark_basemap else '標準街道'} · 不需要底圖 API key · 測站資料：{_timestamp(observed_at)}")
 
@@ -428,6 +490,46 @@ def _page_stations() -> None:
     chart = history.set_index("obs_time")[[metric_options[metric_label]]].rename(columns={metric_options[metric_label]: metric_label})
     st.subheader(f"{station_label} · 最近 48 筆觀測")
     st.line_chart(chart, height=300)
+    station_labels = {
+        row.station_id: f"{row.station_name}（{row.station_id}）"
+        for row in station_options.itertuples(index=False)
+    }
+    with st.expander("多測站趨勢比較", expanded=False):
+        compare_ids = st.multiselect(
+            "選擇測站（最多比較 5 站）",
+            options=station_options["station_id"].tolist(),
+            default=station_options["station_id"].head(3).tolist(),
+            format_func=lambda value: station_labels.get(value, value),
+            key="station_compare_ids",
+        )
+        compare_metric_label = st.selectbox(
+            "比較觀測項目", list(metric_options), key="station_compare_metric"
+        )
+        if len(compare_ids) > 5:
+            st.warning("為保持圖表易讀，一次最多顯示 5 個測站；目前先呈現前 5 站。")
+            compare_ids = compare_ids[:5]
+        if compare_ids:
+            compare_column = metric_options[compare_metric_label]
+            compare_frames = []
+            for compare_id in compare_ids:
+                history_part = _read(
+                    f"SELECT obs_time,{compare_column} FROM station_observations "
+                    "WHERE station_id=? ORDER BY obs_time DESC LIMIT 48",
+                    (compare_id,),
+                )
+                if not history_part.empty:
+                    history_part["測站"] = station_labels[compare_id]
+                    compare_frames.append(history_part)
+            if compare_frames:
+                comparison = pd.concat(compare_frames, ignore_index=True)
+                comparison = comparison.pivot(index="obs_time", columns="測站", values=compare_column).sort_index()
+                comparison.columns.name = None
+                st.line_chart(comparison, height=360)
+                st.caption(f"各站最近 48 筆資料 · {compare_metric_label} · 時間未對齊時保留空值。")
+            else:
+                st.info("所選測站目前沒有可比較的歷史資料。")
+        else:
+            st.info("請至少選擇一個測站。")
     table = frame[["station_id", "station_name", "county_name", "town_name", "obs_time", "temperature", "relative_humidity", "wind_speed", "wind_direction", "precipitation", "air_pressure"]].copy()
     table.columns = ["站碼", "測站", "縣市", "鄉鎮", "觀測時間", "氣溫 °C", "濕度 %", "風速 m/s", "風向 °", "雨量 mm", "氣壓 hPa"]
     st.dataframe(table, hide_index=True, use_container_width=True)
