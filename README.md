@@ -147,7 +147,7 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 
 ## 常見問題
 
-- **缺少 Key**：本機確認專案根目錄 `.env` 設定正確；Streamlit Community Cloud 則確認 **Settings → Secrets** 使用 TOML 格式設定 `CWA_API_KEY` 和 `MOENV_API_KEY`，儲存後重新啟動 app。
+- **缺少 Key**：本機確認專案根目錄 `.env` 設定正確；Streamlit Community Cloud 則確認 **Settings → Secrets** 使用 TOML 格式設定 `CWA_API_KEY` 和 `MOENV_API_KEY`，儲存後重新啟動 app。若 Secrets 和環境變數同時存在，程式優先使用 app 的 Secrets。
 - **Cloud 資料更新失敗**：先從 app 右下角選 **Manage app → Cloud logs** 確認部署/套件安裝成功，再看資料頁顯示的 HTTP 狀態或已遮罩連線原因。HTTP 401/403 才指向授權或額度；DNS/TLS/ConnectError 指向連線路徑，單純重填 Key 不會修復連線問題。CWA 的 TLS 診斷會保留較完整的憑證驗證原因以利排查，同時隱去 API Key 和 URL query。
 - **CWA SSL 顯示 `Missing Subject Key Identifier`**：Python 3.13 之後的預設 SSL context 會啟用嚴格 X.509 檢查，CWA 目前的憑證鏈缺少該欄位時會被拒絕。程式只對 CWA 網域關閉這項嚴格格式檢查，仍驗證可信 CA、憑證鏈與主機名稱；不使用 `verify=False`。若 CWA 更新憑證鏈，應移除此相容設定。
 - **Cloud logs 出現 inotify instance limit reached**：專案 `.streamlit/config.toml` 設定 `server.fileWatcherType = "poll"`，避免使用 Linux inotify watcher；推送設定後需等 app 重新部署。

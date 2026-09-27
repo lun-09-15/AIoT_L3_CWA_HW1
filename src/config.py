@@ -14,19 +14,20 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 def _load_api_key(name: str) -> str:
-    """Read a key from the environment/.env or Streamlit Cloud Secrets."""
-    value = os.getenv(name, "").strip()
-    if value:
-        return value
-
-    # Import Streamlit lazily so command-line ingestion still works locally.
+    """Read Streamlit Secrets first, then environment variables/.env."""
+    # Prefer the app-specific Cloud value if both Secrets and an environment
+    # variable are configured; otherwise a stale environment value can mask it.
     try:
         import streamlit as st
 
-        return str(st.secrets.get(name, "")).strip()
+        value = str(st.secrets.get(name, "")).strip()
+        if value:
+            return value
     except (ImportError, FileNotFoundError, RuntimeError):
-        # Local runs without a configured secrets.toml should use .env.
-        return ""
+        # Local runs without configured Streamlit Secrets should use .env.
+        pass
+
+    return os.getenv(name, "").strip()
 
 
 # Keep provider keys separate. Never print or persist these values.
