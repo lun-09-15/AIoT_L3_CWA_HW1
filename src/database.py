@@ -1,4 +1,4 @@
-"""SQLite persistence and query helpers for the six CWA datasets."""
+"""SQLite persistence and query helpers for CWA and MOENV datasets."""
 from contextlib import contextmanager
 import sqlite3
 from typing import Any, Dict, Iterator, List, Optional, Sequence
@@ -85,6 +85,27 @@ def init_db() -> None:
     );
     CREATE INDEX IF NOT EXISTS idx_station_time ON station_observations(obs_time);
     CREATE INDEX IF NOT EXISTS idx_station_county ON station_observations(county_name);
+
+    CREATE TABLE IF NOT EXISTS air_quality_observations (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        site_id TEXT NOT NULL,
+        site_name TEXT NOT NULL,
+        county_name TEXT,
+        publish_time TEXT NOT NULL,
+        aqi REAL,
+        status TEXT,
+        pollutant TEXT,
+        pm25 REAL,
+        pm25_avg REAL,
+        pm10 REAL,
+        ozone REAL,
+        longitude REAL,
+        latitude REAL,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(site_id, publish_time)
+    );
+    CREATE INDEX IF NOT EXISTS idx_air_quality_time ON air_quality_observations(publish_time);
+    CREATE INDEX IF NOT EXISTS idx_air_quality_county ON air_quality_observations(county_name);
 
     CREATE TABLE IF NOT EXISTS tsunami_events (
         id INTEGER PRIMARY KEY AUTOINCREMENT,

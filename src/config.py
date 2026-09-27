@@ -15,6 +15,7 @@ load_dotenv(BASE_DIR / ".env")
 
 # CWA API Settings
 CWA_API_KEY = os.getenv("CWA_API_KEY", "")
+MOENV_API_KEY = os.getenv("MOENV_API_KEY", "")
 CWA_REST_BASE_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore"
 CWA_FILE_BASE_URL = "https://opendata.cwa.gov.tw/fileapi/v1/opendataapi"
 

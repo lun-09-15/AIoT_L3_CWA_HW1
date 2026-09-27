@@ -1,4 +1,4 @@
-# 📊 中央氣象署 (CWA) 六大資料集規格清單 (Dataset Specifications)
+# 📊 CWA 六項與環境部空品資料集規格清單 (Dataset Specifications)
 
 本文件依據專案 [workflow.md](../workflow.md) 之**階段一：步驟 3「建立資料集規格清單」**編寫，詳細記錄各資料集之代碼、官方名稱、API 取得方式、格式、欄位規範、缺值定義與視覺化呈現元件。
 
@@ -14,6 +14,9 @@
 | **4** | **溫度分布狀態** | `O-A0038-001` | 溫度分布圖-溫度分布圖 | File API | JSON (圖片URL) | 每小時 | 無 | `temperature_maps` |
 | **5** | **颱風侵襲機率** | `W-C0034-003` | 暴風圈侵襲機率圖層 | File API | KMZ (KML) | 颱風活動時 6 小時；警報期間 3 小時 | 無 | `typhoon_probabilities` |
 | **6** | **熱帶氣旋路徑** | `W-C0034-005` | 熱帶氣旋路徑 (過去定位與未來預報) | REST API | JSON | 颱風活動時 6 小時；警報期間 3 小時 | `-`, `None` | `typhoon_tracks` |
+| **7** | **空氣品質地圖** | `AQX_P_432` | 空氣品質指標 (AQI) | 環境部 REST API | JSON | 每小時 | `-`, `NA`, 空值 | `air_quality_observations` |
+
+> 前六項由中央氣象署提供；`AQX_P_432` 由環境部環境資料開放平台提供，必須另設定 `MOENV_API_KEY`，不可拿 CWA Key 替代。空品資料含 AQI、PM2.5、測站發布時間及經緯度，以數值標記直接繪製地圖，非影像圖層。
 
 ---
 
@@ -139,3 +142,14 @@
   - `ForecastData.Fix[]`：未來 24~72 小時預測路徑
 - **展示元件**：Folium 互動路徑地圖（歷史路徑實線藍點 vs 預測路徑虛線紅點）、颱風強度風速時間軸卡片。
 - **儲存表格**：`typhoon_tracks`（以 `typhoon_name + record_type + fix_time` 複合唯一鍵去重）。
+
+---
+
+### 7. 空氣品質指標 (`AQX_P_432`, MOENV)
+- **官方資料集**：[環境部空氣品質指標 (AQI)](https://data.moenv.gov.tw/dataset/detail/AQX_P_432)
+- **存取端點**：`https://data.moenv.gov.tw/api/v2/AQX_P_432?api_key={MOENV_API_KEY}&format=JSON&limit=1000`
+- **主要欄位**：`SiteId`、`SiteName`、`County`、`AQI`、`Status`、`Pollutant`、`PM2.5`、`PM10`、`publishtime`、`Longitude`、`Latitude`。
+- **更新與金鑰**：資料集每小時提供各測站 AQI；環境部 API Key 免費註冊取得，獨立存放於本機 `.env` 的 `MOENV_API_KEY`。
+- **展示元件**：總覽地圖 AQI/PM2.5 數值標籤切換；顏色依官方 AQI 級距，點擊可查看污染物、測站狀態及發布時間。缺少座標或所選指標為缺值時不繪製數值標記。
+- **儲存表格**：`air_quality_observations`（以 `site_id + publish_time` 唯一鍵更新，保留目前與歷次發布值）。
+- **AQI 色階依據**：[環境部空氣品質指標級距](https://airtw.moenv.gov.tw/cht/Information/Standard/AirQualityIndicatorNew.aspx)，以 0–50、51–100、101–150、151–200、201–300、301–500 六級呈現。

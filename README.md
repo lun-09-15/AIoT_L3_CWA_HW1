@@ -1,6 +1,6 @@
 # 台灣海氣象與災害資訊儀表板
 
-以中央氣象署開放資料建置的 Streamlit + SQLite 儀表板，整合海面天氣、逐時測站觀測、海嘯報告、溫度分布圖、颱風侵襲機率與熱帶氣旋路徑。
+以中央氣象署與環境部開放資料建置的 Streamlit + SQLite 儀表板，整合海面天氣、逐時測站觀測、海嘯報告、溫度分布圖、颱風資訊與空氣品質數值地圖。
 
 ## 六項資料功能
 
@@ -12,10 +12,11 @@
 | 溫度分布狀態 | `O-A0038-001` | 顯示 CWA 官方溫度分布影像和資料時間。 |
 | 颱風侵襲機率 | `W-C0034-003` | 解析 KMZ/KML 的官方機率多邊形並疊加於地圖。 |
 | 熱帶氣旋路徑 | `W-C0034-005` | 在地圖分別呈現過去分析定位與未來預測路徑。 |
+| 空氣品質地圖 | `AQX_P_432`（環境部） | 以測站座標呈現 AQI/PM2.5 數值標籤、顏色分級和測站明細，不使用空品圖片。 |
 
 各資料集使用個別解析器與資料表。原始回應保存在 `data/snapshots/`，結構化資料與匯入狀態寫入 SQLite；時間戳記、單位、缺值和空事件狀態會在頁面中保留或明確標示。
 
-總覽頁的「六項資料新鮮度與更新狀態」可查看最近擷取結果、來源資料時間及固定週期資料的逾時提示。海嘯與颱風等事件型資料會依事件特性呈現，不會僅因事件時間較早就判為過期。按左側「更新全部資料」重新擷取後可查看最新狀態。
+總覽頁的「資料新鮮度與更新狀態」可查看六項中央氣象署資料及環境部 AQI 的最近擷取結果、來源資料時間和逾時提示。海嘯與颱風等事件型資料會依事件特性呈現，不會僅因事件時間較早就判為過期。按左側「更新全部資料」重新擷取後可查看最新狀態。
 
 總覽測站地圖預設以台灣本島為中心並採較近的縮放層級，不會為了涵蓋所有站點而自動縮小；可在地圖上自行縮放查看外島及其他測站。
 
@@ -32,13 +33,14 @@ pip install -r requirements.txt
 Copy-Item .env.example .env
 ```
 
-編輯 `.env` 並設定 CWA 會員中心取得的授權碼：
+編輯 `.env` 並分別設定 CWA 與環境部平台的 API Key（不使用某一平台的 Key 呼叫另一平台）：
 
 ```ini
 CWA_API_KEY=你的CWA授權碼
+MOENV_API_KEY=你的環境部API_Key
 ```
 
-不要提交 `.env` 或分享 API Key。
+環境部 Key 請在環境部資料開放平台會員帳號中取得。不要提交 `.env` 或分享 API Key；`.env.example` 僅包含佔位字串。
 
 ## 匯入資料並啟動
 
@@ -46,6 +48,7 @@ CWA_API_KEY=你的CWA授權碼
 
 ```powershell
 python -m src.ingest
+python -m src.air_quality_ingest
 streamlit run app.py
 ```
 
@@ -55,7 +58,7 @@ streamlit run app.py
 python -m src.ingest --only O-A0001-001 W-C0034-005
 ```
 
-開啟 Streamlit 顯示的本機網址時，每個新的 Streamlit 工作階段會自動嘗試更新六項資料一次；同一工作階段中的元件互動不會重複觸發更新。也可以使用左側「更新全部資料」按鈕手動同步。資料更新需要有效的 CWA API Key 和網路連線；未設定金鑰或更新失敗時會提示使用者，並保留資料庫已儲存的資料和擷取狀態供判讀。
+開啟 Streamlit 顯示的本機網址時，每個新的 Streamlit 工作階段會自動嘗試更新六項 CWA 資料及已設定的環境部空品資料一次；同一工作階段中的元件互動不會重複觸發更新。也可以使用左側「更新全部資料」按鈕手動同步。各資料源需要自己的 API Key 和網路連線；未設定金鑰或更新失敗時會提示使用者，並保留資料庫已儲存的資料和擷取狀態供判讀。
 
 ## 專案結構
 
@@ -63,7 +66,9 @@ python -m src.ingest --only O-A0001-001 W-C0034-005
 app.py                         # Streamlit 六頁儀表板
 src/config.py                  # 環境變數與本機路徑
 src/cwa_client.py              # CWA REST/File API、重試與原始快照
+src/moenv_client.py            # 環境部空氣品質 API
 src/ingest.py                  # 全部或指定資料集匯入命令
+src/air_quality_ingest.py      # AQI 擷取、快照與保存
 src/database.py                # SQLite schema、交易與查詢
 src/storage.py                 # 資料集解析/儲存分派
 src/datasets/                   # 六項資料集規格與解析器
@@ -84,4 +89,4 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 
 Python、Requests、Pandas、SQLite、Streamlit、Folium、streamlit-folium、python-dotenv。
 
-資料來源：中央氣象署氣象資料開放平台。實際資料欄位、更新頻率和警示效力以 CWA 公告及各資料產品說明為準。
+資料來源：中央氣象署氣象資料開放平台與環境部環境資料開放平台。實際資料欄位、更新頻率和警示效力以各官方公告及資料產品說明為準。

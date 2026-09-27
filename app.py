@@ -10,7 +10,7 @@ import streamlit as st
 from branca.element import Element
 from streamlit_folium import st_folium
 
-from src.config import BASE_DIR, CWA_API_KEY, DB_PATH
+from src.config import BASE_DIR, CWA_API_KEY, DB_PATH, MOENV_API_KEY
 from src.database import get_latest_ingestion_summary, init_db, query_rows
 from src.datasets.specs import DATASET_SPECS
 from src.datasets.typhoon import parse_typhoon_probability_kmz
@@ -130,6 +130,23 @@ def _freshness_overview(latest: Dict[str, Dict[str, Any]]) -> None:
             "來源資料時間": source_time,
             "最近擷取時間": fetched_at,
         })
+    air_run = latest.get("AQX_P_432")
+    if not MOENV_API_KEY:
+        air_status = "⚪ 未設定環境部 API Key"
+    elif not air_run:
+        air_status = "⚪ 尚未匯入"
+    elif air_run.get("status") == "FAILED":
+        air_status = "🔴 更新失敗"
+    elif air_run.get("status") == "EMPTY":
+        air_status = "⚪ 來源無可呈現資料"
+    else:
+        freshness = _freshness(air_run.get("data_timestamp") or air_run.get("run_time"), 2)
+        air_status = "🟢 新鮮" if freshness == "資料新鮮" else "🟡 可能過期" if "可能已過期" in freshness else "⚪ 時間無法判讀"
+    rows.append({
+        "資料集": "AQX_P_432", "資料名稱": "空氣品質指標（環境部）", "狀態": air_status,
+        "來源資料時間": _timestamp(air_run.get("data_timestamp")) if air_run else "—",
+        "最近擷取時間": _timestamp(air_run.get("run_time")) if air_run else "—",
+    })
     st.dataframe(pd.DataFrame(rows), hide_index=True, width="stretch")
     st.caption("固定週期資料依更新頻率判斷新鮮度；海嘯與颱風屬事件型資料，舊事件時間不代表資料過期。狀態依最近一次擷取紀錄，按左側「更新全部資料」可重新檢查。")
 
@@ -164,6 +181,31 @@ def _latest_station_frame() -> pd.DataFrame:
                     ORDER BY s.county_name,s.station_name""")
 
 
+@st.cache_data(ttl=60, show_spinner=False)
+def _latest_air_quality_frame() -> pd.DataFrame:
+    return _read("""SELECT a.* FROM air_quality_observations a
+                    JOIN (SELECT site_id,MAX(publish_time) AS publish_time FROM air_quality_observations GROUP BY site_id) latest
+                    ON a.site_id=latest.site_id AND a.publish_time=latest.publish_time
+                    ORDER BY a.county_name,a.site_name""")
+
+
+def _aqi_style(value: Any) -> tuple[str, str]:
+    if pd.isna(value):
+        return "#738091", "無 AQI"
+    aqi = float(value)
+    if aqi <= 50:
+        return "#35b779", "良好"
+    if aqi <= 100:
+        return "#f2d34f", "普通"
+    if aqi <= 150:
+        return "#f39c45", "對敏感族群不健康"
+    if aqi <= 200:
+        return "#e34a4a", "對所有族群不健康"
+    if aqi <= 300:
+        return "#9b59b6", "非常不健康"
+    return "#7e2635", "危害"
+
+
 def _weather_overview_map(
     frame: pd.DataFrame,
     dark_basemap: bool,
@@ -172,15 +214,20 @@ def _weather_overview_map(
     show_wind: bool,
     county_key: str,
     selected_county: str,
+    air_quality_frame: pd.DataFrame,
+    show_air_quality: bool,
+    air_metric: str,
 ) -> None:
     mapped = frame.dropna(subset=["latitude", "longitude"]).copy()
-    if mapped.empty:
+    air_mapped = air_quality_frame.dropna(subset=["latitude", "longitude"]).copy()
+    if mapped.empty and (not show_air_quality or air_mapped.empty):
         st.info("目前尚無含有效 WGS84 座標的測站資料。請從側邊欄更新氣象觀測站資料。")
         return
 
     is_county_filtered = selected_county != "全部縣市"
+    center_frame = mapped if not mapped.empty else air_mapped
     map_center = (
-        [float(mapped["latitude"].median()), float(mapped["longitude"].median())]
+        [float(center_frame["latitude"].median()), float(center_frame["longitude"].median())]
         if is_county_filtered else [23.7, 121.0]
     )
     weather_map = folium.Map(
@@ -201,6 +248,7 @@ def _weather_overview_map(
     temperature_layer = folium.FeatureGroup(name="氣溫標籤", show=True) if show_temperature else None
     rain_layer = folium.FeatureGroup(name="降雨觀測", show=True) if show_rain else None
     wind_layer = folium.FeatureGroup(name="風速觀測", show=True) if show_wind else None
+    air_quality_layer = folium.FeatureGroup(name="空氣品質測站", show=True) if show_air_quality else None
 
     for row in mapped.itertuples(index=False):
         lat, lon = float(row.latitude), float(row.longitude)
@@ -251,8 +299,37 @@ def _weather_overview_map(
                 tooltip=f"{station_name} · 風速 {wind:g} m/s",
             ).add_to(wind_layer)
 
+    if air_quality_layer is not None and not air_mapped.empty:
+        for row in air_mapped.itertuples(index=False):
+            aqi = row.aqi
+            value = aqi if air_metric == "AQI" else row.pm25
+            if pd.isna(value):
+                continue
+            color, level = _aqi_style(aqi)
+            value_text = f"{float(value):.0f}" if air_metric == "AQI" else f"{float(value):.1f}"
+            site_name = escape(str(row.site_name or "空品測站"))
+            county = escape(str(row.county_name or ""))
+            pollutant = escape(str(row.pollutant or "未提供"))
+            monitor_status = escape(str(row.status or "未提供"))
+            marker = folium.DivIcon(
+                icon_size=(48, 25), icon_anchor=(24, 12),
+                html=(f'<div style="background:{color};color:#17202a;border:1px solid #fff;'
+                      f'border-radius:16px;padding:2px 7px;font:bold 12px Arial;text-align:center;'
+                      f'box-shadow:0 2px 8px #0008;white-space:nowrap">{value_text}</div>'),
+            )
+            popup = (
+                f"<b>{site_name}</b> · {county}<br>AQI：{aqi if pd.notna(aqi) else '—'}（{level}）<br>"
+                f"PM2.5：{row.pm25 if pd.notna(row.pm25) else '—'} μg/m³<br>主要污染物：{pollutant}<br>"
+                f"狀態：{monitor_status}<br>發布時間：{escape(_timestamp(row.publish_time))}"
+            )
+            folium.Marker(
+                [row.latitude, row.longitude], icon=marker,
+                tooltip=f"{site_name} · {air_metric} {value_text}",
+                popup=folium.Popup(popup, max_width=300),
+            ).add_to(air_quality_layer)
+
     layers = [station_layer]
-    layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer) if layer is not None)
+    layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer, air_quality_layer) if layer is not None)
     for layer in layers:
         layer.add_to(weather_map)
     map_name = weather_map.get_name()
@@ -305,7 +382,7 @@ def _weather_overview_map(
     }})();
     """
     weather_map.get_root().script.add_child(Element(locate_script))
-    map_key = f"overview_map_{county_key}_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}"
+    map_key = f"overview_map_{county_key}_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}_{int(show_air_quality)}_{air_metric}"
     st_folium(weather_map, width=960, height=610, key=map_key, returned_objects=[])
 
 
@@ -335,10 +412,13 @@ def _apply_dashboard_theme() -> None:
 def _page_overview() -> None:
     _apply_dashboard_theme()
     all_stations = _latest_station_frame()
+    air_quality = _latest_air_quality_frame()
     latest = {row["dataset_id"]: row for row in get_latest_ingestion_summary()}
     dark_basemap = st.session_state.get("overview_basemap", "深色") == "深色"
+    show_air_quality = st.session_state.get("overview_show_air_quality", False)
+    air_metric = st.session_state.get("overview_air_metric", "AQI")
 
-    with st.expander("六項資料新鮮度與更新狀態", expanded=False):
+    with st.expander("資料新鮮度與更新狀態", expanded=False):
         _freshness_overview(latest)
 
     left, center, right = st.columns([2.25, 8.1, 2.25], gap="small")
@@ -346,6 +426,7 @@ def _page_overview() -> None:
         counties = ["全部縣市"] + sorted(all_stations["county_name"].dropna().unique().tolist())
         selected_county = st.selectbox("總覽縣市篩選", counties, key="overview_county")
         stations = all_stations if selected_county == "全部縣市" else all_stations[all_stations["county_name"] == selected_county]
+        filtered_air_quality = air_quality if selected_county == "全部縣市" else air_quality[air_quality["county_name"] == selected_county]
         station_run = latest.get("O-A0001-001")
         observed_at = stations["obs_time"].max() if not stations.empty else None
         temp_values = stations["temperature"].dropna() if not stations.empty else pd.Series(dtype=float)
@@ -409,6 +490,9 @@ def _page_overview() -> None:
                 show_wind=st.session_state.get("overview_show_wind", False),
                 county_key=str(counties.index(selected_county)),
                 selected_county=selected_county,
+                air_quality_frame=filtered_air_quality,
+                show_air_quality=show_air_quality,
+                air_metric=air_metric,
             )
             st.caption(f"地圖底圖：OpenStreetMap {'深色樣式' if dark_basemap else '標準街道'} · 不需要底圖 API key · 測站資料：{_timestamp(observed_at)}")
 
@@ -418,8 +502,16 @@ def _page_overview() -> None:
         st.checkbox("顯示氣溫標籤", value=False, key="overview_show_temperature")
         st.checkbox("顯示降雨標記", value=False, key="overview_show_rain")
         st.checkbox("顯示風速標記", value=False, key="overview_show_wind")
+        st.checkbox("顯示空氣品質測站", value=False, key="overview_show_air_quality")
+        if st.session_state.get("overview_show_air_quality", False):
+            st.radio("空品標籤數值", ["AQI", "PM2.5"], horizontal=True, key="overview_air_metric")
+            if air_quality.empty:
+                st.info("尚無空品資料；請設定 MOENV_API_KEY 後更新資料。")
+            else:
+                st.caption("標籤顏色依 AQI 等級，數字依上方選項顯示。")
         st.markdown("**圖例**")
         st.markdown("🟢 **低於 24°C**　🟡 **24–28.9°C**　🟠 **29°C 以上**")
+        st.caption("空品標記依 AQI 分級著色，點擊可看 AQI、PM2.5、污染物和發布時間。")
         st.caption("藍色圓圈為有雨測站，紫色圓圈為風速觀測；圓圈大小依數值調整。")
         st.markdown("**資料來源**")
         st.caption("中央氣象署 O-A0001-001 全測站逐時氣象資料。底圖使用 OpenStreetMap，保留地圖授權標示。")
@@ -693,37 +785,50 @@ def _page_typhoon_track() -> None:
 
 
 def _sync_all() -> None:
-    if not CWA_API_KEY:
-        st.sidebar.error("尚未設定 CWA_API_KEY。請建立 .env 並填入授權碼。")
-        return
-    with st.sidebar.status("正在更新六項資料…", expanded=True) as status:
-        try:
-            from src.ingest import ingest_all
-            from src.cwa_client import CWAClient
-            results = ingest_all(CWAClient())
-            failed = [dataset_id for dataset_id, result in results.items() if result["status"] == "FAILED"]
-            status.update(label="更新完成" if not failed else f"更新完成，{len(failed)} 項失敗", state="complete" if not failed else "error")
-            st.session_state["last_sync_results"] = results
-        except Exception as exc:
-            status.update(label="資料更新失敗", state="error")
-            st.sidebar.error(str(exc))
-        finally:
-            st.cache_data.clear()
+    if CWA_API_KEY:
+        with st.sidebar.status("正在更新六項中央氣象署資料…", expanded=True) as status:
+            try:
+                from src.ingest import ingest_all
+                from src.cwa_client import CWAClient
+                results = ingest_all(CWAClient())
+                failed = [dataset_id for dataset_id, result in results.items() if result["status"] == "FAILED"]
+                status.update(label="中央氣象署資料更新完成" if not failed else f"中央氣象署資料更新完成，{len(failed)} 項失敗", state="complete" if not failed else "error")
+                st.session_state["last_sync_results"] = results
+            except Exception as exc:
+                status.update(label="中央氣象署資料更新失敗", state="error")
+                st.sidebar.error(str(exc))
+    else:
+        st.sidebar.warning("未設定 CWA_API_KEY，略過中央氣象署資料更新。")
+
+    if MOENV_API_KEY:
+        with st.sidebar.status("正在更新環境部空氣品質資料…", expanded=True) as status:
+            from src.air_quality_ingest import sync_air_quality
+            result = sync_air_quality()
+            failed = result["status"] == "FAILED"
+            status.update(
+                label="空氣品質資料更新完成" if not failed else "空氣品質資料更新失敗",
+                state="error" if failed else "complete",
+            )
+            if failed:
+                st.sidebar.error(result["message"])
+    else:
+        st.sidebar.warning("未設定 MOENV_API_KEY，略過環境部空氣品質資料更新。")
+    st.cache_data.clear()
 
 
 st.sidebar.title("資料導覽")
 page = st.sidebar.radio("選擇資料區塊", PAGES, label_visibility="collapsed")
 st.sidebar.button("⟳ 更新全部資料", on_click=_sync_all, width="stretch", type="primary")
-st.sidebar.caption("新工作階段會自動更新；也可手動同步。需設定有效 CWA API Key 和網路連線。")
+st.sidebar.caption("新工作階段會自動更新；也可手動同步。CWA 與環境部空品各需自己的 API Key。")
 st.sidebar.caption(f"資料庫：{DB_PATH.name}")
 
 if not st.session_state.get("startup_sync_attempted", False):
     st.session_state["startup_sync_attempted"] = True
-    if CWA_API_KEY:
+    if CWA_API_KEY or MOENV_API_KEY:
         _sync_all()
         st.rerun()
     else:
-        st.sidebar.warning("自動更新需要設定 CWA_API_KEY；目前顯示已儲存的資料。")
+        st.sidebar.warning("自動更新需要設定 CWA_API_KEY 或 MOENV_API_KEY；目前顯示已儲存的資料。")
 
 if page == "總覽":
     _page_overview()
@@ -741,4 +846,4 @@ elif page == "熱帶氣旋路徑":
     _page_typhoon_track()
 
 st.sidebar.markdown("---")
-st.sidebar.caption("資料來源：中央氣象署開放資料平台。產品時間和更新頻率依官方資料為準。")
+st.sidebar.caption("資料來源：中央氣象署與環境部開放資料平台。產品時間和更新頻率依官方資料為準。")
