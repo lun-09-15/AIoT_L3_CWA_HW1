@@ -51,7 +51,16 @@ flowchart TD
 CWA_API_KEY=你的授權碼
 ```
 
-讀取金鑰前檢查是否存在；不得將 `.env`、下載的私有資料或真實金鑰提交到 Git。保留 `.env.example` 作為設定範例。
+程式設定模組優先讀取 Streamlit `st.secrets`，並回退至環境變數與本機 `.env`；兩家資料來源的 Key 分開設定。讀取金鑰前檢查是否存在；不得將 `.env`、下載的私有資料或真實金鑰提交到 Git。保留 `.env.example` 作為設定範例。
+
+部署到 Streamlit Community Cloud 後，在 App **Settings → Secrets** 設定 TOML：
+
+```toml
+CWA_API_KEY = "你的中央氣象署 API Key"
+MOENV_API_KEY = "你的環境部 API Key"
+```
+
+儲存後重新啟動 App。Secrets 僅存放於 Streamlit 部署設定，不加入 repository 或 `.env.example`。
 
 ### 3. 建立資料集規格清單
 

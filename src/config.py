@@ -13,9 +13,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Load .env file
 load_dotenv(BASE_DIR / ".env")
 
-# CWA API Settings
-CWA_API_KEY = os.getenv("CWA_API_KEY", "")
-MOENV_API_KEY = os.getenv("MOENV_API_KEY", "")
+def _get_secret(name: str) -> str:
+    """Read Streamlit Cloud secrets first, then local environment/.env fallback."""
+    try:
+        import streamlit as st
+
+        value = st.secrets.get(name, "")
+        if value:
+            return str(value).strip()
+    except Exception:
+        # Streamlit secrets are unavailable in ordinary CLI/local contexts unless
+        # .streamlit/secrets.toml exists. Continue with environment/.env instead.
+        pass
+    return os.getenv(name, "").strip()
+
+
+# Keep provider keys separate. Never print or persist these values.
+CWA_API_KEY = _get_secret("CWA_API_KEY")
+MOENV_API_KEY = _get_secret("MOENV_API_KEY")
 CWA_REST_BASE_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore"
 CWA_FILE_BASE_URL = "https://opendata.cwa.gov.tw/fileapi/v1/opendataapi"
 
