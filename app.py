@@ -407,19 +407,37 @@ def _weather_overview_map(
 def _apply_dashboard_theme() -> None:
     st.markdown("""
     <style>
-      :root { color-scheme: dark; }
-      .stApp, [data-testid="stAppViewContainer"] { background:#0c1420; color:#e7edf5; }
-      [data-testid="stHeader"] { background:rgba(12,20,32,.94); }
-      [data-testid="stMainBlockContainer"] { max-width:100%; padding:4rem 1.35rem 2rem !important; }
-      [data-testid="stSidebar"] { background:#101b2a; border-right:1px solid #233247; }
-      [data-testid="stMetric"] { background:#172334; border:1px solid #26374d; border-radius:12px; padding:12px 14px; }
-      [data-testid="stMetricLabel"] { color:#aab9cc; }
-      [data-testid="stMetricValue"] { color:#f3f7fc; }
-      [data-testid="stMarkdownContainer"] p { color:#c2cede; }
-      [data-testid="stVerticalBlockBorderWrapper"] { border-color:#26374d; }
+      :root { color-scheme:dark; --dash-bg:#0b1220; --dash-surface:#111c2c; --dash-card:#162438; --dash-border:#293950; --dash-text:#edf3fb; --dash-muted:#9aacc2; --dash-accent:#55d6b2; }
+      .stApp, [data-testid="stAppViewContainer"] { background:radial-gradient(ellipse at 58% -12%,#18334a 0,transparent 44%),var(--dash-bg); color:var(--dash-text); }
+      [data-testid="stHeader"] { background:rgba(11,18,32,.88); backdrop-filter:blur(14px); }
+      [data-testid="stMainBlockContainer"] { max-width:100%; padding:3.8rem clamp(1rem,2.2vw,2.2rem) 2rem !important; }
+      [data-testid="stSidebar"] { background:linear-gradient(180deg,#111e30 0%,#0e1827 100%); border-right:1px solid #25354b; }
+      [data-testid="stSidebar"] [data-testid="stMarkdownContainer"] p { color:#aebdd0; }
+      [data-testid="stSidebar"] [data-testid="stRadio"] label { border-radius:9px; transition:background .16s ease,color .16s ease; }
+      [data-testid="stSidebar"] [data-testid="stRadio"] label:hover { background:#1b2b40; color:#fff; }
+      h1 { color:#f5f8fc !important; font-size:clamp(1.75rem,2.5vw,2.35rem) !important; letter-spacing:-.035em; font-weight:760 !important; margin-bottom:.2rem !important; }
+      h2, h3 { color:#eaf1fa !important; letter-spacing:-.02em; }
+      [data-testid="stCaptionContainer"] p { color:var(--dash-muted) !important; line-height:1.55; }
+      [data-testid="stMetric"] { background:linear-gradient(145deg,#192a40,#142236); border:1px solid var(--dash-border); border-radius:15px; padding:14px 16px; box-shadow:0 8px 24px #03091430; transition:transform .16s ease,border-color .16s ease; }
+      [data-testid="stMetric"]:hover { transform:translateY(-2px); border-color:#42617e; }
+      [data-testid="stMetricLabel"] { color:#aebdd0; }
+      [data-testid="stMetricValue"] { color:#f4f8ff; font-weight:700; }
+      [data-testid="stMarkdownContainer"] p { color:#c7d2e1; }
+      [data-testid="stVerticalBlockBorderWrapper"] { border-color:var(--dash-border); border-radius:14px; }
+      [data-testid="stExpander"] { background:rgba(17,28,44,.64); border:1px solid #283a51; border-radius:13px; overflow:hidden; }
+      [data-testid="stAlert"] { border-radius:12px; }
+      [data-testid="stDataFrame"] { border:1px solid #293950; border-radius:12px; overflow:hidden; }
+      [data-testid="stPlotlyChart"], [data-testid="stLineChart"] { background:rgba(17,28,44,.5); border:1px solid #293950; border-radius:14px; padding:8px; }
+      [data-testid="stImage"] img { border:1px solid #293950; border-radius:14px; box-shadow:0 12px 32px #02071155; }
+      [data-testid="stSelectbox"] [data-baseweb="select"] > div, [data-testid="stMultiSelect"] [data-baseweb="select"] > div { border-color:#334963; border-radius:10px; }
+      [data-testid="stTextInput"] input { border-color:#334963; border-radius:10px; }
+      .stButton > button, [data-testid="stDownloadButton"] > button, [data-testid="stLinkButton"] > a { border-radius:10px; transition:transform .16s ease,border-color .16s ease,filter .16s ease; }
+      .stButton > button:hover, [data-testid="stDownloadButton"] > button:hover, [data-testid="stLinkButton"] > a:hover { transform:translateY(-1px); border-color:#55d6b2; filter:brightness(1.06); }
+      .stButton > button[kind="primary"] { background:linear-gradient(105deg,#23bda1,#42d2ae); border:0; color:#06251f; font-weight:750; box-shadow:0 7px 18px #18b89a30; }
+      a { color:#71d9c0 !important; }
       .overview-kicker { color:#56d4b0; font-size:.78rem; letter-spacing:.12em; font-weight:700; }
       .overview-title { color:#f4f7fb; font-size:1.55rem; font-weight:750; margin:.1rem 0 .25rem; }
-      .overview-panel { background:#121e2d; border:1px solid #26374d; border-radius:14px; padding:14px 16px; margin:0 0 12px; }
+      .overview-panel { background:linear-gradient(145deg,#142438,#111c2b); border:1px solid #2b4058; border-radius:15px; padding:14px 16px; margin:0 0 12px; box-shadow:0 8px 24px #03091424; }
       .overview-panel-title { color:#edf3fa; font-weight:700; margin-bottom:5px; }
       .overview-muted { color:#9eafc3; font-size:.82rem; line-height:1.5; }
       .overview-ok { color:#59d7b4; font-weight:700; }
@@ -428,7 +446,6 @@ def _apply_dashboard_theme() -> None:
 
 
 def _page_overview() -> None:
-    _apply_dashboard_theme()
     all_stations = _latest_station_frame()
     air_quality = _latest_air_quality_frame()
     latest = {row["dataset_id"]: row for row in get_latest_ingestion_summary()}
@@ -904,6 +921,7 @@ def _sync_all() -> None:
     st.cache_data.clear()
 
 
+_apply_dashboard_theme()
 st.sidebar.title("資料導覽")
 page = st.sidebar.radio("選擇資料區塊", PAGES, label_visibility="collapsed")
 st.sidebar.button("⟳ 更新全部資料", on_click=_sync_all, width="stretch", type="primary")
