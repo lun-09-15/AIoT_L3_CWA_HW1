@@ -119,6 +119,8 @@ src/
 
 Streamlit 全寬元件使用 `width="stretch"`，不要再使用已棄用的 `use_container_width`。Folium 定位控制的 CSS/JavaScript 內嵌於 Python f-string 時，CSS 大括號必須跳脫成雙大括號，避免被 Python 誤當成插值運算式。
 
+每個新的 Streamlit 工作階段啟動時自動嘗試同步六項資料一次；以 session state 防止元件互動/rerun 重複同步。自動同步與手動更新共用 `_sync_all()`，必須在完成或失敗後清除資料快取，使頁面重新讀取資料庫；缺少 API Key 時提示設定要求並顯示現有資料。主內容頂端留出 4rem 空間，避免第一列控制項被 Streamlit 工具列（例如 Deploy）遮擋。
+
 ### 10. 海面預報與測站觀測
 
 - **海面預報**：依預報海域與時段篩選，表格列出天氣、風、浪資訊；地圖座標若未提供或無法可靠對應，就以清單呈現，不使用虛構座標。

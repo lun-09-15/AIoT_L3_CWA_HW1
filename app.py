@@ -315,7 +315,7 @@ def _apply_dashboard_theme() -> None:
       :root { color-scheme: dark; }
       .stApp, [data-testid="stAppViewContainer"] { background:#0c1420; color:#e7edf5; }
       [data-testid="stHeader"] { background:rgba(12,20,32,.94); }
-      [data-testid="stMainBlockContainer"] { max-width:100%; padding:1.1rem 1.35rem 2rem; }
+      [data-testid="stMainBlockContainer"] { max-width:100%; padding:4rem 1.35rem 2rem !important; }
       [data-testid="stSidebar"] { background:#101b2a; border-right:1px solid #233247; }
       [data-testid="stMetric"] { background:#172334; border:1px solid #26374d; border-radius:12px; padding:12px 14px; }
       [data-testid="stMetricLabel"] { color:#aab9cc; }
@@ -704,17 +704,26 @@ def _sync_all() -> None:
             failed = [dataset_id for dataset_id, result in results.items() if result["status"] == "FAILED"]
             status.update(label="更新完成" if not failed else f"更新完成，{len(failed)} 項失敗", state="complete" if not failed else "error")
             st.session_state["last_sync_results"] = results
-            st.cache_data.clear()
         except Exception as exc:
             status.update(label="資料更新失敗", state="error")
             st.sidebar.error(str(exc))
+        finally:
+            st.cache_data.clear()
 
 
 st.sidebar.title("資料導覽")
 page = st.sidebar.radio("選擇資料區塊", PAGES, label_visibility="collapsed")
 st.sidebar.button("⟳ 更新全部資料", on_click=_sync_all, width="stretch", type="primary")
-st.sidebar.caption("同步需設定有效 CWA API Key，並保持網路連線。")
+st.sidebar.caption("新工作階段會自動更新；也可手動同步。需設定有效 CWA API Key 和網路連線。")
 st.sidebar.caption(f"資料庫：{DB_PATH.name}")
+
+if not st.session_state.get("startup_sync_attempted", False):
+    st.session_state["startup_sync_attempted"] = True
+    if CWA_API_KEY:
+        _sync_all()
+        st.rerun()
+    else:
+        st.sidebar.warning("自動更新需要設定 CWA_API_KEY；目前顯示已儲存的資料。")
 
 if page == "總覽":
     _page_overview()
