@@ -108,6 +108,21 @@ python -m src.ingest --only O-A0001-001 W-C0034-005
 
 開啟 Streamlit 顯示的本機網址時，每個新的 Streamlit 工作階段會自動嘗試更新八項 CWA 資料及已設定的環境部空品資料一次；同一工作階段中的元件互動不會重複觸發更新。也可以使用左側「更新全部資料」按鈕手動同步。各資料源需要自己的 API Key 和網路連線；未設定金鑰或更新失敗時會提示使用者，並保留資料庫已儲存的資料和擷取狀態供判讀。
 
+## 部署至 Streamlit Community Cloud
+
+1. 將專案推送至 GitHub，並登入 [Streamlit Community Cloud](https://share.streamlit.io/)。
+2. 選擇 **Create app**，指定此 GitHub repository、`main` 分支和 `app.py` 作為主檔案，然後部署。
+3. 開啟該 app 的 **Settings → Secrets**，以 TOML 格式新增兩個金鑰（使用你自己的有效值）：
+
+   ```toml
+   CWA_API_KEY = "你的CWA授權碼"
+   MOENV_API_KEY = "你的環境部API_Key"
+   ```
+
+4. 儲存後等待 app 重啟；重新開啟頁面應會自動擷取資料。金鑰不要寫進 GitHub 檔案或貼到公開位置。
+
+雲端環境也會在新工作階段自動同步。SQLite 資料庫與原始快照放在 app 執行環境的本機檔案系統，適合快取及重建；Streamlit Community Cloud 重啟或重新部署後，本機資料不保證保留，因此不應把它當成永久資料庫。
+
 ## 專案結構
 
 ```text
@@ -128,7 +143,7 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 
 ## 常見問題
 
-- **缺少 Key**：確認專案根目錄的 `.env` 已設定正確的 `CWA_API_KEY`（及需要時的 `MOENV_API_KEY`）；命令列執行時也可直接設定相同名稱的環境變數。
+- **缺少 Key**：本機確認專案根目錄 `.env` 設定正確；Streamlit Community Cloud 則確認 **Settings → Secrets** 使用 TOML 格式設定 `CWA_API_KEY` 和 `MOENV_API_KEY`，儲存後重新啟動 app。
 - **某項匯入失敗**：看終端機的資料集代碼與錯誤訊息；其他資料集會繼續匯入。
 - **目前無颱風/海嘯資料**：事件資料無內容可能代表目前無有效事件。請查看資料時間與最近匯入狀態，不要把過期報告解讀成即時警報。
 - **地震資訊**：顯著有感及小區域有感報告各自擷取；海嘯資料中的地震欄位不會取代這兩項地震報告。震度圖是官方報告連結，地圖震央只依報告提供的座標繪製。
