@@ -151,6 +151,7 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 - **Cloud 資料更新失敗**：先從 app 右下角選 **Manage app → Cloud logs** 確認部署/套件安裝成功，再看資料頁顯示的 HTTP 狀態或已遮罩連線原因。HTTP 401/403 才指向授權或額度；DNS/TLS/ConnectError 指向連線路徑，單純重填 Key 不會修復連線問題。CWA 的 TLS 診斷會保留較完整的憑證驗證原因以利排查，同時隱去 API Key 和 URL query。
 - **CWA 或環境部 API 出現 SSL `CERTIFICATE_VERIFY_FAILED`**：Python 3.13 之後的預設 SSL context 會啟用嚴格 X.509 檢查，資料平台憑證鏈不符合嚴格格式時可能被拒絕。程式只對各自的 API 網域放寬這項格式檢查，仍驗證可信 CA、憑證鏈與主機名稱；不使用 `verify=False`。若平台更新憑證鏈，應移除對應相容設定。
 - **Cloud logs 出現 inotify instance limit reached**：專案 `.streamlit/config.toml` 設定 `server.fileWatcherType = "poll"`，避免使用 Linux inotify watcher；推送設定後需等 app 重新部署。
+- **空品狀態顯示時間無法判讀**：較舊資料可能使用環境部的 `YYYY/MM/DD HH:MM:SS` 時間格式；重新同步後程式會正規化時間並判斷新鮮度。
 - **某項匯入失敗**：看終端機的資料集代碼與錯誤訊息；其他資料集會繼續匯入。
 - **目前無颱風/海嘯資料**：事件資料無內容可能代表目前無有效事件。請查看資料時間與最近匯入狀態，不要把過期報告解讀成即時警報。
 - **地震資訊**：顯著有感及小區域有感報告各自擷取；海嘯資料中的地震欄位不會取代這兩項地震報告。震度圖是官方報告連結，地圖震央只依報告提供的座標繪製。

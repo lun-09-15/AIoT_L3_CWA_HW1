@@ -26,14 +26,28 @@ def sync_air_quality() -> dict:
         for row in records:
             if row["publish_time"] == "時間未提供":
                 continue
-            value = row["publish_time"]
+            value = row["publish_time"].strip()
             try:
                 parsed_time = datetime.fromisoformat(value.replace("Z", "+00:00"))
-                if parsed_time.tzinfo is None:
-                    parsed_time = parsed_time.replace(tzinfo=ZoneInfo("Asia/Taipei"))
-                timestamps.append(parsed_time.isoformat(timespec="seconds"))
             except ValueError:
+                parsed_time = None
+                for fmt in (
+                    "%Y/%m/%d %H:%M:%S",
+                    "%Y/%m/%d %H:%M",
+                    "%Y-%m-%d %H:%M:%S",
+                    "%Y-%m-%d %H:%M",
+                ):
+                    try:
+                        parsed_time = datetime.strptime(value, fmt)
+                        break
+                    except ValueError:
+                        continue
+            if parsed_time is None:
                 timestamps.append(value)
+                continue
+            if parsed_time.tzinfo is None:
+                parsed_time = parsed_time.replace(tzinfo=ZoneInfo("Asia/Taipei"))
+            timestamps.append(parsed_time.isoformat(timespec="seconds"))
         data_timestamp = max(timestamps) if timestamps else None
         content = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8")
         digest = hashlib.sha256(content).hexdigest()
