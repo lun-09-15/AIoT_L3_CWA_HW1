@@ -68,7 +68,7 @@ MOENV_API_KEY = "你的環境部API_Key"
 
 ### 4. 共用擷取器
 
-共用程式負責設定 timeout、HTTP 錯誤處理、授權、重試策略、回應格式辨識、擷取時間記錄。以 `requests` 的 `params` 組查詢參數，避免手動拼接 URL。對 API 回應同時檢查 HTTP 狀態與資料本身的錯誤欄位。
+共用程式負責設定 timeout、HTTP 錯誤處理、授權、重試策略、回應格式辨識、擷取時間記錄。以 `requests` 的 `params` 組查詢參數，避免手動拼接 URL。對 API 回應同時檢查 HTTP 狀態與資料本身的錯誤欄位。一般請求 timeout 設為 8 秒、最多重試 1 次；連線錯誤需提供例外類型與已遮罩的診斷細節，任何錯誤都不得包含授權 query、API Key 或完整敏感 URL。
 
 ### 5. 各資料集專屬解析器
 
@@ -130,7 +130,7 @@ src/
 
 Streamlit 全寬元件使用 `width="stretch"`，不要再使用已棄用的 `use_container_width`。Folium 定位控制的 CSS/JavaScript 內嵌於 Python f-string 時，CSS 大括號必須跳脫成雙大括號，避免被 Python 誤當成插值運算式。
 
-每個新的 Streamlit 工作階段啟動時自動嘗試同步八項 CWA 資料及已設定的環境部 AQI 資料一次；以 session state 防止元件互動/rerun 重複同步。自動同步與手動更新共用 `_sync_all()`，必須在完成或失敗後清除資料快取，使頁面重新讀取資料庫；缺少 API Key 時提示設定要求並顯示現有資料。Streamlit Community Cloud 使用 App settings → Secrets 儲存 TOML 格式金鑰，`src/config.py` 同時支援本機 `.env` 與 Cloud Secrets。Cloud 執行環境的 SQLite 與快照只作暫存快取，重新啟動/部署後不保證保存；主內容頂端留出 4rem 空間，避免第一列控制項被 Streamlit 工具列遮擋。
+每個新的 Streamlit 工作階段啟動時自動嘗試同步八項 CWA 資料及已設定的環境部 AQI 資料一次；以 session state 防止元件互動/rerun 重複同步。自動同步與手動更新共用 `_sync_all()`，必須在完成或失敗後清除資料快取，使頁面重新讀取資料庫；缺少 API Key 時提示設定要求並顯示現有資料。CWA 同一輪同步若遇到連線錯誤，記錄安全診斷並快速略過同一服務主機的後續請求，避免多個資料集重複等待逾時。Streamlit Community Cloud 使用 App settings → Secrets 儲存 TOML 格式金鑰，`src/config.py` 同時支援本機 `.env` 與 Cloud Secrets。`.streamlit/config.toml` 將 `server.fileWatcherType` 設為 `poll`，避開 Cloud Linux inotify 配額，同時保留開發時自動重載；`.streamlit/secrets.toml` 不提交。Cloud 執行環境的 SQLite 與快照只作暫存快取，重新啟動/部署後不保證保存；主內容頂端留出 4rem 空間，避免第一列控制項被 Streamlit 工具列遮擋。
 
 空氣品質另接環境部 `AQX_P_432` 每小時 AQI 測站資料，使用獨立的 `MOENV_API_KEY`。擷取目前 AQI、PM2.5、測站名稱、縣市、發布時間及座標，寫入 `air_quality_observations`；總覽地圖提供 AQI/PM2.5 數值標記切換，標記顏色依官方 AQI 級距著色，彈窗保留主要污染物、狀態與發布時間。空品圖層須遵循縣市篩選，不用氣象站資料或影像推算污染值。
 
@@ -156,7 +156,7 @@ Streamlit 全寬元件使用 `width="stretch"`，不要再使用已棄用的 `us
 
 ### 13. 快取與例外處理
 
-以資料集各自的更新頻率設定快取期限，提供使用者手動刷新。遇到 API 失敗時，可顯示最後一次成功資料及其時間，但要明確標示資料已過期；不可將舊資料標成即時資料。
+以資料集各自的更新頻率設定快取期限，提供使用者手動刷新。遇到 API 失敗時，可顯示最後一次成功資料及其時間，但要明確標示資料已過期；不可將舊資料標成即時資料。連線錯誤訊息須保留例外類型與安全的主機/原因文字，先遮罩完整 URL query 與常見金鑰參數，再寫入資料庫或顯示在介面。Community Cloud 問題可從 app 右下角 **Manage app → Cloud logs** 讀取；確認部署安裝完成，再依資料頁錯誤區分 HTTP 狀態、連線逾時、DNS/TLS 或其他連線錯誤。若多筆 CWA 資料同時發生同一主機連線錯誤，同一輪同步只需對 CWA 主機實際等待一次，其餘資料集應快速記錄相同連線失敗，避免逐筆重複逾時。
 
 ## 階段四：品質、版本控制與交付
 
@@ -172,7 +172,7 @@ Streamlit 全寬元件使用 `width="stretch"`，不要再使用已棄用的 `us
 
 ```bash
 git status
-git add workflow.md README.md requirements.txt src app.py
+git add .gitignore .streamlit workflow.md README.md requirements.txt src app.py
 git commit -m "feat: add multi-source CWA dashboard workflow"
 git push origin main
 ```

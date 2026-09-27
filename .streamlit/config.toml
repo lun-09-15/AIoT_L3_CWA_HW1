@@ -1,0 +1,3 @@
+[server]
+# Avoid Linux inotify limits on Streamlit Community Cloud while retaining reloads.
+fileWatcherType = "poll"

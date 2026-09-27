@@ -17,6 +17,7 @@ from src.config import (
     DEFAULT_MAX_RETRIES, DEFAULT_TIMEOUT_SEC, RAW_SNAPSHOTS_DIR,
 )
 from src.database import record_raw_snapshot
+from src.http_errors import safe_transport_detail
 
 Payload = Union[Dict[str, Any], bytes]
 
@@ -44,6 +45,7 @@ class CWAClient:
         self.last_snapshot_paths: Dict[str, str] = {}
         self.last_data_timestamps: Dict[str, Optional[str]] = {}
         self.last_response_times_ms: Dict[str, float] = {}
+        self.connection_failure: Optional[str] = None
 
     @staticmethod
     def _data_timestamp(data: Any) -> Optional[str]:
@@ -126,13 +128,18 @@ class CWAClient:
         """Fetch a REST datastore JSON payload."""
         self.last_data_timestamps.pop(dataset_id, None)
         self.last_response_times_ms.pop(dataset_id, None)
+        if self.connection_failure:
+            return False, None, self.connection_failure
         try:
             query = dict(params or {})
             query.setdefault("format", "JSON")
             data, elapsed = self._get(f"{CWA_REST_BASE_URL}/{dataset_id}", dataset_id, "JSON", query, save_snapshot)
             return True, data, f"取得成功 ({elapsed:.0f} ms)"
         except (requests.RequestException, ValueError, OSError) as exc:
-            return False, None, self._safe_error(exc)
+            message = self._safe_error(exc)
+            if isinstance(exc, requests.ConnectionError):
+                self.connection_failure = message
+            return False, None, message
 
     def fetch_file_dataset(
         self, dataset_id: str, file_format: str = "JSON", save_snapshot: bool = True
@@ -140,20 +147,24 @@ class CWAClient:
         """Fetch a file API product (JSON or KMZ)."""
         self.last_data_timestamps.pop(dataset_id, None)
         self.last_response_times_ms.pop(dataset_id, None)
+        if self.connection_failure:
+            return False, None, self.connection_failure
         try:
             query = {"downloadType": "WEB", "format": file_format.upper()}
             data, elapsed = self._get(f"{CWA_FILE_BASE_URL}/{dataset_id}", dataset_id, file_format, query, save_snapshot)
             return True, data, f"取得成功 ({elapsed:.0f} ms)"
         except (requests.RequestException, ValueError, OSError) as exc:
-            return False, None, self._safe_error(exc)
+            message = self._safe_error(exc)
+            if isinstance(exc, requests.ConnectionError):
+                self.connection_failure = message
+            return False, None, message
 
-    @staticmethod
-    def _safe_error(exc: Exception) -> str:
+    def _safe_error(self, exc: Exception) -> str:
         # Never return the request URL: it contains the API key as a query parameter.
         if isinstance(exc, requests.HTTPError) and exc.response is not None:
             return f"CWA HTTP {exc.response.status_code}"
         if isinstance(exc, requests.Timeout):
-            return "連線逾時，請稍後重試。"
+            return f"連線逾時（{safe_transport_detail(exc, self.api_key)}）"
         if isinstance(exc, requests.ConnectionError):
-            return "無法連線至 CWA Open Data。"
-        return str(exc)[:240]
+            return f"無法連線至 CWA Open Data（{safe_transport_detail(exc, self.api_key)}）"
+        return safe_transport_detail(exc, self.api_key, limit=240)

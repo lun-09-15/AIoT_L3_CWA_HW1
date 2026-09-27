@@ -45,6 +45,6 @@ DATA_DIR.mkdir(parents=True, exist_ok=True)
 RAW_SNAPSHOTS_DIR.mkdir(parents=True, exist_ok=True)
 
 # Default HTTP Settings
-DEFAULT_TIMEOUT_SEC = 15
-DEFAULT_MAX_RETRIES = 3
+DEFAULT_TIMEOUT_SEC = 8
+DEFAULT_MAX_RETRIES = 1
 DEFAULT_RETRY_DELAY_SEC = 2

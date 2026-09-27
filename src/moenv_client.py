@@ -6,6 +6,7 @@ from typing import Any, Dict, Optional, Tuple
 import requests
 
 from src.config import DEFAULT_TIMEOUT_SEC, MOENV_API_KEY
+from src.http_errors import safe_transport_detail
 
 MOENV_AQI_DATASET_ID = "AQX_P_432"
 MOENV_AQI_URL = f"https://data.moenv.gov.tw/api/v2/{MOENV_AQI_DATASET_ID}"
@@ -26,9 +27,9 @@ class MOENVClient:
                 timeout=DEFAULT_TIMEOUT_SEC,
             )
         except requests.Timeout as exc:
-            raise RuntimeError("環境部 API 連線逾時。") from exc
+            raise RuntimeError(f"環境部 API 連線逾時（{safe_transport_detail(exc, self.api_key)}）") from exc
         except requests.RequestException as exc:
-            raise RuntimeError("無法連線至環境部開放資料平台。") from exc
+            raise RuntimeError(f"無法連線至環境部開放資料平台（{safe_transport_detail(exc, self.api_key)}）") from exc
         elapsed_ms = (time.perf_counter() - started) * 1000
         if response.status_code >= 400:
             # Never include the response URL because it contains the API key.

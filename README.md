@@ -108,6 +108,8 @@ python -m src.ingest --only O-A0001-001 W-C0034-005
 
 開啟 Streamlit 顯示的本機網址時，每個新的 Streamlit 工作階段會自動嘗試更新八項 CWA 資料及已設定的環境部空品資料一次；同一工作階段中的元件互動不會重複觸發更新。也可以使用左側「更新全部資料」按鈕手動同步。各資料源需要自己的 API Key 和網路連線；未設定金鑰或更新失敗時會提示使用者，並保留資料庫已儲存的資料和擷取狀態供判讀。
 
+CWA HTTP 請求 timeout 為 8 秒，最多重試 1 次；環境部請求 timeout 為 8 秒。同一輪更新若遇到 CWA 主機連線失敗，會快速略過其餘 CWA 資料集，避免每項資料都等待多次逾時。失敗提示包含經遮罩的例外類型/連線細節，不會顯示 API Key 或 URL query。`.streamlit/config.toml` 使用 polling file watcher，避免 Streamlit Community Cloud 的 Linux inotify 配額錯誤；本機仍會自動偵測程式變更。
+
 ## 部署至 Streamlit Community Cloud
 
 1. 將專案推送至 GitHub，並登入 [Streamlit Community Cloud](https://share.streamlit.io/)。
@@ -129,6 +131,7 @@ python -m src.ingest --only O-A0001-001 W-C0034-005
 app.py                         # Streamlit 儀表板
 src/config.py                  # 環境變數與本機路徑
 src/cwa_client.py              # CWA REST/File API、重試與原始快照
+src/http_errors.py             # 遮罩憑證後呈現 HTTP 連線診斷
 src/moenv_client.py            # 環境部空氣品質 API
 src/ingest.py                  # 全部或指定資料集匯入命令
 src/air_quality_ingest.py      # AQI 擷取、快照與保存
@@ -137,6 +140,7 @@ src/storage.py                 # 資料集解析/儲存分派
 src/datasets/                   # CWA 資料集規格與各資料解析器
 docs/datasets_spec.md          # 資料集欄位規格
 workflow.md                    # 開發與展示工作流程
+.streamlit/config.toml         # Streamlit file watcher 設定
 data/snapshots/                # 原始 API/檔案快照（本機資料）
 data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 ```
@@ -144,6 +148,8 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 ## 常見問題
 
 - **缺少 Key**：本機確認專案根目錄 `.env` 設定正確；Streamlit Community Cloud 則確認 **Settings → Secrets** 使用 TOML 格式設定 `CWA_API_KEY` 和 `MOENV_API_KEY`，儲存後重新啟動 app。
+- **Cloud 資料更新失敗**：先從 app 右下角選 **Manage app → Cloud logs** 確認部署/套件安裝成功，再看資料頁顯示的 HTTP 狀態或已遮罩連線原因。HTTP 401/403 才指向授權或額度；DNS/TLS/ConnectError 指向連線路徑，單純重填 Key 不會修復連線問題。錯誤診斷會隱去 API Key 和 URL query。
+- **Cloud logs 出現 inotify instance limit reached**：專案 `.streamlit/config.toml` 設定 `server.fileWatcherType = "poll"`，避免使用 Linux inotify watcher；推送設定後需等 app 重新部署。
 - **某項匯入失敗**：看終端機的資料集代碼與錯誤訊息；其他資料集會繼續匯入。
 - **目前無颱風/海嘯資料**：事件資料無內容可能代表目前無有效事件。請查看資料時間與最近匯入狀態，不要把過期報告解讀成即時警報。
 - **地震資訊**：顯著有感及小區域有感報告各自擷取；海嘯資料中的地震欄位不會取代這兩項地震報告。震度圖是官方報告連結，地圖震央只依報告提供的座標繪製。
