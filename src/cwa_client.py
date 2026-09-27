@@ -1,6 +1,7 @@
 """CWA Open Data HTTP client with retries and portable raw snapshots."""
 import hashlib
 import json
+import ssl
 import time
 import zipfile
 from datetime import datetime, timezone
@@ -9,6 +10,7 @@ from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple, Union
 
 import requests
+import certifi
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
 
@@ -20,6 +22,28 @@ from src.database import record_raw_snapshot
 from src.http_errors import safe_transport_detail
 
 Payload = Union[Dict[str, Any], bytes]
+
+
+class _CwaTLSAdapter(HTTPAdapter):
+    """Keep normal TLS verification but tolerate CWA's missing certificate SKI."""
+
+    def __init__(self, *args: Any, **kwargs: Any):
+        self.ssl_context = ssl.create_default_context(cafile=certifi.where())
+        strict_flag = getattr(ssl, "VERIFY_X509_STRICT", 0)
+        if strict_flag:
+            # CWA's current certificate chain fails Python 3.13+ strict RFC 5280
+            # checks with "Missing Subject Key Identifier". CA and hostname
+            # verification remain enabled; only this chain-profile check is relaxed.
+            self.ssl_context.verify_flags &= ~strict_flag
+        super().__init__(*args, **kwargs)
+
+    def init_poolmanager(self, connections: int, maxsize: int, block: bool = False, **pool_kwargs: Any):
+        pool_kwargs["ssl_context"] = self.ssl_context
+        return super().init_poolmanager(connections, maxsize, block=block, **pool_kwargs)
+
+    def proxy_manager_for(self, proxy: str, **proxy_kwargs: Any):
+        proxy_kwargs["ssl_context"] = self.ssl_context
+        return super().proxy_manager_for(proxy, **proxy_kwargs)
 
 
 class CWAClient:
@@ -40,8 +64,10 @@ class CWAClient:
             allowed_methods=frozenset({"GET"}),
             raise_on_status=False,
         )
-        adapter = HTTPAdapter(max_retries=retry)
-        self.session.mount("https://", adapter)
+        self.session.mount("https://", HTTPAdapter(max_retries=retry))
+        # Scope the compatibility exception to CWA. Other HTTPS connections
+        # continue to use Requests' normal strict certificate verification.
+        self.session.mount("https://opendata.cwa.gov.tw/", _CwaTLSAdapter(max_retries=retry))
         self.last_snapshot_paths: Dict[str, str] = {}
         self.last_data_timestamps: Dict[str, Optional[str]] = {}
         self.last_response_times_ms: Dict[str, float] = {}

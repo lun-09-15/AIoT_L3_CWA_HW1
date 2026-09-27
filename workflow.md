@@ -70,6 +70,8 @@ MOENV_API_KEY = "你的環境部API_Key"
 
 共用程式負責設定 timeout、HTTP 錯誤處理、授權、重試策略、回應格式辨識、擷取時間記錄。以 `requests` 的 `params` 組查詢參數，避免手動拼接 URL。對 API 回應同時檢查 HTTP 狀態與資料本身的錯誤欄位。一般請求 timeout 設為 8 秒、最多重試 1 次；連線錯誤需提供例外類型與已遮罩的診斷細節，任何錯誤都不得包含授權 query、API Key 或完整敏感 URL。CWA TLS/SSL 連線診斷最多保留 700 字元，以顯示完整憑證驗證原因；遮罩必須先於截短執行。
 
+若 CWA 憑證鏈因缺少 Subject Key Identifier 而被 Python 3.13+ 的嚴格 X.509 驗證拒絕，可使用獨立的 CWA HTTP adapter 僅清除 `VERIFY_X509_STRICT` 旗標。必須繼續使用 certifi 信任庫、`CERT_REQUIRED` 和 hostname check；不得以 `verify=False` 或關閉憑證驗證代替。此相容設定限定在 `opendata.cwa.gov.tw`，並應在 CWA 修復憑證鏈後移除。
+
 ### 5. 各資料集專屬解析器
 
 建議模組切分：
