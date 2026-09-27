@@ -8,6 +8,7 @@ import folium
 import pandas as pd
 import streamlit as st
 from branca.element import Element
+from folium.plugins import LocateControl
 from streamlit_folium import st_folium
 
 from src.config import BASE_DIR, CWA_API_KEY, DB_PATH, MOENV_API_KEY
@@ -350,56 +351,11 @@ def _weather_overview_map(
     layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer, air_quality_layer) if layer is not None)
     for layer in layers:
         layer.add_to(weather_map)
-    map_name = weather_map.get_name()
-    locate_script = f"""
-    (function () {{
-      const map = {map_name};
-      let deviceMarker = null;
-      const control = L.control({{position: 'topleft'}});
-      control.onAdd = function () {{
-        const button = L.DomUtil.create('button', 'leaflet-control-locate');
-        button.type = 'button';
-        button.title = '定位我的裝置';
-        button.setAttribute('aria-label', '定位我的裝置');
-        button.textContent = '⌖';
-        L.DomEvent.disableClickPropagation(button);
-        L.DomEvent.on(button, 'click', function (event) {{
-          L.DomEvent.preventDefault(event);
-          if (!navigator.geolocation) {{
-            window.alert('此瀏覽器不支援裝置定位。');
-            return;
-          }}
-          button.disabled = true;
-          button.textContent = '…';
-          navigator.geolocation.getCurrentPosition(function (position) {{
-            const point = [position.coords.latitude, position.coords.longitude];
-            map.flyTo(point, Math.max(map.getZoom(), 10));
-            if (deviceMarker) map.removeLayer(deviceMarker);
-            deviceMarker = L.circleMarker(point, {{radius: 8, color: '#fff', weight: 3,
-              fillColor: '#e53935', fillOpacity: 1}}).addTo(map)
-              .bindPopup('您的裝置位置').openPopup();
-            button.disabled = false;
-            button.textContent = '⌖';
-          }}, function (error) {{
-            const message = error.code === 1 ? '定位權限遭拒，請在瀏覽器網址列允許位置存取。'
-              : error.code === 2 ? '無法取得裝置位置，請確認定位服務已開啟。'
-              : '取得位置逾時，請稍後再試。';
-            window.alert(message);
-            button.disabled = false;
-            button.textContent = '⌖';
-          }}, {{enableHighAccuracy: true, timeout: 12000, maximumAge: 60000}});
-        }});
-        return button;
-      }};
-      control.addTo(map);
-      const style = document.createElement('style');
-      style.textContent = '.leaflet-control-locate{{width:34px;height:34px;border:0;border-radius:4px;'
-        + 'background:#fff;color:#172334;font-size:23px;line-height:30px;text-align:center;cursor:pointer;'
-        + 'box-shadow:0 1px 5px #0008}}.leaflet-control-locate:disabled{{opacity:.65}}';
-      document.head.appendChild(style);
-    }})();
-    """
-    weather_map.get_root().script.add_child(Element(locate_script))
+    LocateControl(
+        position="topleft",
+        strings={"title": "定位我的裝置", "popup": "您的裝置位置"},
+        locateOptions={"enableHighAccuracy": True, "timeout": 12000, "maximumAge": 60000},
+    ).add_to(weather_map)
     map_key = f"overview_map_{county_key}_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}_{int(show_air_quality)}_{air_metric}"
     st_folium(weather_map, width=960, height=610, key=map_key, returned_objects=[])
 
