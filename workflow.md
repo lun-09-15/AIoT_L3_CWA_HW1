@@ -32,7 +32,7 @@ flowchart TD
     J --> K[11. 溫度分布、地震與海嘯資訊頁]
     K --> L[12. 颱風路徑與侵襲機率頁]
     L --> M[13. 錯誤處理、快取與資料新鮮度]
-    M --> N[14. 文件、Git 與部署準備]
+    M --> N[14. 文件與 Git]
 ```
 
 ## 階段一：資料與環境確認
@@ -51,16 +51,7 @@ flowchart TD
 CWA_API_KEY=你的授權碼
 ```
 
-程式設定模組優先讀取 Streamlit `st.secrets`，並回退至環境變數與本機 `.env`；兩家資料來源的 Key 分開設定。讀取金鑰前檢查是否存在；不得將 `.env`、下載的私有資料或真實金鑰提交到 Git。保留 `.env.example` 作為設定範例。
-
-部署到 Streamlit Community Cloud 後，在 App **Settings → Secrets** 設定 TOML：
-
-```toml
-CWA_API_KEY = "你的中央氣象署 API Key"
-MOENV_API_KEY = "你的環境部 API Key"
-```
-
-儲存後重新啟動 App。Secrets 僅存放於 Streamlit 部署設定，不加入 repository 或 `.env.example`。
+程式只從環境變數與專案根目錄本機 `.env` 讀取設定；兩家資料來源的 Key 分開設定。讀取金鑰前檢查是否存在；不得將 `.env`、下載的私有資料或真實金鑰提交到 Git。保留 `.env.example` 作為設定範例。
 
 ### 3. 建立資料集規格清單
 
@@ -130,7 +121,7 @@ src/
 
 Streamlit 全寬元件使用 `width="stretch"`，不要再使用已棄用的 `use_container_width`。Folium 定位控制的 CSS/JavaScript 內嵌於 Python f-string 時，CSS 大括號必須跳脫成雙大括號，避免被 Python 誤當成插值運算式。
 
-每個新的 Streamlit 工作階段啟動時自動嘗試同步八項 CWA 資料及已設定的環境部 AQI 資料一次；以 session state 防止元件互動/rerun 重複同步。自動同步與手動更新共用 `_sync_all()`，必須在完成或失敗後清除資料快取，使頁面重新讀取資料庫；缺少 API Key 時提示設定要求並顯示現有資料。主內容頂端留出 4rem 空間，避免第一列控制項被 Streamlit 工具列（例如 Deploy）遮擋。
+每個新的 Streamlit 工作階段啟動時自動嘗試同步八項 CWA 資料及已設定的環境部 AQI 資料一次；以 session state 防止元件互動/rerun 重複同步。自動同步與手動更新共用 `_sync_all()`，必須在完成或失敗後清除資料快取，使頁面重新讀取資料庫；缺少 API Key 時提示設定要求並顯示現有資料。主內容頂端留出 4rem 空間，避免第一列控制項被 Streamlit 工具列遮擋。
 
 空氣品質另接環境部 `AQX_P_432` 每小時 AQI 測站資料，使用獨立的 `MOENV_API_KEY`。擷取目前 AQI、PM2.5、測站名稱、縣市、發布時間及座標，寫入 `air_quality_observations`；總覽地圖提供 AQI/PM2.5 數值標記切換，標記顏色依官方 AQI 級距著色，彈窗保留主要污染物、狀態與發布時間。空品圖層須遵循縣市篩選，不用氣象站資料或影像推算污染值。
 

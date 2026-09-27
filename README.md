@@ -43,17 +43,6 @@ MOENV_API_KEY=你的環境部API_Key
 
 環境部 Key 請在環境部資料開放平台會員帳號中取得。不要提交 `.env` 或分享 API Key；`.env.example` 僅包含佔位字串。
 
-### 部署到 Streamlit Community Cloud
-
-部署 App 後，進入該 App 的 **Settings → Secrets**，以 TOML 格式填入金鑰：
-
-```toml
-CWA_API_KEY = "你的中央氣象署 API Key"
-MOENV_API_KEY = "你的環境部 API Key"
-```
-
-儲存 Secrets 後重新啟動 App。`src/config.py` 會優先讀取 `st.secrets`；本機開發或命令列執行時，則回退讀取環境變數與專案根目錄 `.env`。不要把實際金鑰寫進 GitHub、程式碼或 `.env.example`。
-
 ## 匯入資料並啟動
 
 在專案根目錄執行：
@@ -92,7 +81,7 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 
 ## 常見問題
 
-- **缺少 Key**：本機確認 `.env` 位於專案根目錄；Streamlit Cloud 確認 App 的 **Settings → Secrets** 已設定正確的 `CWA_API_KEY`（及需要時的 `MOENV_API_KEY`），儲存後重新啟動 App。
+- **缺少 Key**：確認專案根目錄的 `.env` 已設定正確的 `CWA_API_KEY`（及需要時的 `MOENV_API_KEY`）；命令列執行時也可直接設定相同名稱的環境變數。
 - **某項匯入失敗**：看終端機的資料集代碼與錯誤訊息；其他資料集會繼續匯入。
 - **目前無颱風/海嘯資料**：事件資料無內容可能代表目前無有效事件。請查看資料時間與最近匯入狀態，不要把過期報告解讀成即時警報。
 - **地震資訊**：顯著有感及小區域有感報告各自擷取；海嘯資料中的地震欄位不會取代這兩項地震報告。震度圖是官方報告連結，地圖震央只依報告提供的座標繪製。
