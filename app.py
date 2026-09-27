@@ -176,18 +176,35 @@ def _station_map(frame: pd.DataFrame) -> None:
 
 
 def _latest_station_frame() -> pd.DataFrame:
-    return _read("""SELECT s.* FROM station_observations s
+    frame = _read("""SELECT s.* FROM station_observations s
                     JOIN (SELECT station_id,MAX(obs_time) AS obs_time FROM station_observations GROUP BY station_id) latest
                     ON s.station_id=latest.station_id AND s.obs_time=latest.obs_time
                     ORDER BY s.county_name,s.station_name""")
+    if frame.empty:
+        # Keep the expected schema so an empty/new Cloud database still renders
+        # the dashboard and can show its normal no-data state.
+        return pd.DataFrame(columns=[
+            "id", "station_id", "station_name", "county_name", "town_name",
+            "latitude", "longitude", "altitude", "obs_time", "temperature",
+            "relative_humidity", "wind_speed", "wind_direction", "precipitation",
+            "air_pressure", "updated_at",
+        ])
+    return frame
 
 
 @st.cache_data(ttl=60, show_spinner=False)
 def _latest_air_quality_frame() -> pd.DataFrame:
-    return _read("""SELECT a.* FROM air_quality_observations a
+    frame = _read("""SELECT a.* FROM air_quality_observations a
                     JOIN (SELECT site_id,MAX(publish_time) AS publish_time FROM air_quality_observations GROUP BY site_id) latest
                     ON a.site_id=latest.site_id AND a.publish_time=latest.publish_time
                     ORDER BY a.county_name,a.site_name""")
+    if frame.empty:
+        return pd.DataFrame(columns=[
+            "id", "site_id", "site_name", "county_name", "publish_time", "aqi",
+            "status", "pollutant", "pm25", "pm25_avg", "pm10", "ozone",
+            "longitude", "latitude", "updated_at",
+        ])
+    return frame
 
 
 def _aqi_style(value: Any) -> tuple[str, str]:
@@ -440,6 +457,8 @@ def _page_overview() -> None:
             f'有效測站：{len(stations)} 站<br>同步狀態：<span class="overview-ok">{escape(station_run["status"] if station_run else "尚未匯入")}</span></div></div>',
             unsafe_allow_html=True,
         )
+        if stations.empty:
+            st.info("目前沒有可呈現的測站觀測資料。請檢查資料新鮮度與更新狀態、確認 CWA_API_KEY 已設定，再按「更新全部資料」重試。")
         st.markdown("**即時觀測摘要**")
         c1, c2 = st.columns(2, gap="small")
         c1.metric("最高氣溫", f"{temp_values.max():.1f} °C" if not temp_values.empty else "—")
@@ -855,7 +874,7 @@ def _page_typhoon_track() -> None:
 
 def _sync_all() -> None:
     if CWA_API_KEY:
-        with st.sidebar.status("正在更新六項中央氣象署資料…", expanded=True) as status:
+        with st.sidebar.status("正在更新八項中央氣象署資料…", expanded=True) as status:
             try:
                 from src.ingest import ingest_all
                 from src.cwa_client import CWAClient
