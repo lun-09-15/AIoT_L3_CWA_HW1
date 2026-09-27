@@ -164,7 +164,9 @@ class CWAClient:
         if isinstance(exc, requests.HTTPError) and exc.response is not None:
             return f"CWA HTTP {exc.response.status_code}"
         if isinstance(exc, requests.Timeout):
-            return f"連線逾時（{safe_transport_detail(exc, self.api_key)}）"
+            return f"連線逾時（{safe_transport_detail(exc, self.api_key, limit=700)}）"
         if isinstance(exc, requests.ConnectionError):
-            return f"無法連線至 CWA Open Data（{safe_transport_detail(exc, self.api_key)}）"
+            # Keep the nested SSL verification reason visible for Cloud diagnosis.
+            # safe_transport_detail redacts query strings and credentials first.
+            return f"無法連線至 CWA Open Data（{safe_transport_detail(exc, self.api_key, limit=700)}）"
         return safe_transport_detail(exc, self.api_key, limit=240)

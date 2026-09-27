@@ -148,7 +148,7 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 ## 常見問題
 
 - **缺少 Key**：本機確認專案根目錄 `.env` 設定正確；Streamlit Community Cloud 則確認 **Settings → Secrets** 使用 TOML 格式設定 `CWA_API_KEY` 和 `MOENV_API_KEY`，儲存後重新啟動 app。
-- **Cloud 資料更新失敗**：先從 app 右下角選 **Manage app → Cloud logs** 確認部署/套件安裝成功，再看資料頁顯示的 HTTP 狀態或已遮罩連線原因。HTTP 401/403 才指向授權或額度；DNS/TLS/ConnectError 指向連線路徑，單純重填 Key 不會修復連線問題。錯誤診斷會隱去 API Key 和 URL query。
+- **Cloud 資料更新失敗**：先從 app 右下角選 **Manage app → Cloud logs** 確認部署/套件安裝成功，再看資料頁顯示的 HTTP 狀態或已遮罩連線原因。HTTP 401/403 才指向授權或額度；DNS/TLS/ConnectError 指向連線路徑，單純重填 Key 不會修復連線問題。CWA 的 TLS 診斷會保留較完整的憑證驗證原因以利排查，同時隱去 API Key 和 URL query。
 - **Cloud logs 出現 inotify instance limit reached**：專案 `.streamlit/config.toml` 設定 `server.fileWatcherType = "poll"`，避免使用 Linux inotify watcher；推送設定後需等 app 重新部署。
 - **某項匯入失敗**：看終端機的資料集代碼與錯誤訊息；其他資料集會繼續匯入。
 - **目前無颱風/海嘯資料**：事件資料無內容可能代表目前無有效事件。請查看資料時間與最近匯入狀態，不要把過期報告解讀成即時警報。
