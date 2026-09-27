@@ -1,4 +1,4 @@
-"""Fetch the six configured CWA datasets and persist normalized records."""
+"""Fetch configured CWA datasets and persist normalized records."""
 import argparse
 import sys
 from datetime import datetime
@@ -64,7 +64,7 @@ def ingest_all(client: CWAClient, dataset_ids: Optional[list[str]] = None) -> Di
 
 
 def main(argv: Optional[list[str]] = None) -> int:
-    parser = argparse.ArgumentParser(description="匯入中央氣象署六項開放資料")
+    parser = argparse.ArgumentParser(description="匯入中央氣象署開放資料")
     parser.add_argument("--only", nargs="+", choices=sorted(DATASET_SPECS), help="只匯入指定資料集")
     args = parser.parse_args(argv)
     print(f"CWA 資料匯入｜{datetime.now().astimezone().strftime('%Y-%m-%d %H:%M:%S %Z')}")

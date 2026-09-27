@@ -5,6 +5,7 @@ from src.datasets.marine_forecast import parse_marine_forecast, save_marine_fore
 from src.datasets.station_obs import parse_station_observations, save_station_observations
 from src.datasets.temperature_map import parse_temperature_map, save_temperature_map
 from src.datasets.tsunami import parse_tsunami, save_tsunami_events
+from src.datasets.earthquake import parse_earthquake_reports, save_earthquake_reports
 from src.datasets.typhoon import (
     parse_and_save_typhoon_probability_kmz, parse_typhoon_tracks, save_typhoon_tracks,
 )
@@ -21,6 +22,9 @@ def process_and_store_dataset(dataset_id: str, payload: Union[Dict[str, Any], by
         if dataset_id == "E-A0014-001" and isinstance(payload, dict):
             rows = parse_tsunami(payload); count = save_tsunami_events(rows)
             return True, count, f"儲存/更新 {count} 筆海嘯報告"
+        if dataset_id in {"E-A0015-001", "E-A0016-001"} and isinstance(payload, dict):
+            rows = parse_earthquake_reports(payload, dataset_id); count = save_earthquake_reports(rows)
+            return True, count, f"儲存/更新 {count} 筆{('顯著有感' if dataset_id == 'E-A0015-001' else '小區域有感')}地震報告"
         if dataset_id == "O-A0038-001" and isinstance(payload, dict):
             row = parse_temperature_map(payload); count = save_temperature_map(row)
             return True, count, f"儲存 {count} 筆溫度分布圖 metadata"

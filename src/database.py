@@ -128,6 +128,31 @@ def init_db() -> None:
     );
     CREATE INDEX IF NOT EXISTS idx_tsunami_issue ON tsunami_events(issue_time DESC);
 
+    CREATE TABLE IF NOT EXISTS earthquake_events (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        dataset_id TEXT NOT NULL,
+        event_key TEXT NOT NULL,
+        earthquake_no TEXT,
+        report_no TEXT NOT NULL DEFAULT '',
+        origin_time TEXT NOT NULL,
+        report_time TEXT,
+        epicenter_location TEXT,
+        epicenter_lat REAL,
+        epicenter_lon REAL,
+        focal_depth REAL,
+        magnitude REAL,
+        max_intensity TEXT,
+        report_content TEXT,
+        report_image_uri TEXT,
+        web_url TEXT,
+        intensity_json TEXT NOT NULL DEFAULT '[]',
+        created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+        UNIQUE(dataset_id, event_key)
+    );
+    CREATE INDEX IF NOT EXISTS idx_earthquake_origin ON earthquake_events(origin_time DESC);
+    CREATE INDEX IF NOT EXISTS idx_earthquake_dataset ON earthquake_events(dataset_id, origin_time DESC);
+
     CREATE TABLE IF NOT EXISTS temperature_maps (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         dataset_id TEXT NOT NULL,

@@ -49,7 +49,7 @@ class CWAClient:
     def _data_timestamp(data: Any) -> Optional[str]:
         if not isinstance(data, dict):
             return None
-        preferred = ("IssueTime", "ObsTime", "DateTime", "InitialTime", "StartTime", "sent", "Sent", "Update", "update")
+        preferred = ("IssueTime", "ReportTime", "OriginTime", "ObsTime", "DateTime", "InitialTime", "StartTime", "sent", "Sent", "Update", "update")
         found: List[str] = []
 
         def visit(value: Any) -> None:

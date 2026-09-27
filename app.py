@@ -1,4 +1,4 @@
-"""Streamlit application for the six CWA marine, observation and hazard datasets."""
+"""Streamlit application for CWA marine, observation, earthquake and hazard data."""
 from datetime import datetime, timezone
 from html import escape
 from pathlib import Path
@@ -19,11 +19,12 @@ st.set_page_config(page_title="CWA 海氣象與災害資訊", page_icon="🌦️
 init_db()
 
 PAGES = [
-    "總覽", "海面天氣預報", "氣象觀測站", "海嘯資訊", "溫度分布狀態", "颱風侵襲機率", "熱帶氣旋路徑",
+    "總覽", "海面天氣預報", "氣象觀測站", "地震資訊", "海嘯資訊", "溫度分布狀態", "颱風侵襲機率", "熱帶氣旋路徑",
 ]
 DATASET_FOR_PAGE = {
     "海面天氣預報": "F-A0012-001",
     "氣象觀測站": "O-A0001-001",
+    "地震資訊": ("E-A0015-001", "E-A0016-001"),
     "海嘯資訊": "E-A0014-001",
     "溫度分布狀態": "O-A0038-001",
     "颱風侵襲機率": "W-C0034-003",
@@ -673,6 +674,74 @@ def _page_tsunami() -> None:
     _download_csv(history, "tsunami_reports.csv")
 
 
+def _page_earthquake() -> None:
+    st.title("🌏 地震資訊")
+    st.caption("CWA E-A0015-001 顯著有感地震 + E-A0016-001 小區域有感地震；地震報告與海嘯警報分開呈現。")
+    for dataset_id, name in (("E-A0015-001", "顯著有感地震"), ("E-A0016-001", "小區域有感地震")):
+        with st.expander(f"{name}資料擷取狀態", expanded=False):
+            _show_ingestion_status(dataset_id)
+
+    events = _read("SELECT * FROM earthquake_events ORDER BY origin_time DESC, id DESC LIMIT 1000")
+    if events.empty:
+        return _empty("目前資料庫沒有地震報告。請確認 CWA_API_KEY 並按左側「更新全部資料」。")
+
+    dataset_labels = {"全部": None, "顯著有感地震": "E-A0015-001", "小區域有感地震": "E-A0016-001"}
+    selected = st.selectbox("報告類型", list(dataset_labels), key="earthquake_dataset_filter")
+    if dataset_labels[selected]:
+        events = events[events["dataset_id"] == dataset_labels[selected]]
+    if events.empty:
+        return _empty("此類型目前沒有已匯入的地震報告。")
+
+    latest = events.iloc[0]
+    cols = st.columns(4)
+    cols[0].metric("顯示報告數", f"{len(events)}")
+    cols[1].metric("最新規模", f"{latest['magnitude']:.1f}" if pd.notna(latest.get("magnitude")) else "—")
+    max_intensity = latest.get("max_intensity")
+    cols[2].metric("最大震度", max_intensity if pd.notna(max_intensity) and max_intensity else "—")
+    cols[3].metric("最近發生時間", _timestamp(latest.get("origin_time")))
+
+    mapped = events.dropna(subset=["epicenter_lat", "epicenter_lon"])
+    if not mapped.empty:
+        center = [float(mapped.iloc[0]["epicenter_lat"]), float(mapped.iloc[0]["epicenter_lon"])]
+        m = folium.Map(location=center, zoom_start=5, tiles="OpenStreetMap", control_scale=True)
+        for _, row in mapped.head(300).iterrows():
+            dataset_id = str(row["dataset_id"])
+            source_name = "顯著有感" if dataset_id == "E-A0015-001" else "小區域有感"
+            magnitude = row.get("magnitude")
+            radius = max(4, min(13, 3 + (float(magnitude) * 1.2 if pd.notna(magnitude) else 2)))
+            color = "#ff5b5b" if dataset_id == "E-A0015-001" else "#f0b44d"
+            popup = (
+                f"<b>{escape(source_name)}地震 · 規模 {escape(str(magnitude if pd.notna(magnitude) else '—'))}</b><br>"
+                f"{escape(str(row.get('epicenter_location') or '震央位置未提供'))}<br>"
+                f"發生：{escape(_timestamp(row.get('origin_time')))}<br>"
+                f"深度：{escape(str(row.get('focal_depth') if pd.notna(row.get('focal_depth')) else '—'))} km<br>"
+                f"最大震度：{escape(str(row.get('max_intensity') or '—'))}<br>"
+                f"{escape(str(row.get('report_content') or ''))}"
+            )
+            folium.CircleMarker(
+                location=[float(row["epicenter_lat"]), float(row["epicenter_lon"])],
+                radius=radius, color=color, weight=2, fill=True, fill_color=color,
+                fill_opacity=0.65, tooltip=f"{source_name} · 規模 {magnitude if pd.notna(magnitude) else '—'}",
+                popup=folium.Popup(popup, max_width=360),
+            ).add_to(m)
+        st_folium(m, width="stretch", height=520, key="earthquake_map", returned_objects=[])
+        st.caption("紅色為顯著有感地震，黃色為小區域有感地震；圓點大小僅用規模作視覺提示。僅繪製官方提供有效震央座標的報告。")
+    else:
+        st.info("報告目前沒有可用震央座標，以下仍顯示文字與表格資料。")
+
+    table = events.head(200)[[
+        "dataset_id", "origin_time", "epicenter_location", "magnitude", "focal_depth",
+        "max_intensity", "report_content", "report_image_uri", "web_url",
+    ]].copy()
+    table["dataset_id"] = table["dataset_id"].map({"E-A0015-001": "顯著有感", "E-A0016-001": "小區域有感"})
+    table.columns = ["報告類型", "發生時間", "震央", "規模", "深度 km", "最大震度", "報告內容", "震度圖", "官方報告"]
+    st.subheader("地震報告")
+    st.dataframe(table, hide_index=True, width="stretch", column_config={
+        "震度圖": st.column_config.LinkColumn(), "官方報告": st.column_config.LinkColumn(),
+    })
+    _download_csv(table, "cwa_earthquake_reports.csv")
+
+
 def _page_temperature() -> None:
     st.title("🌡️ 溫度分布狀態")
     st.caption("資料集 O-A0038-001 · 官方影像產品；圖面色彩不反推為精確逐點數值")
@@ -836,6 +905,8 @@ elif page == "海面天氣預報":
     _page_marine()
 elif page == "氣象觀測站":
     _page_stations()
+elif page == "地震資訊":
+    _page_earthquake()
 elif page == "海嘯資訊":
     _page_tsunami()
 elif page == "溫度分布狀態":

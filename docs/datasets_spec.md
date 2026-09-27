@@ -1,4 +1,4 @@
-# 📊 CWA 六項與環境部空品資料集規格清單 (Dataset Specifications)
+# 📊 CWA 八項與環境部空品資料集規格清單 (Dataset Specifications)
 
 本文件依據專案 [workflow.md](../workflow.md) 之**階段一：步驟 3「建立資料集規格清單」**編寫，詳細記錄各資料集之代碼、官方名稱、API 取得方式、格式、欄位規範、缺值定義與視覺化呈現元件。
 
@@ -11,12 +11,14 @@
 | **1** | **海面天氣預報** | `F-A0012-001` | 海面天氣預報 (北部及東北部海面、臺灣海峽等) | File API | JSON | 每 6 小時 | `-`, `""`, `無` | `marine_forecasts` |
 | **2** | **氣象觀測站** | `O-A0001-001` | 全測站逐時氣象資料 | REST API | JSON | 每小時 | `-99`, `-999`, `X` | `station_observations` |
 | **3** | **海嘯資訊** | `E-A0014-001` | 海嘯資訊-海嘯警示與解除報告 | REST API | JSON | 事件觸發 | 空陣列/無資料 | `tsunami_events` |
-| **4** | **溫度分布狀態** | `O-A0038-001` | 溫度分布圖-溫度分布圖 | File API | JSON (圖片URL) | 每小時 | 無 | `temperature_maps` |
-| **5** | **颱風侵襲機率** | `W-C0034-003` | 暴風圈侵襲機率圖層 | File API | KMZ (KML) | 颱風活動時 6 小時；警報期間 3 小時 | 無 | `typhoon_probabilities` |
-| **6** | **熱帶氣旋路徑** | `W-C0034-005` | 熱帶氣旋路徑 (過去定位與未來預報) | REST API | JSON | 颱風活動時 6 小時；警報期間 3 小時 | `-`, `None` | `typhoon_tracks` |
-| **7** | **空氣品質地圖** | `AQX_P_432` | 空氣品質指標 (AQI) | 環境部 REST API | JSON | 每小時 | `-`, `NA`, 空值 | `air_quality_observations` |
+| **4** | **地震資訊-顯著有感** | `E-A0015-001` | 顯著有感地震報告 | REST API | JSON | 事件觸發 | 空陣列/無資料 | `earthquake_events` |
+| **5** | **地震資訊-小區域有感** | `E-A0016-001` | 小區域有感地震報告 | REST API | JSON | 事件觸發 | 空陣列/無資料 | `earthquake_events` |
+| **6** | **溫度分布狀態** | `O-A0038-001` | 溫度分布圖-溫度分布圖 | File API | JSON (圖片URL) | 每小時 | 無 | `temperature_maps` |
+| **7** | **颱風侵襲機率** | `W-C0034-003` | 暴風圈侵襲機率圖層 | File API | KMZ (KML) | 颱風活動時 6 小時；警報期間 3 小時 | 無 | `typhoon_probabilities` |
+| **8** | **熱帶氣旋路徑** | `W-C0034-005` | 熱帶氣旋路徑 (過去定位與未來預報) | REST API | JSON | 颱風活動時 6 小時；警報期間 3 小時 | `-`, `None` | `typhoon_tracks` |
+| **9** | **空氣品質地圖** | `AQX_P_432` | 空氣品質指標 (AQI) | 環境部 REST API | JSON | 每小時 | `-`, `NA`, 空值 | `air_quality_observations` |
 
-> 前六項由中央氣象署提供；`AQX_P_432` 由環境部環境資料開放平台提供，必須另設定 `MOENV_API_KEY`，不可拿 CWA Key 替代。空品資料含 AQI、PM2.5、測站發布時間及經緯度，以數值標記直接繪製地圖，非影像圖層。
+> 前八項由中央氣象署提供；`AQX_P_432` 由環境部環境資料開放平台提供，必須另設定 `MOENV_API_KEY`，不可拿 CWA Key 替代。空品資料含 AQI、PM2.5、測站發布時間及經緯度，以數值標記直接繪製地圖，非影像圖層。
 
 ---
 
@@ -92,7 +94,16 @@
 
 ---
 
-### 4. 溫度分布狀態 (`O-A0038-001`)
+### 4. 顯著有感地震 (`E-A0015-001`) 與小區域有感地震 (`E-A0016-001`)
+- **官方資料說明**：[顯著有感地震報告](https://opendata.cwa.gov.tw/opendatadoc/Earthquake/E-A0015-001.pdf)、[小區域有感地震報告](https://opendata.cwa.gov.tw/opendatadoc/Earthquake/E-A0016-001.pdf)。CWA [公告](https://opendata.cwa.gov.tw/announcement/news/316?page=1)兩項資料於 2026-06-01 起欄位格式異動，實際 API 回應以目前平台版本為準。
+- **存取端點**：`https://opendata.cwa.gov.tw/api/v1/rest/datastore/{E-A0015-001|E-A0016-001}?Authorization={API_KEY}&format=JSON`
+- **解析入口**：`records.Earthquake[]`；解析器容許集合/單筆物件，以及大小寫與可選巢狀欄位差異。
+- **標準化欄位**：`EarthquakeInfo.OriginTime`、`Epicenter` 的位置與經緯度、`EarthquakeMagnitude.MagnitudeValue`、`FocalDepth`、`Intensity`/`ShakingArea`、`ReportContent`、`ReportImageURI`、`Web`。可選欄位缺漏保留空值，不推算震度或震央。
+- **呈現方式**：地震資訊頁可依資料集篩選，地圖只畫有效震央座標；顯著有感與小區域有感使用不同顏色，圓點大小作規模視覺提示；清單呈現規模、深度、震度摘要、報告內文和官方報告/震度圖連結。
+- **儲存表格**：`earthquake_events`，以資料集代碼與穩定事件鍵去重；原始完整回應另保存在 snapshots。
+- **事件邊界**：與海嘯 `E-A0014-001` 分開擷取與展示；同一震動可能出現在兩個地震資料集，不跨資料集合併，以保留來源和各自報告。
+
+### 5. 溫度分布狀態 (`O-A0038-001`)
 - **官方名稱**：溫度分布圖-溫度分布圖
 - **存取端點**：
   `https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/O-A0038-001?Authorization={API_KEY}&downloadType=WEB&format=JSON`
@@ -107,7 +118,7 @@
 
 ---
 
-### 5. 颱風侵襲機率 (`W-C0034-003`)
+### 6. 颱風侵襲機率 (`W-C0034-003`)
 - **官方名稱**：颱風侵襲機率-暴風圈侵襲機率圖層 (KMZ)
 - **存取端點**：
   `https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/W-C0034-003?Authorization={API_KEY}&downloadType=WEB&format=KMZ`
@@ -124,7 +135,7 @@
 
 ---
 
-### 6. 熱帶氣旋路徑 (`W-C0034-005`)
+### 7. 熱帶氣旋路徑 (`W-C0034-005`)
 - **官方名稱**：熱帶氣旋路徑-過去分析與預測路徑
 - **存取端點**：
   `https://opendata.cwa.gov.tw/api/v1/rest/datastore/W-C0034-005?Authorization={API_KEY}`
@@ -145,7 +156,7 @@
 
 ---
 
-### 7. 空氣品質指標 (`AQX_P_432`, MOENV)
+### 9. 空氣品質指標 (`AQX_P_432`, MOENV)
 - **官方資料集**：[環境部空氣品質指標 (AQI)](https://data.moenv.gov.tw/dataset/detail/AQX_P_432)
 - **存取端點**：`https://data.moenv.gov.tw/api/v2/AQX_P_432?api_key={MOENV_API_KEY}&format=JSON&limit=1000`
 - **主要欄位**：`SiteId`、`SiteName`、`County`、`AQI`、`Status`、`Pollutant`、`PM2.5`、`PM10`、`publishtime`、`Longitude`、`Latitude`。

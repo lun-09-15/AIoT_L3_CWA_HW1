@@ -1,6 +1,6 @@
 """
 CWA Dataset Specifications definitions.
-Defines metadata, API endpoint types, update frequencies, and schema notes for the 6 datasets.
+Defines metadata, API endpoint types, update frequencies, and schema notes for CWA datasets.
 """
 
 from dataclasses import dataclass
@@ -63,6 +63,34 @@ DATASET_SPECS: Dict[str, DatasetSpec] = {
         unit_description="震源深度 (km)、地震規模 (M_L/M_w)、報告燈號",
         ui_component="海嘯警戒燈號橫幅、地震與震央資訊卡、歷史警訊清單",
         description="海嘯警報發布、解除資訊及相關地震震央與規模紀錄。"
+    ),
+    "E-A0015-001": DatasetSpec(
+        dataset_id="E-A0015-001",
+        official_name="顯著有感地震報告資料-顯著有感地震報告",
+        category="地震資訊",
+        api_type="REST",
+        file_format="JSON",
+        update_frequency="事件觸發更新",
+        time_field="EarthquakeInfo.OriginTime, ReportTime",
+        geo_field="EarthquakeInfo.Epicenter (震央座標)",
+        missing_value_codes=["-", "", "X"],
+        unit_description="地震規模、深度 (km)、各地震度",
+        ui_component="顯著有感地震地圖、震央資訊卡、各地震度與歷史清單",
+        description="中央氣象署發布的顯著有感地震報告及各地震度資訊。"
+    ),
+    "E-A0016-001": DatasetSpec(
+        dataset_id="E-A0016-001",
+        official_name="小區域有感地震報告資料-小區域有感地震報告",
+        category="地震資訊",
+        api_type="REST",
+        file_format="JSON",
+        update_frequency="事件觸發更新",
+        time_field="EarthquakeInfo.OriginTime, ReportTime",
+        geo_field="EarthquakeInfo.Epicenter (震央座標)",
+        missing_value_codes=["-", "", "X"],
+        unit_description="地震規模、深度 (km)、測站/區域震度",
+        ui_component="小區域有感地震地圖、震央資訊卡、測站震度與歷史清單",
+        description="中央氣象署發布的小區域有感地震報告及測站/區域震度資訊。"
     ),
     "O-A0038-001": DatasetSpec(
         dataset_id="O-A0038-001",
