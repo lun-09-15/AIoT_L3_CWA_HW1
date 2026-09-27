@@ -23,6 +23,53 @@
 
 總覽可用縣市篩選同步檢視地圖與摘要，地圖會移至選定縣市；選擇全部縣市時回到台灣本島預設視角。地圖也可按「定位我的裝置」使用瀏覽器位置權限定位（需 localhost/HTTPS 並由使用者允許）。位置只在瀏覽器端定位，不會儲存或傳回伺服器。氣象觀測站頁另有多測站趨勢比較，可比較最多五個測站最近 48 筆觀測資料。
 
+## 畫面導覽
+
+以下畫面展示儀表板總覽與各資料頁的主要呈現方式。
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/overview.png" alt="總覽與測站地圖" width="100%"><br>
+      <strong>總覽</strong><br>查看資料同步狀態、全台測站分布與氣象摘要，並調整縣市、底圖和觀測圖層。
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/marine-forecast.png" alt="海面天氣預報" width="100%"><br>
+      <strong>海面天氣預報</strong><br>依海域與預報時段瀏覽天氣、風向風速、浪高與浪況。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/station-observations.png" alt="氣象觀測站" width="100%"><br>
+      <strong>氣象觀測站</strong><br>在地圖查看測站位置，並比較氣溫、相對濕度等最新觀測摘要。
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/earthquake-reports.png" alt="地震資訊" width="100%"><br>
+      <strong>地震資訊</strong><br>分別檢視顯著有感與小區域地震報告、規模與震央分布。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/tsunami-reports.png" alt="海嘯資訊" width="100%"><br>
+      <strong>海嘯資訊</strong><br>呈現官方報告狀態、有效時間、地震資訊與震央位置。
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/temperature-map.png" alt="溫度分布圖" width="100%"><br>
+      <strong>溫度分布狀態</strong><br>查看中央氣象署溫度分布影像與產品時間；影像不作逐點數值解讀。
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/typhoon-probability.png" alt="颱風侵襲機率圖層" width="100%"><br>
+      <strong>颱風侵襲機率</strong><br>在地圖呈現官方 KMZ 機率範圍與不同機率級距。
+    </td>
+    <td width="50%" valign="top">
+      <img src="docs/screenshots/typhoon-track.png" alt="熱帶氣旋路徑" width="100%"><br>
+      <strong>熱帶氣旋路徑</strong><br>以不同顏色區分已分析定位與預測路徑，並可選擇熱帶氣旋。
+    </td>
+  </tr>
+</table>
+
 ## 安裝與設定
 
 需要 Python 3.9 以上版本。
