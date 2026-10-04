@@ -168,8 +168,34 @@ def _crop_and_downsample(grid: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def _fetch_radar_frame(timestamp: str, api_key: str) -> Dict[str, Any]:
+    """Download and prepare one frame using a worker-owned HTTP session."""
+    worker_client = CWAClient(api_key=api_key)
+    try:
+        parsed_time = _parse_time(timestamp)
+        if parsed_time is None:
+            raise ValueError("CWA 雷達歷史索引包含無法辨識的時次。")
+        time_path = parsed_time.strftime("%Y/%m/%d/%H/%M/%S")
+        data_url = f"{HISTORY_API}/getData/{DATASET_ID}/{time_path}"
+        try:
+            response = worker_client.session.get(
+                data_url,
+                params={"Authorization": worker_client.api_key},
+                timeout=DEFAULT_TIMEOUT_SEC,
+            )
+        except requests.RequestException as exc:
+            raise RuntimeError(worker_client._safe_error(exc)) from exc
+        return _crop_and_downsample(
+            parse_radar_grid(_load_payload(response, f"雷達格點 {timestamp}"))
+        )
+    finally:
+        worker_client.session.close()
+
+
 def load_recent_radar_frames(client: Optional[CWAClient] = None, frame_count: int = 7) -> List[Dict[str, Any]]:
-    """Fetch recent radar grids using the timestamp path advertised by CWA history metadata."""
+    """Fetch recent radar grids with bounded parallel frame downloads."""
+    from concurrent.futures import ThreadPoolExecutor
+
     client = client or CWAClient()
     try:
         metadata_response = client.session.get(
@@ -184,27 +210,11 @@ def load_recent_radar_frames(client: Optional[CWAClient] = None, frame_count: in
     if len(timestamps) < 2:
         raise ValueError("CWA 雷達歷史索引目前不足兩個時次，無法播放動畫。")
 
-    frames: List[Dict[str, Any]] = []
-    for timestamp in timestamps:
-        parsed_time = _parse_time(timestamp)
-        if parsed_time is None:
-            raise ValueError("CWA 雷達歷史索引包含無法辨識的時次。")
-        time_path = parsed_time.strftime("%Y/%m/%d/%H/%M/%S")
-        data_url = f"{HISTORY_API}/getData/{DATASET_ID}/{time_path}"
-        try:
-            response = client.session.get(
-                data_url,
-                params={"Authorization": client.api_key},
-                timeout=DEFAULT_TIMEOUT_SEC,
-            )
-        except requests.RequestException as exc:
-            raise RuntimeError(client._safe_error(exc)) from exc
-        frames.append(_crop_and_downsample(
-            parse_radar_grid(_load_payload(response, f"雷達格點 {timestamp}"))
-        ))
+    workers = min(4, len(timestamps))
+    with ThreadPoolExecutor(max_workers=workers, thread_name_prefix="cwa-radar") as pool:
+        frames = list(pool.map(lambda timestamp: _fetch_radar_frame(timestamp, client.api_key), timestamps))
     frames.sort(key=lambda frame: _parse_time(frame["timestamp"]) or datetime.min)
     return frames
-
 def radar_animation_html(
     frames: List[Dict[str, Any]],
     base_mode: str = "無地形",
