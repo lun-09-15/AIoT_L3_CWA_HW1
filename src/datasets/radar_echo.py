@@ -205,30 +205,56 @@ def load_recent_radar_frames(client: Optional[CWAClient] = None, frame_count: in
     frames.sort(key=lambda frame: _parse_time(frame["timestamp"]) or datetime.min)
     return frames
 
-def radar_animation_html(frames: List[Dict[str, Any]]) -> str:
+def radar_animation_html(
+    frames: List[Dict[str, Any]],
+    base_mode: str = "無地形",
+    area: str = "較大範圍區域",
+    speed_seconds: float = 1.0,
+    playback_mode: str = "循環播放",
+    initial_frame: int = 0,
+) -> str:
     """Build a Leaflet map that paints numeric dBZ cells on Canvas and animates frames."""
+    if not frames:
+        raise ValueError("沒有可繪製的雷達格點時次。")
     encoded = json.dumps(frames, ensure_ascii=False, separators=(",", ":"))
-    # Prevent a timestamp/string from closing the script element in generated HTML.
     encoded = encoded.replace("</", "<\\/")
+    config = json.dumps({
+        "base_mode": base_mode,
+        "area": area,
+        "speed": max(0.25, min(3.0, float(speed_seconds))),
+        "playback_mode": playback_mode,
+        "initial_frame": max(0, min(len(frames) - 1, int(initial_frame))),
+    }, ensure_ascii=False, separators=(",", ":"))
     return f"""<!doctype html>
 <html><head><meta charset="utf-8"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 html,body{{margin:0;padding:0;background:#0b1220;color:#eaf1fb;font:14px sans-serif}}
-#controls{{height:56px;display:flex;align-items:center;gap:12px;padding:0 12px;box-sizing:border-box;background:#111c2c}}
-#play{{border:1px solid #3b526d;border-radius:6px;background:#1b2d44;color:white;padding:7px 13px;cursor:pointer}}
-#timeline{{flex:1;min-width:80px;accent-color:#54d6b2}}#time{{min-width:190px;text-align:right;color:#c5d3e4}}
-#map{{height:calc(100vh - 56px);width:100%;background:#152538}}
+#controls{{min-height:54px;display:flex;align-items:center;gap:10px;padding:7px 10px;box-sizing:border-box;background:#111c2c}}
+#play,#stop{{border:1px solid #3b526d;border-radius:6px;background:#1b2d44;color:white;padding:7px 12px;cursor:pointer;white-space:nowrap}}
+#timeline{{flex:1;min-width:80px;accent-color:#54d6b2}}#time{{min-width:190px;text-align:right;color:#c5d3e4;font-size:12px}}
+#map{{height:calc(100vh - 54px);min-height:390px;width:100%;background:#152538}}
 .radar-canvas{{position:absolute;inset:0;z-index:400;pointer-events:none}}
 .leaflet-control-attribution{{font-size:10px}}
 </style></head><body>
-<div id="controls"><button id="play" type="button">▶ 播放</button><input id="timeline" type="range" min="0" max="{len(frames)-1}" value="{len(frames)-1}"><span id="time"></span></div>
+<div id="controls"><button id="play" type="button">▶ 播放</button><button id="stop" type="button">■ 停止</button><input id="timeline" type="range" min="0" max="{len(frames)-1}" value="0"><span id="time"></span></div>
 <div id="map"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
-const frames={encoded};
-const map=L.map('map',{{zoomControl:true,preferCanvas:true}}).setView([23.7,121.0],7);
-L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png',{{maxZoom:18,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}}).addTo(map);
-const canvas=L.DomUtil.create('canvas','radar-canvas',map.getContainer());const ctx=canvas.getContext('2d');
-const slider=document.getElementById('timeline'),button=document.getElementById('play'),timeLabel=document.getElementById('time');
-let frameIndex=frames.length-1,timer=null;
+const frames={encoded},cfg={config};
+const center=cfg.area==='臺灣鄰近區域'?[23.7,121.0]:[24.2,123.0],zoom=cfg.area==='臺灣鄰近區域'?8:6;
+const map=L.map('map',{{zoomControl:true,preferCanvas:true}}).setView(center,zoom);
+const osm=L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png',{{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}});
+const topo=L.tileLayer('https://{{s}}.tile.opentopomap.org/{{z}}/{{x}}/{{y}}.png',{{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'}});
+osm.addTo(map);
+if(cfg.base_mode==='有地形'){{map.removeLayer(osm);topo.addTo(map);}}
+if(cfg.base_mode==='降雨雷達'){{
+ fetch('https://api.rainviewer.com/public/weather-maps.json').then(r=>r.json()).then(data=>{{
+   const past=data.radar&&data.radar.past||[];if(past.length){{const latest=past[past.length-1];
+     L.tileLayer(data.host+latest.path+'/256/{{z}}/{{x}}/{{y}}/2/1_1.png',{{opacity:.62,maxZoom:7,attribution:'Weather radar &copy; <a href="https://www.rainviewer.com/">RainViewer</a>'}}).addTo(map);
+   }}
+ }}).catch(()=>{{}});
+}}
+const canvas=L.DomUtil.create('canvas','radar-canvas',map.getContainer()),ctx=canvas.getContext('2d');
+const slider=document.getElementById('timeline'),button=document.getElementById('play'),stopButton=document.getElementById('stop'),timeLabel=document.getElementById('time');
+let frameIndex=cfg.initial_frame,timer=null;
 function color(v){{if(v<5)return null;if(v<10)return '#79e7f5';if(v<20)return '#00a9e8';if(v<30)return '#20c55e';if(v<40)return '#facc15';if(v<50)return '#fb923c';if(v<60)return '#ef4444';return '#d946ef';}}
 function draw(){{
  const size=map.getSize(),dpr=window.devicePixelRatio||1;canvas.width=size.x*dpr;canvas.height=size.y*dpr;canvas.style.width=size.x+'px';canvas.style.height=size.y+'px';ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,size.x,size.y);
@@ -242,7 +268,9 @@ function draw(){{
  ctx.globalAlpha=1;timeLabel.textContent=f.timestamp.replace('T',' ').replace('+08:00',' 台灣時間');slider.value=frameIndex;
 }}
 function setFrame(i){{frameIndex=Math.max(0,Math.min(frames.length-1,i));draw();}}
+function stop(){{if(timer){{clearInterval(timer);timer=null;}}button.textContent='▶ 播放';}}
 slider.addEventListener('input',()=>setFrame(Number(slider.value)));
-button.addEventListener('click',()=>{{if(timer){{clearInterval(timer);timer=null;button.textContent='▶ 播放';return;}}button.textContent='❚❚ 暫停';timer=setInterval(()=>setFrame((frameIndex+1)%frames.length),700);}});
+button.addEventListener('click',()=>{{if(timer){{stop();return;}}button.textContent='❚❚ 暫停';timer=setInterval(()=>{{if(frameIndex>=frames.length-1){{if(cfg.playback_mode==='單次播放'){{stop();return;}}setFrame(0);}}else setFrame(frameIndex+1);}},cfg.speed*1000);}});
+stopButton.addEventListener('click',()=>{{stop();setFrame(0);}});
 map.on('moveend zoomend',draw);window.addEventListener('resize',draw);draw();
 </script></body></html>"""

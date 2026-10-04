@@ -750,37 +750,85 @@ def _page_temperature() -> None:
 
 
 @st.cache_data(ttl=300, show_spinner=False)
-def _cached_radar_frames() -> List[Dict[str, Any]]:
-    return load_recent_radar_frames(frame_count=7)
+def _cached_radar_frames(frame_count: int) -> List[Dict[str, Any]]:
+    return load_recent_radar_frames(frame_count=frame_count)
 
 
 def _page_radar_echo() -> None:
     st.title("🌧️ 雷達回波")
     st.caption("資料集 O-A0059-001 · 使用雷達整合回波數值格點（dBZ），以地圖色階逐格繪製；不是官方 PNG 圖片。")
-    st.caption("CWA 約每 10 分鐘更新。本頁按需載入最近約 1 小時、最多 7 個時次；資料取自 CWA 歷史 API，需設定 CWA_API_KEY。")
-    reload_requested = st.button("⟳ 載入／更新最近雷達資料", type="primary", width="stretch")
+    st.caption("CWA 約每 10 分鐘更新。本頁依所選時長按需載入格點；載入範圍越長，所需時間越久。")
     if not CWA_API_KEY:
         st.warning("尚未設定 CWA_API_KEY，無法取得中央氣象署雷達格點資料。")
         return
 
+    map_col, panel_col = st.columns([3.2, 1], gap="medium")
+    with panel_col:
+        st.subheader("雷達播放控制")
+        base_mode = st.radio("底圖／圖層", ["無地形", "有地形", "降雨雷達"], key="radar_base_mode")
+        area = st.radio("顯示範圍", ["較大範圍區域", "臺灣鄰近區域"], key="radar_area")
+        hours = st.radio("動態顯示（小時）", [3, 6, 9, 12], horizontal=True, key="radar_duration_hours")
+        speed = st.slider("播放速度（秒／張）", min_value=0.25, max_value=3.0, value=1.0, step=0.25, key="radar_speed")
+        playback_mode = st.radio("播放方式", ["循環播放", "單次播放"], horizontal=True, key="radar_playback_mode")
+        reload_requested = st.button("⟳ 載入／更新所選時長", type="primary", width="stretch", key="radar_load")
+        st.markdown("**雷達回波顏色（dBZ）**")
+        st.markdown(
+            '<div style="height:14px;border-radius:8px;background:linear-gradient(90deg,#79e7f5,#00a9e8,#20c55e,#facc15,#fb923c,#ef4444,#d946ef)"></div>'
+            '<div style="display:flex;justify-content:space-between;font-size:11px"><span>5</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60+</span></div>',
+            unsafe_allow_html=True,
+        )
+        st.caption("資料來源：中央氣象署 O-A0059-001。降雨雷達底圖另由 RainViewer 提供，僅作視覺參考。")
+
+    frame_count = hours * 6 + 1
+    loaded_hours = st.session_state.get("radar_echo_hours", 0)
     if reload_requested:
         _cached_radar_frames.clear()
-    if reload_requested or "radar_echo_frames" not in st.session_state:
+        st.session_state.pop("radar_echo_frames", None)
+        loaded_hours = 0
+    if loaded_hours != hours or "radar_echo_frames" not in st.session_state:
         try:
-            with st.spinner("正在取得最近雷達格點並建立動畫…"):
-                st.session_state["radar_echo_frames"] = _cached_radar_frames()
+            with st.spinner(f"正在取得最近 {hours} 小時雷達格點（最多 {frame_count} 張）…"):
+                frames = _cached_radar_frames(frame_count)
+            st.session_state["radar_echo_frames"] = frames
+            st.session_state["radar_echo_hours"] = hours
         except Exception as exc:
-            st.error(f"雷達資料載入失敗：{str(exc)[:240]}")
-            st.caption("請確認 CWA_API_KEY 有效、網路可連線，或稍後重試。")
+            with map_col:
+                st.error(f"雷達資料載入失敗：{str(exc)[:240]}")
+                st.caption("請確認 CWA_API_KEY 有效、網路可連線，或稍後重試。")
             return
 
     frames = st.session_state.get("radar_echo_frames", [])
     if len(frames) < 2:
-        st.info("目前可播放的雷達時次不足。請稍後重新載入。")
+        with map_col:
+            st.info("目前可播放的雷達時次不足。請稍後重新載入。")
         return
-    st.caption(f"可播放 {len(frames)} 個時次 · 最新資料時間：{_timestamp(frames[-1]['timestamp'])} · dBZ 顏色為回波強度分級示意")
-    components.html(radar_animation_html(frames), height=660, scrolling=False)
-    st.caption("色階：5–10、10–20、20–30、30–40、40–50、50–60、60 dBZ 以上。格點經裁切及降採樣以提升瀏覽效能；定位為雷達回波概覽。資料來源：中央氣象署 O-A0059-001；底圖：OpenStreetMap。")
+    labels = [str(frame["timestamp"]).replace("T", " ") for frame in frames]
+    with panel_col:
+        selected_label = st.selectbox("單張顯示（靜態）", labels, index=len(labels) - 1, key=f"radar_frame_{hours}")
+        selected_index = labels.index(selected_label)
+        st.caption(f"可播放 {len(frames)} 個時次 · 最新資料：{_timestamp(frames[-1]['timestamp'])}")
+        try:
+            first_time = datetime.fromisoformat(str(frames[0]["timestamp"]).replace("Z", "+00:00"))
+            last_time = datetime.fromisoformat(str(frames[-1]["timestamp"]).replace("Z", "+00:00"))
+            covered_hours = (last_time - first_time).total_seconds() / 3600
+            if covered_hours + (1 / 6) < hours:
+                st.info(f"來源目前只提供約 {covered_hours:.1f} 小時影格；選取時段為 {hours} 小時，CWA 尚未提供的時次不會補造。")
+        except (ValueError, TypeError):
+            pass
+    with map_col:
+        components.html(
+            radar_animation_html(
+                frames,
+                base_mode=base_mode,
+                area=area,
+                speed_seconds=speed,
+                playback_mode=playback_mode,
+                initial_frame=selected_index,
+            ),
+            height=650,
+            scrolling=False,
+        )
+        st.caption("時間軸可選擇單張時次；按播放開始動畫。無效格點透明顯示。色階是回波強度視覺分級，不代表官方警戒門檻。底圖來源：OpenStreetMap／OpenTopoMap；降雨圖層來源：RainViewer。")
 
 
 def _probability_map() -> None:
