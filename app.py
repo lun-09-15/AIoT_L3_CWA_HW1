@@ -1033,48 +1033,6 @@ def _sync_all() -> None:
                 st.session_state["radar_echo_hours"] = radar_hours
                 radar_status.update(label="雷達回波更新失敗", state="error")
                 st.sidebar.error(f"雷達回波更新失敗：{radar_error}")
-    # Fetch radar grids as part of every full sync. The most recently selected
-    # duration is honored; a new session defaults to 3 hours (19 frames).
-    if CWA_API_KEY:
-        radar_hours = int(st.session_state.get("radar_duration_hours", 3))
-        if radar_hours not in (3, 6, 9, 12):
-            radar_hours = 3
-        _cached_radar_frames.clear()
-        with st.sidebar.status(f"正在更新最近 {radar_hours} 小時雷達格點…", expanded=False) as radar_status:
-            try:
-                radar_frames = load_recent_radar_frames(frame_count=radar_hours * 6 + 1)
-                st.session_state["radar_echo_frames"] = radar_frames
-                st.session_state["radar_echo_hours"] = radar_hours
-                st.session_state.pop("radar_echo_sync_error", None)
-                radar_status.update(label=f"雷達回波更新完成（{len(radar_frames)} 個時次）", state="complete")
-            except Exception as exc:
-                radar_error = str(exc)[:240]
-                st.session_state["radar_echo_sync_error"] = radar_error
-                st.session_state["radar_echo_frames"] = []
-                st.session_state["radar_echo_hours"] = radar_hours
-                radar_status.update(label="雷達回波更新失敗", state="error")
-                st.sidebar.error(f"雷達回波更新失敗：{radar_error}")
-    # Fetch radar grids as part of every full sync. The most recently selected
-    # duration is honored; a new session defaults to 3 hours (19 frames).
-    if CWA_API_KEY:
-        radar_hours = int(st.session_state.get("radar_duration_hours", 3))
-        if radar_hours not in (3, 6, 9, 12):
-            radar_hours = 3
-        _cached_radar_frames.clear()
-        with st.sidebar.status(f"正在更新最近 {radar_hours} 小時雷達格點…", expanded=False) as radar_status:
-            try:
-                radar_frames = load_recent_radar_frames(frame_count=radar_hours * 6 + 1)
-                st.session_state["radar_echo_frames"] = radar_frames
-                st.session_state["radar_echo_hours"] = radar_hours
-                st.session_state.pop("radar_echo_sync_error", None)
-                radar_status.update(label=f"雷達回波更新完成（{len(radar_frames)} 個時次）", state="complete")
-            except Exception as exc:
-                radar_error = str(exc)[:240]
-                st.session_state["radar_echo_sync_error"] = radar_error
-                st.session_state["radar_echo_frames"] = []
-                st.session_state["radar_echo_hours"] = radar_hours
-                radar_status.update(label="雷達回波更新失敗", state="error")
-                st.sidebar.error(f"雷達回波更新失敗：{radar_error}")
     if MOENV_API_KEY:
         with st.sidebar.status("正在更新環境部空氣品質資料…", expanded=True) as status:
             from src.air_quality_ingest import sync_air_quality
