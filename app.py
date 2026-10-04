@@ -4,6 +4,7 @@ from html import escape
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+import altair as alt
 import folium
 import pandas as pd
 import streamlit as st
@@ -155,6 +156,65 @@ def _freshness_overview(latest: Dict[str, Dict[str, Any]]) -> None:
     st.caption("固定週期資料依更新頻率判斷新鮮度；海嘯與颱風屬事件型資料，舊事件時間不代表資料過期。狀態依最近一次擷取紀錄，按左側「更新全部資料」可重新檢查。")
 
 
+def _add_device_location_control(map_object: folium.Map) -> None:
+    """Add the same explicit browser-geolocation control to every Folium map."""
+    LocateControl(
+        position="topleft",
+        strings={"title": "定位我的裝置", "popup": "您的裝置位置"},
+        locateOptions={"enableHighAccuracy": True, "timeout": 12000, "maximumAge": 60000},
+    ).add_to(map_object)
+
+
+def _station_history_chart(
+    data: pd.DataFrame,
+    metric_label: str,
+    series_column: Optional[str] = None,
+) -> None:
+    """Render station time series with readable local-time ticks and visible points."""
+    chart_data = data.copy()
+    chart_data["觀測時間"] = (
+        pd.to_datetime(chart_data["obs_time"], errors="coerce", utc=True)
+        .dt.tz_convert("Asia/Taipei")
+        .dt.tz_localize(None)
+    )
+    chart_data["數值"] = pd.to_numeric(chart_data["value"], errors="coerce")
+    chart_data = chart_data.dropna(subset=["觀測時間", "數值"])
+    if chart_data.empty:
+        st.info("所選測項目前沒有有效數值可繪製。")
+        return
+
+    base = alt.Chart(chart_data)
+    x = alt.X(
+        "觀測時間:T", title="台灣時間",
+        axis=alt.Axis(format="%m/%d %H:%M", labelAngle=-35, tickCount=7, grid=False),
+    )
+    y = alt.Y(
+        "數值:Q", title=metric_label,
+        scale=alt.Scale(zero=False),
+        axis=alt.Axis(grid=True, gridColor="#344257", domain=False),
+    )
+    tooltip = [
+        alt.Tooltip("觀測時間:T", title="觀測時間", format="%Y-%m-%d %H:%M"),
+        alt.Tooltip("數值:Q", title=metric_label, format=".2f"),
+    ]
+    if series_column and series_column in chart_data.columns:
+        color = alt.Color(f"{series_column}:N", title="測站", scale=alt.Scale(scheme="tableau10"))
+        chart = base.mark_line(
+            point=alt.OverlayMarkDef(filled=True, size=55), strokeWidth=2.5,
+        ).encode(x=x, y=y, color=color, tooltip=tooltip + [alt.Tooltip(f"{series_column}:N", title="測站")])
+    else:
+        chart = base.mark_line(
+            color="#52d6b4", point=alt.OverlayMarkDef(filled=True, size=65, color="#85e9cf"), strokeWidth=2.8,
+        ).encode(x=x, y=y, tooltip=tooltip)
+    chart = chart.properties(
+        height=320,
+        padding={"left": 8, "right": 16, "top": 12, "bottom": 8},
+    ).configure_view(strokeOpacity=0).configure_axis(
+        labelColor="#b9c8da", titleColor="#dce8f5", titleFontSize=12,
+    ).configure_legend(labelColor="#dce8f5", titleColor="#dce8f5", orient="top")
+    st.altair_chart(chart.interactive(), width="stretch")
+    st.caption(f"顯示 {len(chart_data)} 筆有效觀測 · 時間依台灣時區排列。")
+
 def _station_map(frame: pd.DataFrame) -> None:
     mapped = frame.dropna(subset=["latitude", "longitude"])
     if mapped.empty:
@@ -175,6 +235,7 @@ def _station_map(frame: pd.DataFrame) -> None:
             [row.latitude, row.longitude], radius=5, color=color, fill=True,
             fill_color=color, fill_opacity=.75, tooltip=row.station_name, popup=popup,
         ).add_to(weather_map)
+    _add_device_location_control(weather_map)
     st_folium(weather_map, width=1000, height=520, key="station_map", returned_objects=[])
 
 
@@ -353,12 +414,9 @@ def _weather_overview_map(
     layers.extend(layer for layer in (temperature_layer, rain_layer, wind_layer, air_quality_layer) if layer is not None)
     for layer in layers:
         layer.add_to(weather_map)
-    LocateControl(
-        position="topleft",
-        strings={"title": "定位我的裝置", "popup": "您的裝置位置"},
-        locateOptions={"enableHighAccuracy": True, "timeout": 12000, "maximumAge": 60000},
-    ).add_to(weather_map)
+
     map_key = f"overview_map_{county_key}_{int(dark_basemap)}_{int(show_temperature)}_{int(show_rain)}_{int(show_wind)}_{int(show_air_quality)}_{air_metric}"
+    _add_device_location_control(weather_map)
     st_folium(weather_map, width=960, height=610, key=map_key, returned_objects=[])
 
 
@@ -574,9 +632,11 @@ def _page_stations() -> None:
     ).sort_values("obs_time")
     metric_options = {"氣溫 °C": "temperature", "相對濕度 %": "relative_humidity", "風速 m/s": "wind_speed", "雨量 mm": "precipitation", "氣壓 hPa": "air_pressure"}
     metric_label = st.selectbox("觀測項目", list(metric_options))
-    chart = history.set_index("obs_time")[[metric_options[metric_label]]].rename(columns={metric_options[metric_label]: metric_label})
     st.subheader(f"{station_label} · 最近 48 筆觀測")
-    st.line_chart(chart, height=300)
+    single_history = history[["obs_time", metric_options[metric_label]]].rename(
+        columns={metric_options[metric_label]: "value"}
+    )
+    _station_history_chart(single_history, metric_label)
     station_labels = {
         row.station_id: f"{row.station_name}（{row.station_id}）"
         for row in station_options.itertuples(index=False)
@@ -611,7 +671,10 @@ def _page_stations() -> None:
                 comparison = pd.concat(compare_frames, ignore_index=True)
                 comparison = comparison.pivot(index="obs_time", columns="測站", values=compare_column).sort_index()
                 comparison.columns.name = None
-                st.line_chart(comparison, height=360)
+                comparison_data = comparison.reset_index().melt(
+                    id_vars="obs_time", var_name="測站", value_name="value"
+                )
+                _station_history_chart(comparison_data, compare_metric_label, series_column="測站")
                 st.caption(f"各站最近 48 筆資料 · {compare_metric_label} · 時間未對齊時保留空值。")
             else:
                 st.info("所選測站目前沒有可比較的歷史資料。")
@@ -660,6 +723,7 @@ def _page_tsunami() -> None:
     if pd.notna(latest.get("epicenter_lat")) and pd.notna(latest.get("epicenter_lon")):
         m = folium.Map(location=[latest["epicenter_lat"], latest["epicenter_lon"]], zoom_start=5, tiles="OpenStreetMap")
         folium.Marker([latest["epicenter_lat"], latest["epicenter_lon"]], tooltip="最新報告震央", popup=latest.get("epicenter_location") or "震央").add_to(m)
+        _add_device_location_control(m)
         st_folium(m, width=1000, height=360, key="tsunami_map", returned_objects=[])
     history = events[["issue_time", "tsunami_no", "report_no", "report_type", "report_color", "epicenter_location", "magnitude", "web_url"]].copy()
     history.columns = ["發布時間", "事件編號", "報別", "報告類型", "顏色", "震央", "規模", "官方報告"]
@@ -718,6 +782,7 @@ def _page_earthquake() -> None:
                 fill_opacity=0.65, tooltip=f"{source_name} · 規模 {magnitude if pd.notna(magnitude) else '—'}",
                 popup=folium.Popup(popup, max_width=360),
             ).add_to(m)
+        _add_device_location_control(m)
         st_folium(m, width="stretch", height=520, key="earthquake_map", returned_objects=[])
         st.caption("紅色為顯著有感地震，黃色為小區域有感地震；圓點大小僅用規模作視覺提示。僅繪製官方提供有效震央座標的報告。")
     else:
@@ -873,6 +938,7 @@ def _probability_map() -> None:
             bounds.extend([[lat, lon] for lon, lat in ring])
     if bounds:
         m.fit_bounds(bounds, padding=(15, 15))
+    _add_device_location_control(m)
     st_folium(m, width=1000, height=560, key="typhoon_probability_map", returned_objects=[])
     st.caption("顏色代表 KMZ 內官方標示的機率級距，請依 CWA 原始產品說明判讀。")
     with st.expander("圖層資料"):
@@ -921,6 +987,7 @@ def _page_typhoon_track() -> None:
     points = cyclone[["latitude", "longitude"]].dropna()
     if not points.empty:
         m.fit_bounds([[points["latitude"].min(), points["longitude"].min()], [points["latitude"].max(), points["longitude"].max()]], padding=(20, 20))
+    _add_device_location_control(m)
     st_folium(m, width=1000, height=560, key="typhoon_track_map", returned_objects=[])
     detail = cyclone[["record_type", "fix_time", "latitude", "longitude", "max_wind_speed", "gust", "pressure"]].copy()
     detail["record_type"] = detail["record_type"].map({"ANALYSIS": "分析定位", "FORECAST": "預測定位"}).fillna(detail["record_type"])

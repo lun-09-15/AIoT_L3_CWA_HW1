@@ -236,7 +236,7 @@ html,body{{margin:0;padding:0;background:#0b1220;color:#eaf1fb;font:14px sans-se
 .radar-canvas{{position:absolute;inset:0;z-index:400;pointer-events:none}}
 .leaflet-control-attribution{{font-size:10px}}
 </style></head><body>
-<div id="controls"><button id="play" type="button">▶ 播放</button><button id="stop" type="button">■ 停止</button><input id="timeline" type="range" min="0" max="{len(frames)-1}" value="0"><span id="time"></span></div>
+<div id="controls"><button id="play" type="button">▶ 播放</button><button id="stop" type="button">■ 停止</button><input id="timeline" type="range" min="0" max="{len(frames)-1}" value="0"><span id="time"></span><span id="loc-status" aria-live="polite"></span></div>
 <div id="map"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
 const frames={encoded},cfg={config};
 const center=cfg.area==='臺灣鄰近區域'?[23.7,121.0]:[24.2,123.0],zoom=cfg.area==='臺灣鄰近區域'?8:6;
@@ -252,6 +252,27 @@ if(cfg.base_mode==='降雨雷達'){{
    }}
  }}).catch(()=>{{}});
 }}
+const locateStatus=document.getElementById('loc-status');
+const locateControl=L.Control.extend({{
+ options:{{position:'topleft'}},
+ onAdd:function(){{
+  const button=L.DomUtil.create('button','leaflet-bar');button.type='button';button.title='定位我的裝置';button.setAttribute('aria-label','定位我的裝置');button.textContent='◎';
+  button.style.cssText='width:34px;height:34px;background:#fff;border:1px solid #888;border-radius:4px;font-size:22px;line-height:30px;cursor:pointer;color:#245';
+  L.DomEvent.disableClickPropagation(button);
+  L.DomEvent.on(button,'click',function(){{
+   if(!navigator.geolocation){{locateStatus.textContent='此瀏覽器不支援定位';return;}}
+   locateStatus.textContent='正在取得裝置位置…';
+   navigator.geolocation.getCurrentPosition(function(position){{
+    const point=[position.coords.latitude,position.coords.longitude];map.setView(point,Math.max(map.getZoom(),8));
+    if(window.deviceLocationMarker)map.removeLayer(window.deviceLocationMarker);
+    window.deviceLocationMarker=L.circleMarker(point,{{radius:8,color:'#1976d2',fillColor:'#42a5f5',fillOpacity:.85,weight:2}}).addTo(map).bindPopup('您的裝置位置').openPopup();
+    locateStatus.textContent='已定位';
+   }},function(error){{locateStatus.textContent=error.code===1?'定位權限遭拒，請允許此網站存取位置':'無法取得裝置位置';}},{{enableHighAccuracy:true,timeout:12000,maximumAge:60000}});
+  }});
+  return button;
+ }}
+}});
+new locateControl().addTo(map);
 const canvas=L.DomUtil.create('canvas','radar-canvas',map.getContainer()),ctx=canvas.getContext('2d');
 const slider=document.getElementById('timeline'),button=document.getElementById('play'),stopButton=document.getElementById('stop'),timeLabel=document.getElementById('time');
 let frameIndex=cfg.initial_frame,timer=null;
