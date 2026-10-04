@@ -7,12 +7,14 @@ from typing import Any, Dict, List, Optional
 import folium
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 from branca.element import Element
 from folium.plugins import LocateControl
 from streamlit_folium import st_folium
 
 from src.config import BASE_DIR, CWA_API_KEY, DB_PATH, MOENV_API_KEY
 from src.database import get_latest_ingestion_summary, init_db, query_rows
+from src.datasets.radar_echo import load_recent_radar_frames, radar_animation_html
 from src.datasets.specs import DATASET_SPECS
 from src.datasets.typhoon import parse_typhoon_probability_kmz
 
@@ -20,7 +22,7 @@ st.set_page_config(page_title="CWA 海氣象與災害資訊", page_icon="🌦️
 init_db()
 
 PAGES = [
-    "總覽", "海面天氣預報", "氣象觀測站", "地震資訊", "海嘯資訊", "溫度分布狀態", "颱風侵襲機率", "熱帶氣旋路徑",
+    "總覽", "海面天氣預報", "氣象觀測站", "地震資訊", "海嘯資訊", "溫度分布狀態", "雷達回波", "颱風侵襲機率", "熱帶氣旋路徑",
 ]
 DATASET_FOR_PAGE = {
     "海面天氣預報": "F-A0012-001",
@@ -747,6 +749,40 @@ def _page_temperature() -> None:
     st.link_button("開啟原始影像", row["image_url"])
 
 
+@st.cache_data(ttl=300, show_spinner=False)
+def _cached_radar_frames() -> List[Dict[str, Any]]:
+    return load_recent_radar_frames(frame_count=7)
+
+
+def _page_radar_echo() -> None:
+    st.title("🌧️ 雷達回波")
+    st.caption("資料集 O-A0059-001 · 使用雷達整合回波數值格點（dBZ），以地圖色階逐格繪製；不是官方 PNG 圖片。")
+    st.caption("CWA 約每 10 分鐘更新。本頁按需載入最近約 1 小時、最多 7 個時次；資料取自 CWA 歷史 API，需設定 CWA_API_KEY。")
+    reload_requested = st.button("⟳ 載入／更新最近雷達資料", type="primary", width="stretch")
+    if not CWA_API_KEY:
+        st.warning("尚未設定 CWA_API_KEY，無法取得中央氣象署雷達格點資料。")
+        return
+
+    if reload_requested:
+        _cached_radar_frames.clear()
+    if reload_requested or "radar_echo_frames" not in st.session_state:
+        try:
+            with st.spinner("正在取得最近雷達格點並建立動畫…"):
+                st.session_state["radar_echo_frames"] = _cached_radar_frames()
+        except Exception as exc:
+            st.error(f"雷達資料載入失敗：{str(exc)[:240]}")
+            st.caption("請確認 CWA_API_KEY 有效、網路可連線，或稍後重試。")
+            return
+
+    frames = st.session_state.get("radar_echo_frames", [])
+    if len(frames) < 2:
+        st.info("目前可播放的雷達時次不足。請稍後重新載入。")
+        return
+    st.caption(f"可播放 {len(frames)} 個時次 · 最新資料時間：{_timestamp(frames[-1]['timestamp'])} · dBZ 顏色為回波強度分級示意")
+    components.html(radar_animation_html(frames), height=660, scrolling=False)
+    st.caption("色階：5–10、10–20、20–30、30–40、40–50、50–60、60 dBZ 以上。格點經裁切及降採樣以提升瀏覽效能；定位為雷達回波概覽。資料來源：中央氣象署 O-A0059-001；底圖：OpenStreetMap。")
+
+
 def _probability_map() -> None:
     snapshots = _read("SELECT * FROM typhoon_probabilities ORDER BY id DESC LIMIT 20")
     if snapshots.empty:
@@ -904,6 +940,8 @@ elif page == "海嘯資訊":
     _page_tsunami()
 elif page == "溫度分布狀態":
     _page_temperature()
+elif page == "雷達回波":
+    _page_radar_echo()
 elif page == "颱風侵襲機率":
     _page_typhoon_probability()
 elif page == "熱帶氣旋路徑":
