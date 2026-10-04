@@ -71,9 +71,9 @@ def _history_times(payload: Any) -> List[str]:
     return sorted(values, key=lambda item: _parse_time(item) or datetime.min)
 
 
-def _load_payload(response) -> Any:
+def _load_payload(response, stage: str = "歷史資料") -> Any:
     if response.status_code >= 400:
-        raise RuntimeError(f"CWA 歷史資料 API HTTP {response.status_code}。")
+        raise RuntimeError(f"CWA {stage} API HTTP {response.status_code}。")
     content_type = response.headers.get("Content-Type", "").lower()
     if "json" in content_type or response.text.lstrip().startswith(("{", "[")):
         payload = response.json()
@@ -169,7 +169,7 @@ def _crop_and_downsample(grid: Dict[str, Any]) -> Dict[str, Any]:
 
 
 def load_recent_radar_frames(client: Optional[CWAClient] = None, frame_count: int = 7) -> List[Dict[str, Any]]:
-    """Fetch the newest radar frames from CWA historyAPI (about one hour at 10-min cadence)."""
+    """Fetch recent radar grids using the timestamp path advertised by CWA history metadata."""
     client = client or CWAClient()
     try:
         metadata_response = client.session.get(
@@ -179,25 +179,31 @@ def load_recent_radar_frames(client: Optional[CWAClient] = None, frame_count: in
         )
     except requests.RequestException as exc:
         raise RuntimeError(client._safe_error(exc)) from exc
-    metadata = _load_payload(metadata_response)
+    metadata = _load_payload(metadata_response, "雷達時次清單")
     timestamps = _history_times(metadata)[-frame_count:]
     if len(timestamps) < 2:
-        raise ValueError("CWA 歷史索引目前不足兩個時次，無法播放雷達動畫。")
+        raise ValueError("CWA 雷達歷史索引目前不足兩個時次，無法播放動畫。")
 
     frames: List[Dict[str, Any]] = []
     for timestamp in timestamps:
+        parsed_time = _parse_time(timestamp)
+        if parsed_time is None:
+            raise ValueError("CWA 雷達歷史索引包含無法辨識的時次。")
+        time_path = parsed_time.strftime("%Y/%m/%d/%H/%M/%S")
+        data_url = f"{HISTORY_API}/getData/{DATASET_ID}/{time_path}"
         try:
             response = client.session.get(
-                f"{HISTORY_API}/getData/{DATASET_ID}",
-                params={"Authorization": client.api_key, "dataTime": timestamp, "format": "JSON"},
+                data_url,
+                params={"Authorization": client.api_key},
                 timeout=DEFAULT_TIMEOUT_SEC,
             )
         except requests.RequestException as exc:
             raise RuntimeError(client._safe_error(exc)) from exc
-        frames.append(_crop_and_downsample(parse_radar_grid(_load_payload(response))))
+        frames.append(_crop_and_downsample(
+            parse_radar_grid(_load_payload(response, f"雷達格點 {timestamp}"))
+        ))
     frames.sort(key=lambda frame: _parse_time(frame["timestamp"]) or datetime.min)
     return frames
-
 
 def radar_animation_html(frames: List[Dict[str, Any]]) -> str:
     """Build a Leaflet map that paints numeric dBZ cells on Canvas and animates frames."""
