@@ -56,20 +56,20 @@ def _parse_time(value: str) -> Optional[datetime]:
 
 
 def _history_times(payload: Any) -> List[str]:
+    """Return radar product times only; UpdateTime is not a downloadable frame time."""
     values: set[str] = set()
     for node in _walk(payload):
-        if isinstance(node, dict):
-            for key, value in node.items():
-                if _key_name(key) in {"datetime", "datatime", "obstime", "producttime"} and isinstance(value, str):
-                    match = _TIMESTAMP.search(value)
-                    if match and _parse_time(match.group()) is not None:
-                        values.add(match.group())
-        elif isinstance(node, str):
-            match = _TIMESTAMP.fullmatch(node.strip())
+        if not isinstance(node, dict):
+            continue
+        for key, value in node.items():
+            if _key_name(key) not in {"datetime", "datatime", "obstime", "producttime"}:
+                continue
+            if not isinstance(value, str):
+                continue
+            match = _TIMESTAMP.search(value)
             if match and _parse_time(match.group()) is not None:
                 values.add(match.group())
     return sorted(values, key=lambda item: _parse_time(item) or datetime.min)
-
 
 def _load_payload(response, stage: str = "歷史資料") -> Any:
     if response.status_code >= 400:
