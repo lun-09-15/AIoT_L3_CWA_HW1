@@ -721,7 +721,7 @@ def _page_tsunami() -> None:
     cols[2].metric("震央", latest.get("epicenter_location") or "—")
     cols[3].metric("地震時間", _timestamp(latest.get("origin_time")))
     if pd.notna(latest.get("epicenter_lat")) and pd.notna(latest.get("epicenter_lon")):
-        m = folium.Map(location=[latest["epicenter_lat"], latest["epicenter_lon"]], zoom_start=5, tiles="OpenStreetMap")
+        m = folium.Map(location=[23.7, 121.0], zoom_start=7, tiles="OpenStreetMap")
         folium.Marker([latest["epicenter_lat"], latest["epicenter_lon"]], tooltip="最新報告震央", popup=latest.get("epicenter_location") or "震央").add_to(m)
         _add_device_location_control(m)
         st_folium(m, width=1000, height=360, key="tsunami_map", returned_objects=[])
@@ -761,7 +761,7 @@ def _page_earthquake() -> None:
     mapped = events.dropna(subset=["epicenter_lat", "epicenter_lon"])
     if not mapped.empty:
         center = [float(mapped.iloc[0]["epicenter_lat"]), float(mapped.iloc[0]["epicenter_lon"])]
-        m = folium.Map(location=center, zoom_start=5, tiles="OpenStreetMap", control_scale=True)
+        m = folium.Map(location=[23.7, 121.0], zoom_start=7, tiles="OpenStreetMap", control_scale=True)
         for _, row in mapped.head(300).iterrows():
             dataset_id = str(row["dataset_id"])
             source_name = "顯著有感" if dataset_id == "E-A0015-001" else "小區域有感"
@@ -831,7 +831,7 @@ def _page_radar_echo() -> None:
     with panel_col:
         st.subheader("雷達播放控制")
         base_mode = st.radio("底圖／圖層", ["無地形", "有地形", "降雨雷達"], key="radar_base_mode")
-        area = st.radio("顯示範圍", ["較大範圍區域", "臺灣鄰近區域"], key="radar_area")
+        area = st.radio("顯示範圍", ["臺灣鄰近區域", "較大範圍區域"], key="radar_area_v2")
         hours = st.radio("動態顯示（小時）", [3, 6, 9, 12], horizontal=True, key="radar_duration_hours")
         speed = st.slider("播放速度（秒／張）", min_value=0.25, max_value=3.0, value=1.0, step=0.25, key="radar_speed")
         playback_mode = st.radio("播放方式", ["循環播放", "單次播放"], horizontal=True, key="radar_playback_mode")
@@ -919,7 +919,7 @@ def _probability_map() -> None:
         return
     colors = {"20%": "#2ecc71", "40%": "#3498db", "60%": "#f1c40f", "80%": "#e67e22", "100%": "#e74c3c"}
     geojson = {"type": "FeatureCollection", "features": features}
-    m = folium.Map(location=[22.5, 130.0], zoom_start=4, tiles="OpenStreetMap", control_scale=True)
+    m = folium.Map(location=[23.7, 121.0], zoom_start=7, tiles="OpenStreetMap", control_scale=True)
     folium.GeoJson(
         geojson,
         name="暴風圈侵襲機率",
@@ -936,8 +936,6 @@ def _probability_map() -> None:
     for feature in features:
         for ring in feature["geometry"]["coordinates"]:
             bounds.extend([[lat, lon] for lon, lat in ring])
-    if bounds:
-        m.fit_bounds(bounds, padding=(15, 15))
     _add_device_location_control(m)
     st_folium(m, width=1000, height=560, key="typhoon_probability_map", returned_objects=[])
     st.caption("顏色代表 KMZ 內官方標示的機率級距，請依 CWA 原始產品說明判讀。")
@@ -965,7 +963,7 @@ def _page_typhoon_track() -> None:
     selected_name = st.selectbox("熱帶氣旋", names, format_func=lambda name: f"{name}（{cwa_names.get(name, '')}）")
     cyclone = frame[frame["typhoon_name"] == selected_name].copy()
     cyclone = cyclone.sort_values("fix_time")
-    m = folium.Map(location=[20.0, 135.0], zoom_start=4, tiles="OpenStreetMap", control_scale=True)
+    m = folium.Map(location=[23.7, 121.0], zoom_start=7, tiles="OpenStreetMap", control_scale=True)
     palette = {"ANALYSIS": "#1565c0", "FORECAST": "#d32f2f"}
     for kind, group in cyclone.groupby("record_type"):
         group = group.sort_values("fix_time")
@@ -985,8 +983,6 @@ def _page_typhoon_track() -> None:
                                 color=color, fill=True, fill_opacity=.8, popup=popup,
                                 tooltip=f"{label} · {_timestamp(row.fix_time)}").add_to(m)
     points = cyclone[["latitude", "longitude"]].dropna()
-    if not points.empty:
-        m.fit_bounds([[points["latitude"].min(), points["longitude"].min()], [points["latitude"].max(), points["longitude"].max()]], padding=(20, 20))
     _add_device_location_control(m)
     st_folium(m, width=1000, height=560, key="typhoon_track_map", returned_objects=[])
     detail = cyclone[["record_type", "fix_time", "latitude", "longitude", "max_wind_speed", "gust", "pressure"]].copy()

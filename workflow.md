@@ -207,3 +207,6 @@ git push origin main
 - [CWA 天氣警特報資料介紹（含颱風侵襲機率更新說明）](https://opendata.cwa.gov.tw/promotion/introduction/warning)
 - [CWA 熱帶氣旋路徑產品說明 `W-C0034-005`](https://opendata.cwa.gov.tw/opendatadoc/Warning/W-C0034-005.pdf)
 - [CWA API 使用說明](https://opendata.cwa.gov.tw/devManual/insrtuction)
+
+## 地圖初始視角
+所有地圖初始中心固定為台灣（23.7°N, 121.0°E），縮放層級為 7。不得因測站、地震、海嘯或颱風圖層範圍自動呼叫 fit_bounds 覆蓋此初始視角；使用者仍可手動縮放。雷達回波預設選擇臺灣鄰近區域，較大範圍由使用者切換。

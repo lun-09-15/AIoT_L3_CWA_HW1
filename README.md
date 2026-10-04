@@ -165,3 +165,6 @@ data/weather_dashboard.db      # SQLite 資料庫（自動建立）
 Python、Requests、Pandas、SQLite、Streamlit、Folium、streamlit-folium、python-dotenv。
 
 資料來源：中央氣象署氣象資料開放平台與環境部環境資料開放平台。實際資料欄位、更新頻率和警示效力以各官方公告及資料產品說明為準。
+
+### 地圖預設視角
+所有地圖初始中心統一為台灣（23.7°N, 121.0°E），縮放層級為 7；初始載入不依測站、地震或颱風路徑範圍自動縮放，避免台灣本島顯示過小。雷達回波預設為「臺灣鄰近區域」，仍可切換較大範圍；使用者可手動縮放或按「定位我的裝置」。

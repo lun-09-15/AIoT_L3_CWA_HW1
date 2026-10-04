@@ -239,7 +239,7 @@ html,body{{margin:0;padding:0;background:#0b1220;color:#eaf1fb;font:14px sans-se
 <div id="controls"><button id="play" type="button">▶ 播放</button><button id="stop" type="button">■ 停止</button><input id="timeline" type="range" min="0" max="{len(frames)-1}" value="0"><span id="time"></span><span id="loc-status" aria-live="polite"></span></div>
 <div id="map"></div><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script>
 const frames={encoded},cfg={config};
-const center=cfg.area==='臺灣鄰近區域'?[23.7,121.0]:[24.2,123.0],zoom=cfg.area==='臺灣鄰近區域'?8:6;
+const center=[23.7,121.0],zoom=cfg.area==='較大範圍區域'?6:7;
 const map=L.map('map',{{zoomControl:true,preferCanvas:true}}).setView(center,zoom);
 const osm=L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png',{{maxZoom:19,attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}});
 const topo=L.tileLayer('https://{{s}}.tile.opentopomap.org/{{z}}/{{x}}/{{y}}.png',{{maxZoom:17,attribution:'Map data: &copy; OpenStreetMap contributors, SRTM | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a>'}});
