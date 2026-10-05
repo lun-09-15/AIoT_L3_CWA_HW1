@@ -63,9 +63,15 @@
   </tr>
   <tr>
     <td width="50%" valign="top">
+      <img src="docs/screenshots/radar-echo.png" alt="雷達回波動畫與播放控制" width="100%"><br>
+      <strong>雷達回波</strong><br>以數值格點繪製回波，可選擇資料時長、底圖、播放速度和播放模式，並以時間軸播放。
+    </td>
+    <td width="50%" valign="top">
       <img src="docs/screenshots/typhoon-probability.png" alt="颱風侵襲機率圖層" width="100%"><br>
       <strong>颱風侵襲機率</strong><br>在地圖呈現官方 KMZ 機率範圍與不同機率級距。
     </td>
+  </tr>
+  <tr>
     <td width="50%" valign="top">
       <img src="docs/screenshots/typhoon-track.png" alt="熱帶氣旋路徑" width="100%"><br>
       <strong>熱帶氣旋路徑</strong><br>以不同顏色區分已分析定位與預測路徑，並可選擇熱帶氣旋。
